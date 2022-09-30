@@ -1,2 +1,2 @@
 # team_2325_ta_website
-Anshul Mittal
+im ritvik and im dumb

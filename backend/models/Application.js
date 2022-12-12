@@ -4,26 +4,28 @@ const Schema = mongoose.Schema;
 var ApplicationSchema = new mongoose.Schema({
 
   name: {
-    type: String,
-    defualt: "default"
-    },
-    professorId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+      type: String,
+      defualt: "default"
     },
 
-    default: {
-        type: Boolean, 
-        default: true
-    },
+  professorId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+  },
+
+  default: {
+      type: Boolean, 
+      default: true
+  },
 
   description: {
-        type: String,
-        default: ""
-    },
+      type: String,
+      default: ""
+  },
 
-  assignedCourse: 
-    { type: Schema.Types.ObjectId, ref: "Course" },
+  assignedCourse: { 
+      type: Schema.Types.ObjectId, ref: "Course" 
+  },
 
   questions : [{
     _id: 0,
@@ -39,5 +41,4 @@ var ApplicationSchema = new mongoose.Schema({
  }, {timestamps: true});
 
 Application = mongoose.model('Application', ApplicationSchema);
-
 module.exports = Application; 

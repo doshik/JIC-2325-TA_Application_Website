@@ -1,12 +1,15 @@
 const express = require('express');
-require("dotenv").config();
-const router = express.Router();
 const mongoose = require('mongoose');
+require("dotenv").config();
+
 const User = require('./models/User');
 const Course = require('./models/Course');
 const Application = require('./models/Application');
+
 var app = express();
+const router = express.Router();
 const db = process.env.mongoURI;
+
 var bodyParser = require('body-parser')
 // Bodyparser middleware
 app.use(
@@ -199,6 +202,3 @@ app.post("/editApplication", (req, res) => {
 });
 
 app.listen(3000, () => console.log('TA Application Server is listening on port 3000.'));
-
-
-  

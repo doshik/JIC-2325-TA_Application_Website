@@ -30,7 +30,7 @@ mongoose
 app.post("/newAccount", (req, res) => {
   User.findOne({ email: req.body.email.toLowerCase() }).then((user) => {
       if (user) {
-      return res.status(400).json({ email: "A user account with that email already exists." });
+        return res.status(400).json({ email: "A user account with that email already exists." });
       } else {
           const newAccount = new User({
               _id: new mongoose.Types.ObjectId(),
@@ -49,44 +49,6 @@ app.post("/newAccount", (req, res) => {
               professorInfo: newAccount._id,
               application: null,
           });
-          
-          const app1 = new Application({
-              _id: new mongoose.Types.ObjectId(),
-              name: "CS 4641 Application",
-              professorId: newAccount._id,
-              default: true,
-              description: "This is the default application for CS 4641",
-              assignedCourse: course1._id,
-              questions: [
-                  {
-                      written: false,
-                      questionPrompt: "What is your GPA?",
-                      options: [
-                          {
-                              optionText: "< 3.0",
-                          },
-                          {
-                              optionText: "3.0 - 3.5",
-                          },
-                          {
-                              optionText: "> 3.5",
-                          },
-                      ],
-                      response: "",
-                  },
-                  {
-                      written: true,
-                      questionPrompt: "Why do you want to join this course?",
-                      options: [],
-                      response: "",
-                  },
-              ],
-          });
-          app1.save().catch((err) => console.log(err));
-          course1.application = app1._id;
-          course1
-          .save()
-          .catch((err) => console.log(err));
 
           const course2 = new Course({
               _id: new mongoose.Types.ObjectId(),
@@ -94,40 +56,48 @@ app.post("/newAccount", (req, res) => {
               professorInfo: newAccount._id,
               application: null,
           });
-          const app2 = new Application({
-              _id: new mongoose.Types.ObjectId(),
-              name: "CS 7641 Application",
-              professorId: newAccount._id,
-              default: true,
-              description: "This is the default application for CS 7641",
-              assignedCourse: null,
-              questions: [
-                  {
-                      written: false,
-                      questionPrompt: "What is your GPA?",
-                      options: [
-                          {
-                              optionText: "< 3.0",
-                          },
-                          {
-                              optionText: "3.0 - 3.5",
-                          },
-                          {
-                              optionText: "> 3.5",
-                          },
-                      ],
-                      response: "",
-                  },
-                  {
-                      written: true,
-                      questionPrompt: "Why do you want to join this course?",
-                      options: [],
-                      response: "",
-                  },
-              ],
-          });
-          app2.save().catch((err) => console.log(err));
-          course2.application = app2._id;
+
+          const defaultApp = new Application({
+            _id: new mongoose.Types.ObjectId(),
+            name: "Default Application",
+            professorId: newAccount._id,
+            default: true,
+            description: "This is the default application",
+            assignedCourse: course1._id,
+            questions: [
+                {
+                    written: false,
+                    questionPrompt: "What is your GPA?",
+                    options: [
+                        {
+                            optionText: "< 3.0",
+                        },
+                        {
+                            optionText: "3.0 - 3.5",
+                        },
+                        {
+                            optionText: "> 3.5",
+                        },
+                    ],
+                    response: "",
+                },
+                {
+                    written: true,
+                    questionPrompt: "Why do you want to join this course?",
+                    options: [],
+                    response: "",
+                },
+            ],
+        });
+
+          defaultApp.save().catch((err) => console.log(err));
+          course1.application = defaultApp._id;
+          course1
+          .save()
+          .catch((err) => console.log(err));
+
+          defaultApp.save().catch((err) => console.log(err));
+          course2.application = defaultApp._id;
           course2
           .save()
           .catch((err) => console.log(err));
@@ -145,6 +115,7 @@ app.post("/newAccount", (req, res) => {
 });
 
 app.post("/addNewApplication", (req, res) => {
+
   const newApplication = new Application({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -154,6 +125,7 @@ app.post("/addNewApplication", (req, res) => {
       assignedCourse: req.body.assignedCourse,
       questions: req.body.questions,
   });
+
   newApplication
   .save()
   .then((newApplication) => {
@@ -161,6 +133,7 @@ app.post("/addNewApplication", (req, res) => {
       res.json(newApplication.name + " has been created by " + newApplication.professorId + "! \n The application ID is " + newApplication._id);
   })
   .catch((err) => console.log(err));
+
 });
 
 app.post("/assignApplicationToCourse", (req, res) => {
@@ -170,7 +143,7 @@ app.post("/assignApplicationToCourse", (req, res) => {
   (mongoose.Types.ObjectId(req.body.courseId))
   .then((course) => {
       console.log(course)
-      course.application =mongoose.Types.ObjectId(req.body.applicationId);
+      course.application = mongoose.Types.ObjectId(req.body.applicationId);
       course
       .save()
       .then((course) => {

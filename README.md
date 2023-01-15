@@ -1,2 +1,2 @@
-# team_2325_ta_website
+# JIC-2325-TA_Application_Website
 

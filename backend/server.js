@@ -8,10 +8,10 @@ const Application = require('./models/Application');
 
 var app = express();
 const router = express.Router();
-const db = process.env.mongoURI;
+const db = process.env.ATLAS_URI;
 
-var bodyParser = require('body-parser')
 // Bodyparser middleware
+var bodyParser = require('body-parser')
 app.use(
     bodyParser.urlencoded({
       limit: "500mb",
@@ -19,13 +19,12 @@ app.use(
     })
   );
   app.use(bodyParser.json({ limit: "500mb" }));
-  
+// 
 
 mongoose
   .connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("MongoDB successfully connected"))
   .catch((err) => console.log(err));
-// 
 
 app.post("/newAccount", (req, res) => {
   User.findOne({ email: req.body.email.toLowerCase() }).then((user) => {
@@ -173,5 +172,4 @@ app.post("/editApplication", (req, res) => {
   })
   .catch((err) => console.log(err));
 });
-
-app.listen(3000, () => console.log('TA Application Server is listening on port 3000.'));
+app.listen(process.env.PORT, () => console.log('TA Application Server is listening on port 3000.'));

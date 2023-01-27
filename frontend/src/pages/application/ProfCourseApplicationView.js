@@ -1,5 +1,5 @@
 import * as React from "react";
-import ApplicationTable from "../../components/application/ApplicationTable";
+import ApplicationTable from "./ApplicationTable";
 
 const ProfCourseApplicationView = () => {
   return (

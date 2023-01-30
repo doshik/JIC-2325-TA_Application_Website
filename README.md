@@ -12,6 +12,9 @@ Summary: We are designing a better TA application website with functionalities t
 * Frontend - created application template creation form
 * Frontend - created student and professor dashboards
 
-
 #### Bug Fixes
 * Fixed minor bugs associated with routing in React-Router v6
+
+
+#### Known Issues
+* Data on frontend pages is currently hard-coded since GT SSO and BuzzPort integration not being implemented yet

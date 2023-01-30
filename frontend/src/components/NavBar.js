@@ -6,8 +6,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "react-bootstrap/Image";
 import { FiSettings } from "react-icons/fi";
 import "./NavBar.css";
-// import GTLogo from "../assets/gt-logo-full-text.svg";
-// import GT from "../assets/images/gt-logo-full-text.svg";
 
 function NavBar() {
   const GTLogo = require("../assets/images/gt-logo-full-text.svg").default;
@@ -78,11 +76,8 @@ const styles = {
     marginRight: "75px",
   },
   link: {
-    // color: "#003057",
-    // color: "black",
     fontWeight: "150",
     fontSize: "1.4rem",
-    // backgroundColor: "#003057",
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -95,7 +90,5 @@ const styles = {
     justifyContent: "center",
     color: "#003057",
     marginRight: "50px",
-    // alignSelf: "flex-end",
-    // justifySelf: "flex-end",
   },
 };

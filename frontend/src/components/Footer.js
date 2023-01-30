@@ -30,7 +30,6 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    // height: "100%",
   },
   logo: {
     height: "3.7vh",

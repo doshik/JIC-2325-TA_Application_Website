@@ -21,7 +21,7 @@ const ApplicationTemplatesTable = () => {
                         </td>
                         <td>No</td>
                         <td>
-                            <Button>View</Button>
+                            <Button variant="primary">View</Button>
                         </td>
                     </tr>
                 </tbody>

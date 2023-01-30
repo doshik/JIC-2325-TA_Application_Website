@@ -98,7 +98,6 @@ const styles = {
     color: "#61dafb",
   },
   table: {
-    // alignSelf: "center",
     width: "75%",
   },
   tableRow: {

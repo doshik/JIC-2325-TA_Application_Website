@@ -4,6 +4,8 @@ import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicatio
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
+import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
+import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import Root from "./Root";
 import {
   createBrowserRouter,
@@ -36,6 +38,16 @@ const Router = createBrowserRouter(
           exact
           path="student/openapplications"
           element={<StudentApplicationsView />}
+        />
+        <Route
+          exact
+          path="prof/dashboardview"
+          element={<ProfessorDashboardView />}
+        />
+        <Route
+          exact
+          path="student/dashboardview"
+          element={<StudentDashboardView />}
         />
       </Route>
       <Route exact path="/test" element={<ProfCourseApplicationPage />}></Route>

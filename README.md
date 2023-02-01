@@ -17,4 +17,4 @@ Summary: We are designing a better TA application website with functionalities t
 
 
 #### Known Issues
-* Data on frontend pages is currently hard-coded since GT SSO and BuzzPort integration not being implemented yet
+* Data on frontend pages is currently hard-coded since GT SSO and BuzzPort integration have not been implemented yet

@@ -1,11 +1,12 @@
 import React from "react";
-import { Route, Routes, Redirect } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
 import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
+import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
 import {
   createBrowserRouter,
@@ -15,6 +16,7 @@ import {
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      <Route exact path="/login" element={<LoginPage />}></Route>
       <Route exact path="/" element={<Root />}>
         <Route
           exact

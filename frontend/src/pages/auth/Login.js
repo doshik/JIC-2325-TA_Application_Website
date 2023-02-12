@@ -17,6 +17,7 @@ function LoginPage() {
       <Row>  
           <h1>TA Application Hub</h1>
       </Row>
+      
       <Row className = 'w-75'>
         <Col lg={6} md={8} sm={12} xs={12} >
           <img src={GTVertical_RGB} />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
@@ -16,8 +16,12 @@ import {
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
+      <Route
+        exact path="/"
+        element={<Navigate to="/login" replace />}
+      />
       <Route exact path="/login" element={<LoginPage />}></Route>
-      <Route exact path="/" element={<Root />}>
+      <Route exact path="/home" element={<Root />}>
         <Route
           exact
           path="prof/course/:courseId"
@@ -52,7 +56,6 @@ const Router = createBrowserRouter(
           element={<StudentDashboardView />}
         />
       </Route>
-      <Route exact path="/test" element={<ProfCourseApplicationPage />}></Route>
     </>
   )
 );

@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
+import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
@@ -34,6 +35,11 @@ const Router = createBrowserRouter(
           exact
           path="prof/applicationtemplates/defaultform"
           element={<DefaultApplicationFormView />}
+        />
+        <Route
+          exact
+          path="prof/applicationtemplates/customform"
+          element={<CustomApplicationFormView />}
         />
         <Route
           exact

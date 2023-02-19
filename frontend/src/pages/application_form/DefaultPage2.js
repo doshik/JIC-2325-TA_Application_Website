@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, Card, Button } from "react-bootstrap";
 
-const UserDetails = ({ prevStep }) => {
+const DefaultPage2 = ({ prevStep }) => {
   return (
     <>
       <Card style={{ marginTop: 100 }}>
@@ -11,14 +11,18 @@ const UserDetails = ({ prevStep }) => {
               <Form.Label>Why do you want to be a TA?</Form.Label>
               <Form.Control
                 as="textarea"
-                rows="(3)"
+                rows="3"
+                disabled
+                readOnly
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Do you have any additional information you would like to provide? If yes, write below.</Form.Label>
               <Form.Control
                 as="textarea"
-                rows="(3)"
+                rows="3"
+                disabled
+                readOnly
               />
             </Form.Group>
             <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -36,4 +40,4 @@ const UserDetails = ({ prevStep }) => {
   );
 };
 
-export default UserDetails;
+export default DefaultPage2;

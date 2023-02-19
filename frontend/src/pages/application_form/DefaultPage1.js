@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, Card, Button } from "react-bootstrap";
 
-const UserBasics = ({ nextStep }) => {
+const DefaultPage1 = ({ nextStep }) => {
   return (
     <div>
       <Card style={{ marginTop: 100 }}>
@@ -13,6 +13,8 @@ const UserBasics = ({ nextStep }) => {
                 name="firstName"
                 type="text"
                 placeholder="First Name"
+                disabled
+                readOnly
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -21,6 +23,8 @@ const UserBasics = ({ nextStep }) => {
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
+                disabled
+                readOnly
               />
             </Form.Group>
             <Button variant="primary" onClick={nextStep}>
@@ -33,4 +37,4 @@ const UserBasics = ({ nextStep }) => {
   );
 };
 
-export default UserBasics;
+export default DefaultPage1;

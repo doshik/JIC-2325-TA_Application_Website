@@ -8,9 +8,6 @@ const ProfessorDashboardView = () => {
             Professor Dashboard
         </h1>
         <ProfDashboard/>
-        <ProfDashboard/>
-        <ProfDashboard/>
-        <ProfDashboard/>
       </div>
     );
   };
@@ -21,8 +18,9 @@ const styles = {
     container: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "left",
+      alignItems: "center",
       justifyContent: "flex-start",
       height: "100vh",
+      marginTop: "15px"
     },
   };

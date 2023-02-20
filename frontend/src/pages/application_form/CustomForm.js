@@ -55,6 +55,7 @@ function CustomForm() {
             <Row>
                 <Col xs={8} className="mx-auto">
                     {fields.map((field, idx) => {
+                        console.log(pageNumbers[idx])
                         return (
                             <Row className="mb-3" style={{ marginTop: '5px' }}>
                                 <Form.Group key={idx} as={Row}>
@@ -72,24 +73,30 @@ function CustomForm() {
                                                 <Form.Label>Page Number: </Form.Label>
                                                 <Form.Check
                                                     inline
+                                                    name= {`pageNumberRadio${idx}`}
                                                     type="radio"
                                                     label="1"
                                                     value="1"
+                                                    checked={pageNumbers[idx].value === '1'}
                                                     onChange={(e) => handlePageNumberChange(idx, e)}
                                                     style={{ marginLeft: '10px' }}
                                                 />
                                                 <Form.Check
                                                     inline
+                                                    name={`pageNumberRadio${idx}`}
                                                     type="radio"
                                                     label="2"
                                                     value="2"
+                                                    checked={pageNumbers[idx].value === '2'}
                                                     onChange={(e) => handlePageNumberChange(idx, e)}
                                                 />
                                                 <Form.Check
                                                     inline
+                                                    name={`pageNumberRadio${idx}`}
                                                     type="radio"
                                                     label="3"
                                                     value="3"
+                                                    checked={pageNumbers[idx].value === '3'}
                                                     onChange={(e) => handlePageNumberChange(idx, e)}
                                                 />
                                             </Form.Group>

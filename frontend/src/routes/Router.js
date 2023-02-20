@@ -25,7 +25,7 @@ const Router = createBrowserRouter(
       <Route exact path="/user" element={<Root />}>
         <Route
           exact
-          path="prof/dashboardview"
+          path="prof/dashboard"
           element={<ProfessorDashboardView />}
         />
         <Route
@@ -54,7 +54,7 @@ const Router = createBrowserRouter(
       
         <Route
           exact
-          path="student/dashboardview"
+          path="student/dashboard"
           element={<StudentDashboardView />}
         />
         <Route

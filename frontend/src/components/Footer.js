@@ -17,7 +17,7 @@ function Footer() {
             <Nav.Link href="#home">Home</Nav.Link>
           </Nav>
         </Navbar.Collapse> */}
-        <img src={GTLogo} alt="hehe" style={styles.logo} />
+        <img src={GTLogo} alt="Georgia Tech" style={styles.logo} />
       </Container>
     </Navbar>
   );

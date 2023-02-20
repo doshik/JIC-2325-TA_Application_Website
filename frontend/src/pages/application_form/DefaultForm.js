@@ -1,9 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import UserDetails from "./UserDetails";
-import UserBasics from "./UserBasics";
+import DefaultPage1 from "./DefaultPage1";
+import DefaultPage2 from "./DefaultPage2";
 
-function MultiStepForm() {
+function DefaultForm() {
   const [step, setstep] = useState(1);
 
   const nextStep = () => {
@@ -22,7 +22,7 @@ function MultiStepForm() {
           <Container className="align-content-center">
             <Row>
               <Col md={{ span: 6, offset: 3 }}>
-                <UserBasics nextStep={nextStep} />
+                <DefaultPage1 nextStep={nextStep} />
               </Col>
             </Row>
           </Container>
@@ -34,7 +34,7 @@ function MultiStepForm() {
           <Container>
             <Row>
               <Col md={{ span: 8, offset: 2 }}>
-                <UserDetails prevStep={prevStep} />
+                <DefaultPage2 prevStep={prevStep} />
               </Col>
             </Row>
           </Container>
@@ -47,4 +47,4 @@ function MultiStepForm() {
   }
 }
 
-export default MultiStepForm;
+export default DefaultForm;

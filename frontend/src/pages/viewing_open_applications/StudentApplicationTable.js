@@ -35,8 +35,8 @@ const StudentApplicationTable = () => {
                     </tr>
                     <tr>
                         <td>CS 4641</td>
-                        <td>54321</td>
-                        <td>Richard Landry</td>
+                        <td>98765</td>
+                        <td>Mahdi Roozbahani</td>
                         <td>Spring 2023</td>
                         <td>
                         <Button>View</Button>

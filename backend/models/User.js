@@ -23,6 +23,11 @@ const userSchema = Schema({
       type: Date,
   }, 
 
+  gtID: { 
+    type: String,
+    required: true,
+  },
+
   professorInfo: {
       type: Object
   }, 

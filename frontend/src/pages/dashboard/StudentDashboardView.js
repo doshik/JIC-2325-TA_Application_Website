@@ -8,9 +8,6 @@ const StudentDashboardView = () => {
             Student Dashboard
         </h1>
         <StudentDashboard/>
-        <StudentDashboard/>
-        <StudentDashboard/>
-        <StudentDashboard/>
       </div>
     );
   };
@@ -18,11 +15,12 @@ const StudentDashboardView = () => {
 export default StudentDashboardView;
 
 const styles = {
-    container: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "left",
-      justifyContent: "flex-start",
-      height: "100vh",
-    },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    height: "100vh",
+    marginTop: "15px"
+  },
   };

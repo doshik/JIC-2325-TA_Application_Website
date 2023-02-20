@@ -22,7 +22,12 @@ const Router = createBrowserRouter(
         element={<Navigate to="/login" replace />}
       />
       <Route exact path="/login" element={<LoginPage />}></Route>
-      <Route exact path="/home" element={<Root />}>
+      <Route exact path="/user" element={<Root />}>
+        <Route
+          exact
+          path="prof/dashboardview"
+          element={<ProfessorDashboardView />}
+        />
         <Route
           exact
           path="prof/course/:courseId"
@@ -33,33 +38,29 @@ const Router = createBrowserRouter(
         />
         <Route
           exact
-          path="prof/applicationtemplates/defaultform"
-          element={<DefaultApplicationFormView />}
-        />
-        <Route
-          exact
-          path="prof/applicationtemplates/customform"
-          element={<CustomApplicationFormView />}
-        />
-        <Route
-          exact
           path="prof/applicationtemplates"
           element={<ApplicationTemplateView />}
         />
         <Route
           exact
-          path="student/openapplications"
-          element={<StudentApplicationsView />}
+          path="prof/applicationtemplates/default"
+          element={<DefaultApplicationFormView />}
         />
         <Route
           exact
-          path="prof/dashboardview"
-          element={<ProfessorDashboardView />}
+          path="prof/applicationtemplates/custom"
+          element={<CustomApplicationFormView />}
         />
+      
         <Route
           exact
           path="student/dashboardview"
           element={<StudentDashboardView />}
+        />
+        <Route
+          exact
+          path="student/openapplications"
+          element={<StudentApplicationsView />}
         />
       </Route>
     </>

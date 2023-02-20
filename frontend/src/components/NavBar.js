@@ -9,7 +9,7 @@ function NavBar() {
   return (
     <Navbar expand="lg" style={styles.navbar}>
       <Container style={styles.row}>
-         <Navbar.Brand href="#home">
+         <Navbar.Brand href="https://www.gatech.edu/">
            <img src={GTLogo} alt="Georgia Tech" style={styles.logo} />
          </Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />

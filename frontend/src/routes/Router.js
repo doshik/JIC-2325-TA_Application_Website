@@ -4,7 +4,7 @@ import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicatio
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
-import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
+import StudentApplicationsView from "../pages/viewing_open_positions/StudentApplicationsView";
 import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
 import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import LoginPage from "../pages/auth/Login";

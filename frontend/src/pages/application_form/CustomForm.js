@@ -1,11 +1,15 @@
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function CustomForm() {
   const [fields, setFields] = useState([{ value: null }]);
   const [pageNumbers, setPageNumbers] = useState([{ value: null }]);
+  const navigate = useNavigate();
 
-  console.log(pageNumbers)
+  function handleBackClick() {
+    navigate('/user/prof/applicationtemplates');
+  }
 
   function handleAddField() {
     const values = [...fields];
@@ -45,19 +49,22 @@ function CustomForm() {
 
     return (
         <Container>
-            <Row className="mb-3" style={{ marginTop: '10px', marginBottom: '30px' }}>
-                <Col>
-                    <Button variant="success">
-                        Save Custom Application
-                    </Button>
+            <Row style={{ marginTop: '1rem', marginBottom: '1rem'}}>
+                <Col md={3}></Col>
+                <Col xs={12} sm={6} md={3}>
+                    <Button variant="secondary" onClick={handleBackClick}>Back to Application Templates</Button>
                 </Col>
+                <Col xs={12} sm={6} md={3}>
+                    <Button variant="success">Save Custom Application</Button>
+                </Col>
+                <Col md={3}></Col>
             </Row>
             <Row>
                 <Col xs={8} className="mx-auto">
                     {fields.map((field, idx) => {
                         console.log(pageNumbers[idx])
                         return (
-                            <Row className="mb-3" style={{ marginTop: '5px' }}>
+                            <Row className="" style={{ marginTop: '1rem' }}>
                                 <Form.Group key={idx} as={Row}>
                                     <Col xs={2} />
                                     <Col xs={8}>
@@ -68,7 +75,7 @@ function CustomForm() {
                                             onChange={(e) => handleChange(idx, e)}
                                             rows="1"
                                         />
-                                        <div style={{ marginTop: '10px' }}>
+                                        <div style={{ marginTop: '1rem' }}>
                                             <Form.Group controlId="pageNumber">
                                                 <Form.Label>Page Number: </Form.Label>
                                                 <Form.Check
@@ -79,7 +86,7 @@ function CustomForm() {
                                                     value="1"
                                                     checked={pageNumbers[idx].value === '1'}
                                                     onChange={(e) => handlePageNumberChange(idx, e)}
-                                                    style={{ marginLeft: '10px' }}
+                                                    style={{ marginLeft: '1rem' }}
                                                 />
                                                 <Form.Check
                                                     inline
@@ -115,7 +122,7 @@ function CustomForm() {
                     })}
                 </Col>
             </Row>
-            <Row className="mb-3" style={{ marginTop: '5px' }}>
+            <Row className="" style={{ marginTop: '1rem' }}>
                 <Col>
                     <Button variant="primary" onClick={() => { handleAddField(); handleAddPageNumber(); }}>
                         Add Question

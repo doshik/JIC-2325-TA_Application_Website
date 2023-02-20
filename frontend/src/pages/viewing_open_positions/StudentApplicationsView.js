@@ -4,8 +4,8 @@ import { Button } from "react-bootstrap";
 
 const StudentApplicationsView = () => {
   return (
-    <div className="text-center mt-5">
-        <h1>Open Applications</h1>
+    <div className="text-center" style={{ marginTop: '2rem' }}>
+        <h1>Open Positions</h1>
         <StudentApplicationTable />
     </div>
   );

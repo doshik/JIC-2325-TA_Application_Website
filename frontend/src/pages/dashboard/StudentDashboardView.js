@@ -3,7 +3,7 @@ import StudentDashboard from "./StudentDashboard";
 
 const StudentDashboardView = () => {
     return (
-      <div style={styles.container}>
+      <div className="text-center" style={{ marginTop: "2rem"}}>
         <h1>
             Student Dashboard
         </h1>
@@ -13,14 +13,3 @@ const StudentDashboardView = () => {
   };
 
 export default StudentDashboardView;
-
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    height: "100vh",
-    marginTop: "15px"
-  },
-  };

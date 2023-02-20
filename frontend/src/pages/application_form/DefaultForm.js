@@ -14,7 +14,6 @@ function DefaultForm() {
     setstep(step - 1);
   };
 
-
   switch (step) {
     case 1:
       return (

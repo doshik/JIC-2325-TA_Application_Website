@@ -11,8 +11,8 @@ const ProfDashboard = () => {
   ];
 
     return (
-      <Container>
-        <Row xs={1} md={2}>
+      <Container style={{ width: '80vw' }}>
+        <Row xs={1} md={2} lg={4}>
           {Courses.map((Course, idx) => (
             <Col>
               <Card style={{ marginTop: '15px' }}>

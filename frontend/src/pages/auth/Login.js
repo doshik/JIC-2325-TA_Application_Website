@@ -1,11 +1,27 @@
 import React from 'react';
-
+import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import {Container, Col, Row, Button, Form} from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 import GTVertical_RGB from '../../assets/images/gt_vertical/GTVertical_RGB.svg'
 
+import { loginUser } from '../../redux/actions/authActions';
 
-function LoginPage() {
+
+
+const LoginPage = (props) => {
+
+  const login = () => {
+    props.loginUser();
+  }
+
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (props.auth.isAuthenticated) {
+      navigate("/home");
+    }
+  },[props.auth.isAuthenticated, navigate]);
 
   return (
     <Container fluid className="h-100 w-100" style={{
@@ -20,7 +36,7 @@ function LoginPage() {
       
       <Row className = 'w-75'>
         <Col lg={6} md={8} sm={12} xs={12} >
-          <img src={GTVertical_RGB} />
+          <img src={GTVertical_RGB} alt={'GT Logo'}/>
         </Col>
 
         <Col lg={6} md={4} sm={12} xs={12} className='d-flex align-items-center justify-content-center'>
@@ -40,29 +56,23 @@ function LoginPage() {
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Login
+                  <Button variant="primary" type="button" onClick={login} >
+                    Login with GT-SSO
                   </Button>
+                  <br/>
                 </Form>
+
         </Col>
 
       </Row>
-
     </Container>
   );
 }
 
+// subscribe to the redux store
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 
-export default LoginPage;
 
-
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    height: "100vh",
-    width: "100%",
-  },
-};
+export default connect(mapStateToProps, {loginUser})(LoginPage);

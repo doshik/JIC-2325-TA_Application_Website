@@ -14,8 +14,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
+  gtID: { 
+    type: String,
+    required: true,
   },
   userInfo: {
     type: Object,

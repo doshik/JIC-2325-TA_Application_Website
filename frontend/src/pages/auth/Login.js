@@ -58,12 +58,18 @@ const LoginPage = (props) => {
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
                   </Form.Group>
-                  <Button variant="primary" type="button" onClick={() => login(0)} >
-                    Login Student
-                  </Button>
-                  <Button variant="primary" type="button" onClick={() => login(1)} >
-                    Login Professor
-                  </Button>
+                  <Col>
+                    <Row>
+                      <Button variant="primary" type="button" onClick={() => login(0)} >
+                      Login Student
+                      </Button>
+                    </Row>
+                    <Row className='mt-3'> 
+                      <Button variant="primary" type="button" onClick={() => login(1)} >
+                        Login Professor
+                      </Button>
+                    </Row>
+                  </Col>
                   <br/>
                 </Form>
 

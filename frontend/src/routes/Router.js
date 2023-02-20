@@ -33,6 +33,32 @@ const Router = () => {
           }}
           element={<ProfCourseApplicationPage />}
         />
+         <Route
+          exact
+          path="prof/applicationtemplates"
+          element={<ApplicationTemplateView />}
+        />
+        <Route
+          exact
+          path="prof/applicationtemplates/default"
+          element={<DefaultApplicationFormView />}
+        />
+        <Route
+          exact
+          path="prof/applicationtemplates/custom"
+          element={<CustomApplicationFormView />}
+        />
+      
+        <Route
+          exact
+          path="student/dashboard"
+          element={<StudentDashboardView />}
+        />
+        <Route
+          exact
+          path="student/openapplications"
+          element={<StudentApplicationsView />}
+        />
       </Routes>
     </BrowserRouter>
       

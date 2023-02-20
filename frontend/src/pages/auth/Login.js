@@ -11,17 +11,19 @@ import { loginUser } from '../../redux/actions/authActions';
 
 const LoginPage = (props) => {
 
-  const login = () => {
-    props.loginUser();
+  const login = (accountType) => {
+    props.loginUser(accountType);
   }
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (props.auth.isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
-  },[props.auth.isAuthenticated, navigate]);
+  }, [props.auth.isAuthenticated, navigate]);
+  
+
 
   return (
     <Container fluid className="h-100 w-100" style={{
@@ -56,8 +58,11 @@ const LoginPage = (props) => {
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
                   </Form.Group>
-                  <Button variant="primary" type="button" onClick={login} >
-                    Login with GT-SSO
+                  <Button variant="primary" type="button" onClick={() => login(0)} >
+                    Login Student
+                  </Button>
+                  <Button variant="primary" type="button" onClick={() => login(1)} >
+                    Login Professor
                   </Button>
                   <br/>
                 </Form>

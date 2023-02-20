@@ -6,15 +6,16 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 
 // Login - authorize and authenticate user; get a JWT token from the server
-export const loginUser = () => (dispatch) => {
+export const loginUser = (accountType) => (dispatch) => {
   axios
-    .post(`http://localhost:5000/auth/login`, {'test': 'test'})
+    .post(`http://localhost:5000/auth/login`, {'accountType': accountType})
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
       setAuthToken(token);
       const decoded = jwt_decode(token);
+      console.log("loginUser called: " + decoded);
       dispatch(setCurrentUser(decoded));
     })
     .catch((err) => {

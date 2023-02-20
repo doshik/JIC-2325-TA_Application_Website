@@ -20,7 +20,7 @@ router.post("/login", (req, res) => {
 
     */ 
     // also add function to turn casData into userData
-    const userData = {
+    const studentData = {
         name: "Student Name",
         email: "studentName@gatech.edu", 
         accountType: "student",
@@ -33,6 +33,16 @@ router.post("/login", (req, res) => {
             gpa: '3.5',
         }
     }
+
+    const profData = {
+        name: "Professor Name",
+        email: "profName@gatech.edu", 
+        accountType: "professor",
+        gtID: "900000001",
+        professorInfo: {},
+    }
+    let userData;
+    req.body.accountType ? userData = profData : userData = studentData;
 
     // Find a user with a matching gtID
     User.findOne({ gtID: userData.gtID }, (error, user) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
@@ -9,25 +9,22 @@ import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
 import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import Private from "./PrivateRoute";
 
-const Router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route
-        exact path="/"
-        element={<Navigate to="/login" replace />}
-      />
-      <Route exact path="/login" element={<LoginPage />}></Route>
-      <Route exact path="/user" element={<Root />}>
-        <Route
-          exact
-          path="prof/dashboard"
-          element={<ProfessorDashboardView />}
-        />
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Navigate to="/login" />}/>
+        <Route exact path="/login" element={<LoginPage />}/>
+
+        <Route path="/home" element={<Private Component={Root} roles={['student', 'professor']}/>}/>
+        <Route path="/studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />
+        <Route path="/apply" element={<StudentApplicationsView />} />
+          
+        <Route path="/professordashboard" element={<Private Component={ProfessorDashboardView} roles={['professor']}/>} />
+        <Route path="/applications" element={<ApplicationTemplateView />} />
+        <Route path="applications/default" element={<DefaultApplicationFormView />} />
         <Route
           exact
           path="prof/course/:courseId"
@@ -36,7 +33,7 @@ const Router = createBrowserRouter(
           }}
           element={<ProfCourseApplicationPage />}
         />
-        <Route
+         <Route
           exact
           path="prof/applicationtemplates"
           element={<ApplicationTemplateView />}
@@ -62,9 +59,10 @@ const Router = createBrowserRouter(
           path="student/openapplications"
           element={<StudentApplicationsView />}
         />
-      </Route>
-    </>
+      </Routes>
+    </BrowserRouter>
+      
   )
-);
+    }
 
 export default Router;

@@ -19,7 +19,7 @@ const StudentDashboard = () => {
                 <Card.Header as="h5">{Course}</Card.Header>
                 <Card.Body>
                   <div className="text-center">
-                    <Button style={{ width: '90%' }} variant="primary">View Status</Button>
+                    <Button style={{ width: '90%' }} variant="primary">Status: Pending Review</Button>
                   </div>
                 </Card.Body>
               </Card>

@@ -27,11 +27,10 @@ const LoginPage = (props) => {
   useEffect(() => {
     if (isAuthenticated) {
       if (role === "student") {
-        navigate("/studentdashboard");
+        navigate("/user/studentdashboard");
       } else if (role === "professor") {
-        navigate("/professordashboard");
+        navigate("/user/professordashboard");
       }
-      // navigate("/home");
     }
   }, [isAuthenticated, role, navigate]);
 

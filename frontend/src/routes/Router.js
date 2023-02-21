@@ -1,5 +1,12 @@
 import React from "react";
-import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  BrowserRouter,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
@@ -12,39 +19,32 @@ import Root from "./Root";
 import Private from "./PrivateRoute";
 import { useSelector } from "react-redux";
 
-const Router = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  return (
-    <BrowserRouter>
-      <Routes>
-        {isAuthenticated ? (
-          <Route path="/" element={<Root />} />
-        ) : (
-          <Route path="/" element={<Navigate to="/login" />} />
-        )}
-        <Route exact path="/login" element={<LoginPage />} />
+const Router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route exact path="/" element={<Navigate to="/login" />} />
+      <Route exact path="/login" element={<LoginPage />} />
 
+      <Route
+        exact
+        path="/user"
+        element={<Private Component={Root} roles={["student", "professor"]} />}
+      >
         <Route
-          path="/home"
-          element={
-            <Private Component={Root} roles={["student", "professor"]} />
-          }
-        />
-        <Route
-          path="/studentdashboard"
+          path="studentdashboard"
           element={
             <Private Component={StudentDashboardView} roles={["student"]} />
           }
         />
-        <Route path="/apply" element={<StudentApplicationsView />} />
+        <Route path="apply" element={<StudentApplicationsView />} />
 
         <Route
-          path="/professordashboard"
+          path="professordashboard"
           element={
             <Private Component={ProfessorDashboardView} roles={["professor"]} />
           }
         />
-        <Route path="/applications" element={<ApplicationTemplateView />} />
+        <Route path="applications" element={<ApplicationTemplateView />} />
         <Route
           path="applications/default"
           element={<DefaultApplicationFormView />}
@@ -83,9 +83,9 @@ const Router = () => {
           path="student/openapplications"
           element={<StudentApplicationsView />}
         />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+      </Route>
+    </>
+  )
+);
 
 export default Router;

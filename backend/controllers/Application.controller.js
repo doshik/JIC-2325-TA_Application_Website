@@ -1,29 +1,58 @@
 const User = require("../models/User.js");
+const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
+const { userAuth } = require("../middleware/auth");
 
-// Save a student's new application
-applicationRoutes.route("/student/submit").post(function (req, res) {
-  //   let application = new Application(req.body);
-  const newApplication = new Application({
-    student: mongoose.Types.ObjectId(req.body.student),
-    professor: mongoose.Types.ObjectId(req.body.professorId),
-    course: mongoose.Types.ObjectId(req.body.courseId),
-    data: req.body.data,
+// @route POST api/application/student/submit
+// @desc Submit a student's TA application
+// @access Public
+
+applicationRoutes
+  .route("/student/submit")
+  .post(userAuth, async function (req, res) {
+    const course = await Course.findOne({ courseId: req.body.courseId });
+    if (!course) {
+      res.status(400).send("Course not found");
+    }
+
+    const newApplication = new Application({
+      student: req.user.id,
+      professor: null,
+      course: course._id,
+      data: req.body.data,
+    });
+
+    newApplication
+      .save()
+      .then(() => {
+        res.status(200).json({ submissionStatus: "SUCCESS" });
+      })
+      .catch((err) => {
+        res.status(400).send("adding new application failed");
+      });
   });
 
-  newApplication
-    .save()
-    .then(() => {
-      res.status(200).json({ submissionStatus: "SUCCESS" });
-    })
-    .catch((err) => {
-      res.status(400).send("adding new application failed");
-    });
-});
+// @route POST api/application/professor/submit
+// @desc Professor creates a TA application for a course
+// @access Public
+applicationRoutes
+  .route("/professor/submit")
+  .post(userAuth, async function (req, res) {
+    const course = await Course.findOne({ courseId: req.body.courseId });
+    if (!course) {
+      res.status(400).send("Course not found");
+    }
 
+    const newApplication = new Application({
+      student: null,
+      professor: req.user.id,
+      course: course._id,
+      data: req.body.data,
+    });
+  });
 module.exports = applicationRoutes;
 
 // old endpoints

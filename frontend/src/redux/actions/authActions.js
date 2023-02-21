@@ -1,30 +1,22 @@
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
-
-
+import { SET_CURRENT_USER, USER_LOADING, SET_FAILED_LOGIN } from "./types";
+import { login } from "../../api/users";
 
 // Login - authorize and authenticate user; get a JWT token from the server
-export const loginUser = (accountType) => (dispatch) => {
-  axios
-    .post(`http://localhost:5000/auth/login`, {'accountType': accountType})
-    .then((res) => {
-      const { token } = res.data;
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      setAuthToken(token);
-      const decoded = jwt_decode(token);
-      console.log("loginUser called: " + decoded);
-      dispatch(setCurrentUser(decoded));
-    })
-    .catch((err) => {
-        console.log("loginUser failed: " + err);
-        dispatch({
-        type: GET_ERRORS,
-        payload: err,
-        });
-    });
+export const loginUser = (role) => {
+  return async (dispatch) => {
+    try {
+      const response = await login(role);
+      if (response.loggedIn) {
+        dispatch({ type: SET_CURRENT_USER, payload: response.user });
+      }
+    } catch (err) {
+      console.log("loginUser failed: " + err);
+      dispatch({ type: SET_FAILED_LOGIN, payload: err });
+    }
+  };
 };
 
 // Set logged in user
@@ -41,6 +33,7 @@ export const setUserLoading = () => {
     type: USER_LOADING,
   };
 };
+
 // Log user out
 export const logoutUser = () => (dispatch) => {
   // Remove token from local storage

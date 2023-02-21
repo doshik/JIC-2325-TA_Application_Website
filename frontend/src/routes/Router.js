@@ -10,21 +10,45 @@ import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
 import Private from "./PrivateRoute";
+import { useSelector } from "react-redux";
 
 const Router = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Navigate to="/login" />}/>
-        <Route exact path="/login" element={<LoginPage />}/>
+        {isAuthenticated ? (
+          <Route path="/" element={<Root />} />
+        ) : (
+          <Route path="/" element={<Navigate to="/login" />} />
+        )}
+        <Route exact path="/login" element={<LoginPage />} />
 
-        <Route path="/home" element={<Private Component={Root} roles={['student', 'professor']}/>}/>
-        <Route path="/studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />
+        <Route
+          path="/home"
+          element={
+            <Private Component={Root} roles={["student", "professor"]} />
+          }
+        />
+        <Route
+          path="/studentdashboard"
+          element={
+            <Private Component={StudentDashboardView} roles={["student"]} />
+          }
+        />
         <Route path="/apply" element={<StudentApplicationsView />} />
-          
-        <Route path="/professordashboard" element={<Private Component={ProfessorDashboardView} roles={['professor']}/>} />
+
+        <Route
+          path="/professordashboard"
+          element={
+            <Private Component={ProfessorDashboardView} roles={["professor"]} />
+          }
+        />
         <Route path="/applications" element={<ApplicationTemplateView />} />
-        <Route path="applications/default" element={<DefaultApplicationFormView />} />
+        <Route
+          path="applications/default"
+          element={<DefaultApplicationFormView />}
+        />
         <Route
           exact
           path="prof/course/:courseId"
@@ -33,7 +57,7 @@ const Router = () => {
           }}
           element={<ProfCourseApplicationPage />}
         />
-         <Route
+        <Route
           exact
           path="prof/applicationtemplates"
           element={<ApplicationTemplateView />}
@@ -48,7 +72,7 @@ const Router = () => {
           path="prof/applicationtemplates/custom"
           element={<CustomApplicationFormView />}
         />
-      
+
         <Route
           exact
           path="student/dashboard"
@@ -61,8 +85,7 @@ const Router = () => {
         />
       </Routes>
     </BrowserRouter>
-      
-  )
-    }
+  );
+};
 
 export default Router;

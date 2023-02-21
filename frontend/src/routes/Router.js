@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
@@ -11,14 +11,15 @@ import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
 import Private from "./PrivateRoute";
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
+const Router = createBrowserRouter(
+  createRoutesFromElements(
+      <>
         <Route exact path="/" element={<Navigate to="/login" />}/>
         <Route exact path="/login" element={<LoginPage />}/>
 
         <Route path="/home" element={<Private Component={Root} roles={['student', 'professor']}/>}/>
+
+        
         <Route path="/studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />
         <Route path="/apply" element={<StudentApplicationsView />} />
           
@@ -59,10 +60,9 @@ const Router = () => {
           path="student/openapplications"
           element={<StudentApplicationsView />}
         />
-      </Routes>
-    </BrowserRouter>
+      </>
       
   )
-    }
+);
 
 export default Router;

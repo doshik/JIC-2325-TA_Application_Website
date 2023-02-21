@@ -40,7 +40,7 @@ if (localStorage.jwtToken) {
 const App = () => {
   return (
     <Provider store={store}>
-      <Router />
+      <RouterProvider router={Router} />
     </Provider>
   );
 };

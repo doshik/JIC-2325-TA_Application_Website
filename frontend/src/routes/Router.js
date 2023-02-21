@@ -17,8 +17,6 @@ const Router = createBrowserRouter(
         <Route exact path="/" element={<Navigate to="/login" />}/>
         <Route exact path="/login" element={<LoginPage />}/>
 
-        <Route path="/home" element={<Private Component={Root} roles={['student', 'professor']}/>}/>
-
         <Route exact path="/user" element={<Private Component={Root} roles={['student', 'professor']}/>}>
         
           <Route path="studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />

@@ -19,7 +19,11 @@ const LoginPage = (props) => {
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
-      navigate('/home');
+      if (props.auth.user.accountType === 'student') {
+        navigate('/user/studentdashboard');
+      } else if (props.auth.user.accountType === 'professor') {
+        navigate('/user/professordashboard');
+      }
     }
   }, [props.auth.isAuthenticated, navigate]);
   

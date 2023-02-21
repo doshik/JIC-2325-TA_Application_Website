@@ -204,7 +204,7 @@ userRoutes.route("/isLoggedIn").get(userAuth, (req, res) => {
 // @access Public
 userRoutes.route("/logout").get((req, res) => {
   res.clearCookie("jwt");
-  res.status(200).json("Logged out");
+  res.status(200).json({ loggedIn: false });
 });
 
 module.exports = userRoutes;

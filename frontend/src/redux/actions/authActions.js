@@ -1,8 +1,13 @@
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { SET_CURRENT_USER, USER_LOADING, SET_FAILED_LOGIN } from "./types";
-import { login } from "../../api/users";
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  SET_FAILED_LOGIN,
+  SET_LOGOUT,
+} from "./types";
+import { login, logout } from "../../api/users";
 
 // Login - authorize and authenticate user; get a JWT token from the server
 export const loginUser = (role) => {
@@ -14,6 +19,21 @@ export const loginUser = (role) => {
       }
     } catch (err) {
       console.log("loginUser failed: " + err);
+      dispatch({ type: SET_FAILED_LOGIN, payload: err });
+    }
+  };
+};
+
+// logout user
+export const logoutUser = () => {
+  return async (dispatch) => {
+    try {
+      const response = await logout();
+      if (response.loggedIn === false) {
+        dispatch({ type: SET_LOGOUT });
+      }
+    } catch (err) {
+      console.log("logoutUser failed: " + err);
       dispatch({ type: SET_FAILED_LOGIN, payload: err });
     }
   };
@@ -34,12 +54,12 @@ export const setUserLoading = () => {
   };
 };
 
-// Log user out
-export const logoutUser = () => (dispatch) => {
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
-};
+// // Log user out
+// export const logoutUser = () => (dispatch) => {
+//   // Remove token from local storage
+//   localStorage.removeItem("jwtToken");
+//   // Remove auth header for future requests
+//   setAuthToken(false);
+//   // Set current user to empty object {} which will set isAuthenticated to false
+//   dispatch(setCurrentUser({}));
+// };

@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route, useLocation } from "react-router-dom";
+import { isLoggedIn } from "../api/users";
 
 const Private = ({ Component, roles }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  // var isAuthenticated = false;
+  // useEffect(() => {
+  //   isLoggedIn().then((res) => {
+  //     isAuthenticated = res.isLoggedIn;
+  //   });
+  // }, []);
+  console.log("isAuthenticated", isAuthenticated);
   // TODO: replace isAuthenticated with checking logged in endpoint, or helper function
   const userHasRequiredRole =
     user && roles && roles.includes(user.accountType) ? true : false;

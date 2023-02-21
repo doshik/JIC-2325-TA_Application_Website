@@ -21,8 +21,15 @@ const LoginPage = (props) => {
       dispatch(loginUser("professor"));
     }
   };
-
   const navigate = useNavigate();
+  console.log("isAuthenticated", isAuthenticated);
+  if (isAuthenticated) {
+    if (role === "student") {
+      navigate("/user/studentdashboard");
+    } else if (role === "professor") {
+      navigate("/user/professordashboard");
+    }
+  }
 
   useEffect(() => {
     if (isAuthenticated) {

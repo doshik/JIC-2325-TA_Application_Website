@@ -19,47 +19,49 @@ const Router = createBrowserRouter(
 
         <Route path="/home" element={<Private Component={Root} roles={['student', 'professor']}/>}/>
 
+        <Route exact path="/user" element={<Private Component={Root} roles={['student', 'professor']}/>}>
         
-        <Route path="/studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />
-        <Route path="/apply" element={<StudentApplicationsView />} />
-          
-        <Route path="/professordashboard" element={<Private Component={ProfessorDashboardView} roles={['professor']}/>} />
-        <Route path="/applications" element={<ApplicationTemplateView />} />
-        <Route path="applications/default" element={<DefaultApplicationFormView />} />
-        <Route
-          exact
-          path="prof/course/:courseId"
-          loader={({ params }) => {
-            return params.courseId;
-          }}
-          element={<ProfCourseApplicationPage />}
-        />
-         <Route
-          exact
-          path="prof/applicationtemplates"
-          element={<ApplicationTemplateView />}
-        />
-        <Route
-          exact
-          path="prof/applicationtemplates/default"
-          element={<DefaultApplicationFormView />}
-        />
-        <Route
-          exact
-          path="prof/applicationtemplates/custom"
-          element={<CustomApplicationFormView />}
-        />
-      
-        <Route
-          exact
-          path="student/dashboard"
-          element={<StudentDashboardView />}
-        />
-        <Route
-          exact
-          path="student/openapplications"
-          element={<StudentApplicationsView />}
-        />
+          <Route path="studentdashboard" element={<Private Component={StudentDashboardView} roles={['student']}/>} />
+          <Route path="apply" element={<StudentApplicationsView />} />
+            
+          <Route path="professordashboard" element={<Private Component={ProfessorDashboardView} roles={['professor']}/>} />
+          <Route path="applications" element={<ApplicationTemplateView />} />
+          <Route path="applications/default" element={<DefaultApplicationFormView />} />
+          <Route
+            exact
+            path="prof/course/:courseId"
+            loader={({ params }) => {
+              return params.courseId;
+            }}
+            element={<ProfCourseApplicationPage />}
+          />
+          <Route
+            exact
+            path="prof/applicationtemplates"
+            element={<ApplicationTemplateView />}
+          />
+          <Route
+            exact
+            path="prof/applicationtemplates/default"
+            element={<DefaultApplicationFormView />}
+          />
+          <Route
+            exact
+            path="prof/applicationtemplates/custom"
+            element={<CustomApplicationFormView />}
+          />
+        
+          <Route
+            exact
+            path="student/dashboard"
+            element={<StudentDashboardView />}
+          />
+          <Route
+            exact
+            path="student/openapplications"
+            element={<StudentApplicationsView />}
+          />
+        </Route>
       </>
       
   )

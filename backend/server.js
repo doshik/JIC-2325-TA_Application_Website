@@ -35,6 +35,10 @@ app.use(
 
 app.use("/auth", auth);
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 const PORT = process.env.PORT || 5000;
 //Connect to the database before listening
 connectDB().then(() => {

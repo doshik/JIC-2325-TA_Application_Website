@@ -4,11 +4,10 @@ import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 
-
 // Login - authorize and authenticate user; get a JWT token from the server
 export const loginUser = (accountType) => (dispatch) => {
   axios
-    .post(`http://localhost:5000/auth/login`, {'accountType': accountType})
+    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {'accountType': accountType})
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);

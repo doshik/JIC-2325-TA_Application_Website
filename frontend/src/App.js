@@ -8,14 +8,12 @@ import jwt_decode from "jwt-decode";
 import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
 
 
-
 window.addEventListener('storage', function(event){
   if (event.key === 'logout-event') { 
     window.location.href = "./home";
     localStorage.clear();
   }
 });
-
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {

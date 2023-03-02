@@ -6,7 +6,19 @@ require("dotenv").config();
 const db = process.env.mongoURI;
 const auth = require('./routes/auth');
 
+
 var app = express();
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(db);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);  
+  }
+}
+
 app.use(cors());
 app.options("*", cors());
 
@@ -21,12 +33,12 @@ app.use(
   app.use(bodyParser.json({ limit: "500mb" }));
 // 
 
-mongoose
-  .connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log("MongoDB successfully connected"))
-  .catch((err) => console.log(err));
+app.use("/auth", auth);
 
-  app.use("/auth", auth);
-
-  const port = process.env.PORT || 5000;
-  app.listen(port, () => console.log(`Listening on ${port}!`));
+const PORT = process.env.PORT || 5000;
+//Connect to the database before listening
+connectDB().then(() => {
+  app.listen(PORT, () => {
+      console.log("Server is running on port: " + PORT);
+  })
+});

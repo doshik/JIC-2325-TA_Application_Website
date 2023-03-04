@@ -4,27 +4,8 @@ const cookies = require("cookie-parser");
 const cors = require("cors");
 require("dotenv").config();
 
-const db = process.env.mongoURI;
-const auth = require("./routes/auth");
-
 var app = express();
 app.use(cookies());
-
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(db, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-};
-
-// app.use(cors());
-// app.options("*", cors());
 
 var allowedOrigins = [
   "http://localhost:3000",
@@ -52,6 +33,7 @@ var options = {
 };
 app.use(cors(options));
 
+// app.use(cors());
 // app.options("*", cors());
 
 // Bodyparser middlewar
@@ -70,11 +52,26 @@ app.use("/application", applicationRoutes);
 userRoutes = require("./controllers/User.controller");
 app.use("/user", userRoutes);
 
-app.use("/auth", auth);
+// const auth = require("./routes/auth");
+// app.use("/auth", auth);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+const db = process.env.mongoURI;
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(db, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
 const PORT = process.env.PORT || 5000;
 //Connect to the database before listening

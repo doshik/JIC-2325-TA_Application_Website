@@ -3,6 +3,25 @@ Summary: We are designing a better TA application website with functionalities t
 
 ## Release Notes
 
+### Version 0.2.0:
+#### New Features
+* Frontend - created customized TA application form for professors
+* Frontend - created page to view application templates
+* Frontend - created protected routes that require authentication for access
+* Frontend - updated student and professor dashboards to be populated based on backend data
+* Frontend - created login page and authentication tokens
+* Frontend - added functionality for buttons
+* Backend - created test data for both professor and student accoutns
+* Backend - added JWT token generation functionality
+* Backend - added a route for logging in and signing up 
+
+#### Bug Fixes
+* Nothing major to report
+
+
+#### Known Issues
+* Data on frontend pages is still partially hard-coded since GT CAS have not fully been implemented yet
+
 ### Version 0.1.0:
 #### New Features
 * Frontend - added navigation bar and footer

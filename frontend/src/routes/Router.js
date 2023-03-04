@@ -17,6 +17,7 @@ import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
 import Private from "./PrivateRoute";
+import ProtectedRoute from "./ProtectedRoute";
 import { useSelector } from "react-redux";
 import { isLoggedIn } from "../api/users";
 
@@ -45,7 +46,16 @@ const Router = createBrowserRouter(
             <Private Component={ProfessorDashboardView} roles={["professor"]} />
           }
         /> */}
-      <Route exact path="/user" element={<Root />}>
+      <Route
+        exact
+        path="/user"
+        element={
+          <ProtectedRoute roles={["student", "professor"]}>
+            <Root />
+          </ProtectedRoute>
+        }
+      >
+        {/* <ProtectedRoute path="/user" component={<Root />}> */}
         <Route path="studentdashboard" element={<StudentDashboardView />} />
         <Route path="apply" element={<StudentApplicationsView />} />
 
@@ -89,6 +99,7 @@ const Router = createBrowserRouter(
           path="student/openapplications"
           element={<StudentApplicationsView />}
         />
+        {/* </ProtectedRoute> */}
       </Route>
     </>
   )

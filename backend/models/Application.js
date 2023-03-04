@@ -1,44 +1,28 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var ApplicationSchema = new mongoose.Schema({
-
-  name: {
-      type: String,
-      defualt: "default"
-    },
-
-  professorId: {
+var applicationSchema = new Schema(
+  {
+    student: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
+    },
+    professor: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    course: {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+    },
+    data: {
+      type: Object,
+      default: {},
+    },
   },
 
-  default: {
-      type: Boolean, 
-      default: true
-  },
+  { timestamps: true }
+);
 
-  description: {
-      type: String,
-      default: ""
-  },
-
-  assignedCourse: { 
-      type: Schema.Types.ObjectId, ref: "Course" 
-  },
-
-  questions : [{
-    _id: 0,
-    written: {type: Boolean, default: false},
-    questionPrompt: String,
-    options: [{
-      optionText : String,
-      _id: 0
-    }],
-    response: {type: String, default: ""},
-    }],
-
- }, {timestamps: true});
-
-Application = mongoose.model('Application', ApplicationSchema);
-module.exports = Application; 
+Application = mongoose.model("Application", applicationSchema);
+module.exports = Application;

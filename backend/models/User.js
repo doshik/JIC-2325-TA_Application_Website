@@ -1,41 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = Schema({
-  _id: Schema.Types.ObjectId,
-
+const userSchema = new Schema({
   accountType: {
-      type: String, 
-      required: true
+    type: String,
+    required: true,
   },
-
-  name: {
-      type: String,
-      required: true,
+  username: {
+    type: String,
+    required: true,
   },
-
   email: {
-      type: String,
-      required: true,
+    type: String,
+    required: true,
   },
-
-  createdAt: {
-      type: Date,
-  }, 
-
   gtID: { 
     type: String,
     required: true,
   },
-
-  professorInfo: {
-      type: Object
-  }, 
-
-  studentInfo: {}, 
-
-  adminInfo: {},
-
+  userInfo: {
+    type: Object,
+    default: {},
+  },
 });
 
 const User = mongoose.model("User", userSchema);

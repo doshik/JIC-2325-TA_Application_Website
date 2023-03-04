@@ -1,37 +1,74 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
+const cookies = require("cookie-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 const db = process.env.mongoURI;
-const auth = require('./routes/auth');
-
+const auth = require("./routes/auth");
 
 var app = express();
+app.use(cookies());
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(db);
+    const conn = await mongoose.connect(db, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
-    process.exit(1);  
+    process.exit(1);
   }
-}
+};
 
 app.use(cors());
 app.options("*", cors());
 
-// Bodyparser middleware
-var bodyParser = require('body-parser')
+var allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3006",
+  "http://yourapp.com",
+];
+const temp = function (origin, callback) {
+  if (!origin) return callback(null, true);
+  console.log(origin);
+  if (allowedOrigins.indexOf(origin) === -1) {
+    var msg =
+      "The CORS policy for this site does not " +
+      "allow access from the specified Origin.";
+    return callback(new Error(msg), false);
+  }
+  return callback(null, true);
+};
+
+var options = {
+  origin: temp,
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(options));
+
+// app.options("*", cors());
+
+// Bodyparser middlewar
+var bodyParser = require("body-parser");
 app.use(
-    bodyParser.urlencoded({
-      limit: "500mb",
-      extended: false,
-    })
-  );
-  app.use(bodyParser.json({ limit: "500mb" }));
-// 
+  bodyParser.urlencoded({
+    limit: "500mb",
+    extended: false,
+  })
+);
+app.use(bodyParser.json({ limit: "500mb" }));
+
+applicationRoutes = require("./controllers/Application.controller");
+app.use("/application", applicationRoutes);
+
+userRoutes = require("./controllers/User.controller");
+app.use("/user", userRoutes);
 
 app.use("/auth", auth);
 
@@ -43,6 +80,6 @@ const PORT = process.env.PORT || 5000;
 //Connect to the database before listening
 connectDB().then(() => {
   app.listen(PORT, () => {
-      console.log("Server is running on port: " + PORT);
-  })
+    console.log("Server is running on port: " + PORT);
+  });
 });

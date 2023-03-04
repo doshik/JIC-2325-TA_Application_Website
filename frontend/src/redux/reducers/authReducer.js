@@ -1,4 +1,9 @@
-import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  SET_FAILED_LOGIN,
+  SET_LOGOUT,
+} from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -19,6 +24,17 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case SET_FAILED_LOGIN:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
+    case SET_LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: {},
       };
     default:
       return state;

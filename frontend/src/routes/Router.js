@@ -18,6 +18,8 @@ import LoginPage from "../pages/auth/Login";
 import Root from "./Root";
 import Private from "./PrivateRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import { useSelector } from "react-redux";
+import { isLoggedIn } from "../api/users";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(

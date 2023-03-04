@@ -29,7 +29,7 @@ function NavBar() {
             <Nav.Link
               className="navLink"
               style={styles.link}
-              onClick={navigate(dashboard)}
+              onClick={() => navigate(dashboard)}
             >
               Dashboard
             </Nav.Link>
@@ -55,10 +55,10 @@ function NavBar() {
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item
-                href="#action/3.4"
+                href=""
                 onClick={() => {
                   dispatch(logoutUser());
-                  navigate("login");
+                  navigate("/login");
                 }}
               >
                 Logout

@@ -1,6 +1,3 @@
-import axios from "axios";
-import setAuthToken from "../../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
 import {
   SET_CURRENT_USER,
   USER_LOADING,
@@ -16,6 +13,8 @@ export const loginUser = (role) => {
       const response = await login(role);
       if (response.loggedIn) {
         dispatch({ type: SET_CURRENT_USER, payload: response.user });
+      } else {
+        throw new Error("loginUser failed");
       }
     } catch (err) {
       console.log("loginUser failed: " + err);
@@ -31,6 +30,8 @@ export const logoutUser = () => {
       const response = await logout();
       if (response.loggedIn === false) {
         dispatch({ type: SET_LOGOUT });
+      } else {
+        throw new Error("logoutUser failed");
       }
     } catch (err) {
       console.log("logoutUser failed: " + err);

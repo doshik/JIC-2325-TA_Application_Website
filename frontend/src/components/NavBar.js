@@ -16,6 +16,7 @@ function NavBar() {
   const dashboard =
     role === "student" ? "/user/studentdashboard" : "/user/professordashboard";
   const secondAction = role === "student" ? "Apply" : "Create Applications";
+  const secondLink = role === "student" ? "/user/apply" : "/user/applications";
 
   return (
     <Navbar expand="lg" style={styles.navbar}>
@@ -36,7 +37,7 @@ function NavBar() {
             <Nav.Link
               className="navLink"
               style={styles.link}
-              onClick={() => navigate("/user/professordashboard")}
+              onClick={() => navigate(secondLink)}
             >
               {secondAction}
             </Nav.Link>

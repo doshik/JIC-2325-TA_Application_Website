@@ -27,25 +27,6 @@ const Router = createBrowserRouter(
       <Route exact path="/" element={<Navigate to="/login" />} />
       <Route exact path="/login" element={<LoginPage />} />
 
-      {/* <Route
-        exact
-        path="/user"
-        element={<Private Component={Root} roles={["student", "professor"]} />}
-      >
-        <Route
-          path="studentdashboard"
-          element={
-            <Private Component={StudentDashboardView} roles={["student"]} />
-          }
-        />
-        <Route path="apply" element={<StudentApplicationsView />} />
-
-        <Route
-          path="professordashboard"
-          element={
-            <Private Component={ProfessorDashboardView} roles={["professor"]} />
-          }
-        /> */}
       <Route
         exact
         path="/user"
@@ -55,9 +36,8 @@ const Router = createBrowserRouter(
           </ProtectedRoute>
         }
       >
-        {/* <ProtectedRoute path="/user" component={<Root />}> */}
         <Route path="studentdashboard" element={<StudentDashboardView />} />
-        <Route path="apply" element={<StudentApplicationsView />} />
+        <Route path="apply" element={<DefaultApplicationFormView />} />
 
         <Route path="professordashboard" element={<ProfessorDashboardView />} />
         <Route path="applications" element={<ApplicationTemplateView />} />
@@ -80,12 +60,16 @@ const Router = createBrowserRouter(
         />
         <Route
           exact
-          path="prof/applicationtemplates/default"
-          element={<DefaultApplicationFormView />}
+          path="applicationtemplates/default"
+          element={
+            <ProtectedRoute roles={["professor"]}>
+              <DefaultApplicationFormView />
+            </ProtectedRoute>
+          }
         />
         <Route
           exact
-          path="prof/applicationtemplates/custom"
+          path="applicationtemplates/custom"
           element={<CustomApplicationFormView />}
         />
 
@@ -96,85 +80,12 @@ const Router = createBrowserRouter(
         />
         <Route
           exact
-          path="student/openapplications"
-          element={<StudentApplicationsView />}
+          path="studentchangeapply"
+          element={<DefaultApplicationFormView />}
         />
-        {/* </ProtectedRoute> */}
       </Route>
     </>
   )
 );
 
 export default Router;
-
-// const generalRoutes = (
-//   <>
-//     <Route path="applications" element={<ApplicationTemplateView />} />
-//     <Route
-//       path="applications/default"
-//       element={<DefaultApplicationFormView />}
-//     />
-//     <Route
-//       exact
-//       path="prof/course/:courseId"
-//       loader={({ params }) => {
-//         return params.courseId;
-//       }}
-//       element={<ProfCourseApplicationPage />}
-//     />
-//     <Route
-//       exact
-//       path="prof/applicationtemplates"
-//       element={<ApplicationTemplateView />}
-//     />
-//     <Route
-//       exact
-//       path="prof/applicationtemplates/default"
-//       element={<DefaultApplicationFormView />}
-//     />
-//     <Route
-//       exact
-//       path="prof/applicationtemplates/custom"
-//       element={<CustomApplicationFormView />}
-//     />
-
-//     <Route exact path="student/dashboard" element={<StudentDashboardView />} />
-//     <Route
-//       exact
-//       path="student/openapplications"
-//       element={<StudentApplicationsView />}
-//     />
-//   </>
-// );
-// const ProtectedRoutes = () => {
-//   const { isAuthenticated, user } = useSelector((state) => state.auth);
-//   if (isAuthenticated) {
-//     if (user.accountType === "student") {
-//       return (
-//         <Route exact path="/user" element={<Root />}>
-//           <Route path="studentdashboard" element={<StudentDashboardView />} />
-//           {generalRoutes}
-//         </Route>
-//       );
-//     } else if (user.accountType === "professor") {
-//       return (
-//         <Route exact path="/user" element={<Root />}>
-//           <Route
-//             path="professordashboard"
-//             element={<ProfessorDashboardView />}
-//           />
-//           {generalRoutes}
-//         </Route>
-//       );
-//     }
-//   } else {
-//     <>
-//       <Route exact path="/" element={<Navigate to="/login" />} />
-//       <Route exact path="/login" element={<LoginPage />} />
-//     </>;
-//   }
-// };
-
-// const Router = createBrowserRouter(
-//   createRoutesFromElements(<>{ProtectedRoutes()}</>)
-// );

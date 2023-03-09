@@ -1,6 +1,7 @@
 const User = require("../models/User.js");
 const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
+const ApplicationTemplate = require("../models/Application.js");
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
@@ -53,6 +54,50 @@ applicationRoutes
       data: req.body.data,
     });
   });
+
+// @route POST api/application/prof/save-template
+// @desc Professor saves a TA application template
+// @access Public
+applicationRoutes
+  .route("/prof/save-template")
+  .post(userAuth, async function (req, res) {
+    try {
+      console.log(req.body);
+      const newTemplate = new ApplicationTemplate({
+        name: req.body.name,
+        professor: req.user.id,
+        questions: req.body.questions,
+      });
+
+      const savedTemplate = await newTemplate.save();
+
+      const templates = await ApplicationTemplate.find({
+        professor: req.user.id,
+      });
+      res.status(200).send({ templates: templates });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send("adding new application failed");
+    }
+  });
+
+// @route GET api/application/prof/get-templates
+// @desc Professor gets all own TA application templates
+// @access Public
+applicationRoutes
+  .route("/prof/get-templates")
+  .get(userAuth, async function (req, res) {
+    try {
+      const templates = await ApplicationTemplate.find({
+        professor: req.user.id,
+      });
+
+      res.status(200).send({ templates: templates });
+    } catch (err) {
+      res.status(400).send("getting application templates failed");
+    }
+  });
+
 module.exports = applicationRoutes;
 
 // old endpoints

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Container, Nav, Navbar, NavDropdown, Image } from "react-bootstrap";
 import { FiSettings } from "react-icons/fi";
-import "./NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 

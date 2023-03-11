@@ -1,5 +1,5 @@
 import * as React from "react";
-import NavBar from "../components/NavBar";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 import LeftNavBar from "../components/LeftNavBar";
 import TopNavBar from "../components/TopNavBar";
@@ -9,7 +9,7 @@ import { Container, Row, Col } from "react-bootstrap"
 export default function Root() {
   return (
     <>
-      <NavBar />
+      <Header />
       <Container fluid style={styles.container}>
         <Row>
           <Col md={3} lg={2} style={styles.leftNavBar}>

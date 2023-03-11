@@ -7,7 +7,7 @@ function TopNavBar() {
     const location = useLocation();
 
     return (
-        <Nav id="TopNavBar" className="topNavBar">
+        <Nav className="topNavBar col-md-9 col-lg-10">
             <Nav.Item>
                 <Nav.Link className="topNavLink" href="/login" active={location.pathname === '/login'}>
                     Welcome

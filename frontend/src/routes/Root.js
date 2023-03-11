@@ -10,8 +10,8 @@ export default function Root() {
   return (
     <>
       <Header />
-      <Container style={styles.container}>
-        <Row style={{ maxWidth: "100%" }}>
+      <Container fluid style={styles.container}>
+        <Row>
           <Col md={3} lg={2} style={styles.leftNavBar}>
             <LeftNavBar />
           </Col>
@@ -22,24 +22,28 @@ export default function Root() {
             <Row>
               <Outlet />
             </Row>
+            <Row>
+              <Footer />
+            </Row>
           </Col>
         </Row>
       </Container>
-      <Footer />
     </>
   );
 }
 
 const styles = {
+  primaryArea: {
+    marginBottom: "2rem"
+  },
   container: {
     overflowX: "hidden",
     maxWidth: "100%",
-    paddingRight: "15px",
-    paddingLeft: "15px",
-    marginRight: "auto",
-    marginLeft: "auto"
   },
   leftNavBar: {
     padding: "0px"
+  },
+  content: {
+
   }
 };

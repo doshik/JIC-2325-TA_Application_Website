@@ -1,11 +1,15 @@
 .leftNavBar {
-    height: 100vh;
-    background-color: #efefef;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    padding-top: 2rem;
-    color: #857437;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #efefef;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: 96px 15px 0;  
+  color: #857437;
+  flex-direction: column;
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
 }
 
 .leftNavLink {

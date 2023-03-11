@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   Route,
   Navigate,
@@ -12,7 +12,7 @@ import ApplicationTemplateView from "../pages/application_templates/ApplicationT
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
 import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
-import LoginPage from "../pages/login/Login";
+import LoginPage from "../pages/login/NewLogin";
 import Root from "./Root";
 
 const Router = createBrowserRouter(

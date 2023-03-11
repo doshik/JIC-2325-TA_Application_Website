@@ -1,24 +1,26 @@
 import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import "./TopNavBar.css"
+import "./LeftNavBar.css"
 
-function TopNavBar() {
+
+function LeftNavBar() {
     const location = useLocation();
 
     return (
-        <Nav id="TopNavBar" className="topNavBar">
+        <Nav id="LeftNavBar" className="leftNavBar">
             <Nav.Item>
-                <Nav.Link className="topNavLink" href="/login" active={location.pathname === '/login'}>
+                <Nav.Link className="leftNavLink" href="/login" active={location.pathname === '/login'}>
                     Welcome
                 </Nav.Link>
             </Nav.Item>     
             <Nav.Item>
-                <Nav.Link className="topNavLink" href="/FAQs" active={location.pathname === '/FAQs'}>
+                <Nav.Link className="leftNavLink" href="/FAQs" active={location.pathname === '/FAQs'}>
                     FAQs
                 </Nav.Link>
             </Nav.Item>         
         </Nav>
     );
 }
-export default TopNavBar;
+
+export default LeftNavBar;

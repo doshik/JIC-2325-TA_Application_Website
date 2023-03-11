@@ -1,0 +1,21 @@
+.leftNavBar {
+    height: 100vh;
+    background-color: #efefef;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-top: 2rem;
+    color: #857437;
+    flex-direction: column;
+}
+
+.leftNavLink {
+  font-weight: 400;
+  color: #857437;
+  text-align: center;
+  margin-right: 0.5rem;
+  line-height: 2;
+}
+
+.leftNavLink.active {
+    color: #000000;
+}

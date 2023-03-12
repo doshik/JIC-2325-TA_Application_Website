@@ -83,7 +83,7 @@ const styles = {
     height: "8vh",
     color: "#003057",
     padding: "0px",
-    zIndex: 100
+    zIndex: 100,
   },
   nav: {
     height: "100%",

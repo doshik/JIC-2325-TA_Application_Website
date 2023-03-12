@@ -1,43 +1,43 @@
 .footer {
-    background: -webkit-linear-gradient(left,#b3a369 0%,#bfb37c 100%);
-    background: linear-gradient(to right,#b3a369 0%,#bfb37c 100%);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    overflow: hidden;
-    margin-top: auto;
+  background: -webkit-linear-gradient(left, #b3a369 0%, #bfb37c 100%);
+  background: linear-gradient(to right, #b3a369 0%, #bfb37c 100%);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  overflow: hidden;
+  margin-top: auto;
 }
-    
+
 .footerSection {
-    border-left: 1px solid #ffffff;
-    padding-left: 1rem;
-    color: #262626;
+  border-left: 1px solid #ffffff;
+  padding-left: 1rem;
+  color: #262626;
 }
 
 .footerImage {
-    max-width: 200px;
-    padding: 0;
-    margin-bottom: 1rem;
-    height: auto;
-    float: right;
+  max-width: 200px;
+  padding: 0;
+  margin-bottom: 1rem;
+  height: auto;
+  float: right;
 }
-address {
-    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-    font-size: .85rem;
-    font-weight: 300;
-    line-height: 1.6;
+.GTaddress {
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.6;
 }
-address strong {
-    font-weight: 700;
+.GTaddress strong {
+  font-weight: 700;
 }
-p {
-    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-    font-size: .85rem;
-    font-weight: 300;
-    line-height: 1.1;
+.paragraph {
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.1;
 }
-a {
-    color: inherit;
-    text-decoration: none;
+.hyperlink {
+  color: inherit;
+  text-decoration: none;
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Container } from "react-bootstrap"
 import ApplicationTable from "./ApplicationTable";
+import DefaultHeader from "../../components/DefaultHeader";
 import { useLoaderData } from "react-router-dom";
 
 const ProfCourseApplicationPage = () => {
@@ -8,25 +8,19 @@ const ProfCourseApplicationPage = () => {
 
   if (!courseId) {
     return (
-      <div>
-        <div style={styles.header}>
-          "Course Not Found"
+      <>
+        <DefaultHeader text="Course Not Found" />
+        <div style={styles.container}>
+          <h1>Course is either invalid or cannot be found at this time.</h1>
         </div>
-        <div style={styles.body}>
-          Course is either invalid or cannot be found at this time.
-        </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div>
-      <div style={styles.header}>
-        `Applications for ${courseId}`
-      </div>
-      <div style={styles.body}>
-        <ApplicationTable />
-      </div>
+    <div style={styles.container}>
+      <DefaultHeader text={`Applications for ${courseId}`} />
+      <ApplicationTable />
     </div>
   );
 };
@@ -34,13 +28,7 @@ const ProfCourseApplicationPage = () => {
 export default ProfCourseApplicationPage;
 
 const styles = {
-  header: {
-    fontSize: "2rem", 
-    fontWeight: "bold", 
-    color: "#B3A369", 
-    padding: "1rem"
-  },
-  body: {
+  container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

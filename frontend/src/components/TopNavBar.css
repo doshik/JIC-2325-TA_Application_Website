@@ -1,15 +1,15 @@
 .topNavBar {
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .topNavLink {
-    font-weight: 400;
-    color: #004f9f;
-    text-align: center;
-    margin-right: 0.5rem;
+  font-weight: 400;
+  color: #004f9f;
+  text-align: center;
+  margin-right: 0.5rem;
 }
 
 .topNavLink.active {
-    color: #fff;
-    background-color: #004f9f;
+  color: #fff;
+  background-color: #004f9f;
 }

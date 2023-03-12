@@ -14,7 +14,6 @@ function DefaultForm() {
     setstep(step - 1);
   };
 
-
   switch (step) {
     case 1:
       return (
@@ -41,9 +40,7 @@ function DefaultForm() {
         </div>
       );
     default:
-      return (
-        <div></div>
-      );
+      return <div></div>;
   }
 }
 

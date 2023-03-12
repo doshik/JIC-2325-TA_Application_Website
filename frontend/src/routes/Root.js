@@ -1,16 +1,16 @@
 import * as React from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer.js";
 import LeftNavBar from "../components/LeftNavBar";
 import TopNavBar from "../components/TopNavBar";
 import { Outlet } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap";
 
 export default function Root() {
   return (
     <>
       <Header />
-      <Container fluid style={styles.container}>
+      <Container fluid style={styles.primaryArea}>
         <Row>
           <Col md={3} lg={2} style={styles.leftNavBar}>
             <LeftNavBar />
@@ -20,7 +20,9 @@ export default function Root() {
               <TopNavBar />
             </Row>
             <Row>
-              <Outlet />
+              <Container fluid className="px-4" style={styles.content}>
+                <Outlet />
+              </Container>
             </Row>
             <Row>
               <Footer />
@@ -34,16 +36,14 @@ export default function Root() {
 
 const styles = {
   primaryArea: {
-    marginBottom: "2rem"
-  },
-  container: {
     overflowX: "hidden",
-    maxWidth: "100%",
+    overflowY: "scroll",
+    maxWidth: "100%"
   },
   leftNavBar: {
     padding: "0px"
   },
   content: {
-
+    minHeight: "75vh",
   }
 };

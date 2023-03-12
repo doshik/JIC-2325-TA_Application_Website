@@ -18,7 +18,7 @@ const ApplicationTemplatesTable = () => {
   }, [dispatch]);
 
   return (
-    <Container className="mt-3">
+    <Container>
       <Table hover size="sm">
         <thead>
           <tr>

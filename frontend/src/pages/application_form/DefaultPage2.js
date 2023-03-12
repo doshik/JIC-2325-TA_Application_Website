@@ -9,14 +9,21 @@ const DefaultPage2 = ({ prevStep }) => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Why do you want to be a TA?</Form.Label>
-              <Form.Control as="textarea" rows="3" disabled readOnly />
+              <Form.Control
+                as="textarea"
+                rows="3"
+                disabled
+                readOnly
+              />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>
-                Do you have any additional information you would like to
-                provide? If yes, write below.
-              </Form.Label>
-              <Form.Control as="textarea" rows="3" disabled readOnly />
+              <Form.Label>Do you have any additional information you would like to provide? If yes, write below.</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="3"
+                disabled
+                readOnly
+              />
             </Form.Group>
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <Button variant="primary" onClick={prevStep}>

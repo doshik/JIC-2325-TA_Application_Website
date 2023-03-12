@@ -4,8 +4,9 @@ import { Button } from "react-bootstrap";
 
 const StudentApplicationsView = () => {
   return (
-    <div className="text-center">
-      <StudentApplicationTable />
+    <div className="text-center mt-5">
+        <h1>Open Applications</h1>
+        <StudentApplicationTable />
     </div>
   );
 };

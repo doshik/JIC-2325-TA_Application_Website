@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "./Footer.css";
 
 function Footer() {
-  const GTLogo = require("../assets/images/gt-logo-fullname-blk.svg").default;
+  const GTLogo = require("../assets/images/gt-logo-full-text.svg").default;
 
   return (
     <Container fluid className="footer">
@@ -135,3 +135,19 @@ function Footer() {
 }
 
 export default Footer;
+
+const styles = {
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  logo: {
+    height: "3.7vh",
+    marginLeft: "30px",
+    marginRight: "75px",
+  },
+  footer: {
+    backgroundColor: "#857437",
+  },
+};

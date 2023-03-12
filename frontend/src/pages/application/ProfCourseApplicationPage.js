@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
+import DefaultHeader from "../../components/DefaultHeader";
 import { useLoaderData } from "react-router-dom";
 
 const ProfCourseApplicationPage = () => {

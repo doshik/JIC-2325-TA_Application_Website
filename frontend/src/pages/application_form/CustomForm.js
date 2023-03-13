@@ -1,7 +1,6 @@
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { createApplicationTemplateAction } from "../../redux/actions/applicationActions";
 import { useNavigate } from "react-router-dom";
 
@@ -34,147 +33,85 @@ function CustomForm() {
     setQuestions(fields);
   }
 
-  //   function handleAddPageNumber() {
-  //     const values = [...pageNumbers];
-  //     values.push({ value: null });
-  //     setPageNumbers(values);
-  //   }
-
-  //   function handleRemovePageNumber(i) {
-  //     const values = [...pageNumbers];
-  //     values.splice(i, 1);
-  //     setPageNumbers(values);
-  //   }
-
-  //   function handlePageNumberChange(i, event) {
-  //     const values = [...pageNumbers];
-  //     values[i].value = event.target.value;
-  //     setPageNumbers(values);
-  //   }
-
   function handleSubmit(event) {
     console.log(questions);
     dispatch(createApplicationTemplateAction(name, questions));
     navigate("/user/prof/applicationtemplates");
-    // console.log(pageNumbers);
   }
 
   return (
     <Container>
       <Row>
-        <Col xs={8} className="mx-auto">
-          <Row className="mb-3" style={{ marginTop: "5px" }}>
-            <Form.Group as={Row}>
-              <Col xs={2} />
-
-              <Col xs={8}>
-                <Form.Label>Application Name</Form.Label>
-
-                <Form.Control
-                  as="textarea"
-                  onChange={(e) => handleNameChange(e)}
-                  rows="1"
-                />
-              </Col>
-            </Form.Group>
-          </Row>
-
-          {questions.map((field, idx) => {
-            // console.log(pageNumbers[idx]);
-            return (
-              <Row className="mb-3" style={{ marginTop: "5px" }}>
-                <Form.Group key={idx} as={Row}>
-                  <Col xs={2} />
-                  <Col xs={8}>
-                    <Form.Label>Question {idx + 1}</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      value={field.question || ""}
-                      onChange={(e) => handleChange(idx, e)}
-                      rows="1"
-                    />
-                    {/* <div style={{ marginTop: "10px" }}>
-                      <Form.Group controlId="pageNumber">
-                        <Form.Label>Page Number: </Form.Label>
-                        <Form.Check
-                          inline
-                          name={`pageNumberRadio${idx}`}
-                          type="radio"
-                          label="1"
-                          value="1"
-                          checked={pageNumbers[idx].value === "1"}
-                          onChange={(e) => handlePageNumberChange(idx, e)}
-                          style={{ marginLeft: "10px" }}
-                        />
-                        <Form.Check
-                          inline
-                          name={`pageNumberRadio${idx}`}
-                          type="radio"
-                          label="2"
-                          value="2"
-                          checked={pageNumbers[idx].value === "2"}
-                          onChange={(e) => handlePageNumberChange(idx, e)}
-                        />
-                        <Form.Check
-                          inline
-                          name={`pageNumberRadio${idx}`}
-                          type="radio"
-                          label="3"
-                          value="3"
-                          checked={pageNumbers[idx].value === "3"}
-                          onChange={(e) => handlePageNumberChange(idx, e)}
-                        />
-                      </Form.Group>
-                    </div> */}
-                  </Col>
-                  <Col xs={2} className="d-flex align-items-center">
-                    {questions.length > 1 && (
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          handleRemoveField(idx);
-                          //   handleRemovePageNumber(idx);
-                        }}
-                      >
-                        X
-                      </Button>
-                    )}
-                  </Col>
+        <Col xs={12}>
+          <Card style={{ marginTop: "5px" }}>
+            <Card.Body>
+              <div className="text-center">
+                <Form.Group as={Row} className="mb-4">
+                    <Col></Col>
+                    <Col>
+                      <Form.Label><strong>Application Name: </strong></Form.Label>
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        as="textarea"
+                        onChange={(e) => handleNameChange(e)}
+                        rows="1"
+                      />
+                    </Col>
+                    <Col></Col>
                 </Form.Group>
+              </div>
+              {questions.map((field, idx) => {
+                return (
+                  <Form.Group key={idx} as={Row}>
+                    <Form.Label column xs={2}>
+                      Question {idx + 1}:
+                    </Form.Label>
+                    <Col xs={8}>
+                      <Form.Control
+                        as="textarea"
+                        value={field.question || ""}
+                        onChange={(e) => handleChange(idx, e)}
+                        rows="1"
+                      />
+                    </Col>
+                    <Col xs={2} className="d-flex align-items-center">
+                      {questions.length > 1 && (
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            handleRemoveField(idx);
+                          }}
+                        >
+                          X
+                        </Button>
+                      )}
+                    </Col>
+                  </Form.Group>
+                );
+              })}
+              <Row className="mt-4 mb-3">
+                <Col className="d-flex justify-content-center">
+                  <Button
+                    variant="primary"
+                    className="mr-3"
+                    onClick={() => handleAddField()}
+                  >
+                    Add Question
+                  </Button>
+                  <Button
+                    variant="success"
+                    onClick={() => handleSubmit()}
+                  >
+                    Save Custom Application
+                  </Button>
+                </Col>
               </Row>
-            );
-          })}
-        </Col>
-      </Row>
-      <Row className="mb-3" style={{ marginTop: "5px" }}>
-        <Col>
-          <Button
-            variant="primary"
-            styles={styles.button}
-            onClick={() => {
-              handleAddField();
-              //   handleAddPageNumber();
-            }}
-          >
-            Add Question
-          </Button>
-          <Button
-            styles={styles.button}
-            variant="success"
-            onClick={() => handleSubmit()}
-          >
-            Save Custom Application
-          </Button>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
   );
 }
-
 export default CustomForm;
-
-const styles = {
-  button: {
-    marginRight: "10px",
-  },
-};

@@ -4,7 +4,7 @@ import { Form, Card, Button } from "react-bootstrap";
 const DefaultPage1 = ({ nextStep }) => {
   return (
     <div>
-      <Card style={{ marginTop: 100 }}>
+      <Card className="mt-1">
         <Card.Body>
           <Form>
             <Form.Group className="mb-3">
@@ -27,9 +27,11 @@ const DefaultPage1 = ({ nextStep }) => {
                 readOnly
               />
             </Form.Group>
-            <Button variant="primary" onClick={nextStep}>
-              Continue
-            </Button>
+            <div className="text-center">
+              <Button variant="primary" onClick={nextStep}>
+                Continue
+              </Button>
+            </div>
           </Form>
         </Card.Body>
       </Card>

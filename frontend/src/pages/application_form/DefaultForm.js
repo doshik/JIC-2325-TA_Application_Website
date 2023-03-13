@@ -20,7 +20,7 @@ function DefaultForm() {
         <div>
           <Container className="align-content-center">
             <Row>
-              <Col md={{ span: 6, offset: 3 }}>
+            <Col px={4}>
                 <DefaultPage1 nextStep={nextStep} />
               </Col>
             </Row>
@@ -32,7 +32,7 @@ function DefaultForm() {
         <div>
           <Container>
             <Row>
-              <Col md={{ span: 8, offset: 2 }}>
+              <Col px={4}>
                 <DefaultPage2 prevStep={prevStep} />
               </Col>
             </Row>

@@ -52,6 +52,9 @@ app.use("/application", applicationRoutes);
 userRoutes = require("./controllers/User.controller");
 app.use("/user", userRoutes);
 
+interviewRoutes = require("./controllers/InterviewRequest.controller");
+app.use("/interview", interviewRoutes);
+
 // const auth = require("./routes/auth");
 // app.use("/auth", auth);
 

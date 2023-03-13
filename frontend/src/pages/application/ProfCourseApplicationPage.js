@@ -19,7 +19,7 @@ const ProfCourseApplicationPage = () => {
 
   return (
     <div>
-      <div style={styles.header}>`Applications for ${courseId}`</div>
+      <div style={styles.header}>Applications for {courseId}</div>
       <div style={styles.body}>
         <ApplicationTable />
       </div>

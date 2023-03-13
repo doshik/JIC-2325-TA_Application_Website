@@ -1,6 +1,6 @@
 import * as React from "react";
 import Table from "react-bootstrap/Table";
-import SchedulerWrapper from './SchedulerWrapper';
+import ProfSchedulerWrapper from '../interview/ProfSchedulerWrapper';
 
 const ApplicationTable = () => {
   const [applications, setApplications] = React.useState([]);
@@ -45,7 +45,7 @@ const ApplicationTable = () => {
 
   return (
     <>
-    <SchedulerWrapper />
+    <ProfSchedulerWrapper />
 
     <Table striped bordered hover style={styles.table}>
       <thead>

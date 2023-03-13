@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 
-const ProfessorModal = ({ show, onHide, onSubmit }) => {
+const StudentSchedulerModal = ({ show, onHide, onSubmit }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
 
   const timeSlots = [1, 2, 3, 4, 5]
@@ -44,4 +44,4 @@ const ProfessorModal = ({ show, onHide, onSubmit }) => {
   );
 };
 
-export default ProfessorModal;
+export default StudentSchedulerModal;

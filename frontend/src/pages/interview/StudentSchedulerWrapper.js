@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ProfessorModal from './ProfessorModal';
+import StudentSchedulerModal from './StudentSchedulerModal';
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
 
-const SchedulerWrapper = () => {
+const StudentSchedulerWrapper = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModalSubmit = (slot) => {
@@ -14,10 +14,9 @@ const SchedulerWrapper = () => {
   return (
     <>
       <Button onClick={() => setShowModal(true)}>Select Interview Slot</Button>
-      <ProfessorModal show={showModal} onHide={() => setShowModal(false)} onSubmit={handleModalSubmit} />
+      <StudentSchedulerModal show={showModal} onHide={() => setShowModal(false)} onSubmit={handleModalSubmit} />
     </>
   );
 };
 
-export default SchedulerWrapper;
-
+export default StudentSchedulerWrapper;

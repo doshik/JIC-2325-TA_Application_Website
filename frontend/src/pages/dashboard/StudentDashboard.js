@@ -1,11 +1,13 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
+import StudentSchedulerWrapper from "../interview/StudentSchedulerWrapper";
 
 const StudentDashboard = () => {
   const Courses = ["CS 1331", "CS 1332", "CS 3510", "CS 4641"];
 
   return (
     <Container>
+        <StudentSchedulerWrapper/>
       <Row xs={1} md={2}>
         {Courses.map((Course, idx) => (
           <Col>

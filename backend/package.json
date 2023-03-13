@@ -1,5 +1,5 @@
 {  
-  "main": "index.js", 
+  "main": "server.js", 
   "scripts": {
   "start": "node server.js"
 },

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Container,
   Row,
   Col,
   Card,
@@ -121,13 +120,11 @@ function Login() {
             <Card.Text style={styles.rightCardHeader}>
               Announcements
             </Card.Text>
-            <Card.Text>
-              <ul>
-                <li>Announcement #1</li>
-                <li>Announcement #2</li>
-                <li>Announcement #3</li>
-              </ul>
-            </Card.Text>
+            <ul>
+              <li>Announcement #1</li>
+              <li>Announcement #2</li>
+              <li>Announcement #3</li>
+            </ul>
           </Card.Body>
         </Card>
         <Card className="mb-3 rounded-0">

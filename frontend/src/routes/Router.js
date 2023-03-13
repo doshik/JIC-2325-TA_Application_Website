@@ -15,6 +15,7 @@ import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
 import LoginPage from "../pages/login/Login";
 import FAQs from "../pages/faqs/FAQs";
 import Root from "./Root";
+import HomePage from "../pages/login/Home";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const Router = createBrowserRouter(
       <Route exact path="/" element={<Navigate to="/login" />} />
       <Route exact path="/" element={<Root />}>
         <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/home" element={<HomePage />} />
         <Route exact path="/faqs" element={<FAQs />} />
 
         <Route

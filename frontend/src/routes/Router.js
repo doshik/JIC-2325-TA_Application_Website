@@ -40,6 +40,16 @@ const Router = createBrowserRouter(
           path="prof/dashboard"
           element={<ProfessorDashboardView />}
         />
+
+        <Route
+          exact
+          path="prof/applications/:courseId"
+          loader={({ params }) => {
+            return params.courseId;
+          }}
+          element={<ProfCourseApplicationPage />}
+        />
+
         <Route
           exact
           path="prof/templates"

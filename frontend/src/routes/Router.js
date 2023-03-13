@@ -52,6 +52,15 @@ const Router = createBrowserRouter(
         />
         <Route
           exact
+          path="prof/course/:courseId"
+          loader={({ params }) => {
+            return params.courseId;
+          }}
+          element={<ProfCourseApplicationPage />}
+        />
+
+        <Route
+          exact
           path="prof/templates/custom"
           element={<CustomApplicationFormView />}
         />

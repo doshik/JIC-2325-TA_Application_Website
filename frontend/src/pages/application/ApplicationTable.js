@@ -1,5 +1,6 @@
 import * as React from "react";
 import Table from "react-bootstrap/Table";
+import SchedulerWrapper from './SchedulerWrapper';
 
 const ApplicationTable = () => {
   const [applications, setApplications] = React.useState([]);
@@ -43,6 +44,9 @@ const ApplicationTable = () => {
   testApplications.push(...testApplications);
 
   return (
+    <>
+    <SchedulerWrapper />
+
     <Table striped bordered hover style={styles.table}>
       <thead>
         <tr>
@@ -57,6 +61,7 @@ const ApplicationTable = () => {
       </thead>
       <tbody>{applicationsToRows(testApplications)}</tbody>
     </Table>
+    </>
   );
 };
 

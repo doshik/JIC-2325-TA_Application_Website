@@ -47,7 +47,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/dashboard"
-              active={location.pathname === "/student/dashboard"}
+              active={location.pathname === "/dashboard"}
             >
               Dashboard
             </Nav.Link>
@@ -56,7 +56,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/apply"
-              active={location.pathname === "/student/apply"}
+              active={location.pathname === "/apply"}
             >
               Open Applications
             </Nav.Link>
@@ -65,7 +65,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/apply"
-              active={location.pathname === "/student/apply"}
+              active={location.pathname === "/apply"}
             >
               Interview Scheduling
             </Nav.Link>
@@ -87,7 +87,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/dashboard"
-              active={location.pathname === "/prof/dashboard"}
+              active={location.pathname === "/dashboard"}
             >
               Dashboard
             </Nav.Link>
@@ -96,7 +96,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/templates"
-              active={location.pathname === "/prof/templates"}
+              active={location.pathname === "/templates"}
             >
               Application Templates
             </Nav.Link>
@@ -105,7 +105,7 @@ function TopNavBar() {
             <Nav.Link
               className="topNavLink"
               href="/templates"
-              active={location.pathname === "/prof/templates"}
+              active={location.pathname === "/templates"}
             >
               Interview Scheduling
             </Nav.Link>

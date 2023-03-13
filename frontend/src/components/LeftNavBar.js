@@ -56,7 +56,7 @@ function LeftNavBar() {
             <Nav.Link
               className="leftNavLink"
               href="/apply"
-              active={location.pathname === "/student/apply"}
+              active={location.pathname === "/apply"}
             >
               Open Applications
             </Nav.Link>

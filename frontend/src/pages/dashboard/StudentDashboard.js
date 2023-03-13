@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
+import StudentSchedulerWrapper from "../interview/StudentSchedulerWrapper";
 
 const StudentDashboard = () => {
   const Courses = [
@@ -14,6 +15,7 @@ const StudentDashboard = () => {
 
   return (
     <Container>
+    <StudentSchedulerWrapper/>
       <Row>
         <Col>
           <h5>In Progress</h5>

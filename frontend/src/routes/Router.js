@@ -40,6 +40,16 @@ const Router = createBrowserRouter(
           path="prof/dashboard"
           element={<ProfessorDashboardView />}
         />
+
+        <Route
+          exact
+          path="prof/applications/:courseId"
+          loader={({ params }) => {
+            return params.courseId;
+          }}
+          element={<ProfCourseApplicationPage />}
+        />
+
         <Route
           exact
           path="prof/templates"
@@ -50,6 +60,15 @@ const Router = createBrowserRouter(
           path="prof/templates/default"
           element={<DefaultApplicationFormView />}
         />
+        <Route
+          exact
+          path="prof/course/:courseId"
+          loader={({ params }) => {
+            return params.courseId;
+          }}
+          element={<ProfCourseApplicationPage />}
+        />
+
         <Route
           exact
           path="prof/templates/custom"

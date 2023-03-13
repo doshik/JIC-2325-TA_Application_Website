@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "react-redux";
 import "./LeftNavBar.css";
 
 function LeftNavBar() {
   const location = useLocation();
-  const role = useSelector((state) => state.auth.user.accountType, [shallowEqual]);
-  console.log("Role: " + role)
+  const role = useSelector((state) => state.auth.user.accountType);
 
   return (
     <Nav className="leftNavBar d-none d-md-block col-md-3 col-lg-2">
@@ -96,7 +95,7 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/apply"
+              href="/prof/templates"
               active={location.pathname === "/prof/templates"}
             >
               Application Templates
@@ -105,8 +104,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/apply"
-              active={location.pathname === "/student/apply"}
+              href="/prof/templates"
+              active={location.pathname === "/prof/templates"}
             >
               Interview Scheduling
             </Nav.Link>

@@ -15,7 +15,6 @@ const StudentDashboard = () => {
 
   return (
     <Container>
-    <StudentSchedulerWrapper/>
       <Row>
         <Col>
           <h5>In Progress</h5>
@@ -51,6 +50,9 @@ const StudentDashboard = () => {
             </Card>
           ))}
         </Col>
+      </Row>
+      <Row>
+        <StudentSchedulerWrapper/>
       </Row>
     </Container>
   );

@@ -13,8 +13,10 @@ const StudentSchedulerWrapper = () => {
 
   return (
     <>
-      <Button onClick={() => setShowModal(true)}>Select Interview Slot</Button>
-      <StudentSchedulerModal show={showModal} onHide={() => setShowModal(false)} onSubmit={handleModalSubmit} />
+      <div className="d-flex justify-content-between align-items-center">
+        <Button onClick={() => setShowModal(true)} className="btn-sm w-auto">Select Interview Slot</Button>
+        <StudentSchedulerModal show={showModal} onHide={() => setShowModal(false)} onSubmit={handleModalSubmit} />
+      </div>
     </>
   );
 };

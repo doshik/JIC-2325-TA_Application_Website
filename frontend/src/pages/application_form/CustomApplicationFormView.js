@@ -4,10 +4,11 @@ import CustomForm from "./CustomForm.js";
 const CustomApplicationFormView = () => {
   return (
     <div
-      className="text-center mt-5"
-      style={{ paddingBottom: "50px", overflow: "auto" }}
+    
+      className="mt-1"
+      style={{ paddingLeft: "14px", overflow: "auto" }}
     >
-      <h1>Create a Custom Application</h1>
+      <h5>Create a Custom Application</h5>
       <CustomForm />
     </div>
   );

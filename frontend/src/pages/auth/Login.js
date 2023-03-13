@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
+import '../../assets/css/main.css'
 
 function Login() {
   const dispatch = useDispatch();
@@ -28,11 +29,7 @@ function Login() {
 
   React.useEffect(() => {
     if (isAuthenticated) {
-      if (role === "student") {
-        navigate("/student/dashboard");
-      } else if (role === "professor") {
-        navigate("/prof/dashboard");
-      }
+      navigate(`/dashboard`);
     }
   }, [isAuthenticated, role, navigate]);
 
@@ -57,8 +54,7 @@ function Login() {
                 >
                   Login Student
                 </Button>
-                <Button
-                  type="button"
+                <Button 
                   className="btn btn-rectangular"
                   onClick={() => login("professor")}
                 >

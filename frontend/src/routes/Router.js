@@ -26,10 +26,7 @@ const Router = createBrowserRouter(
         <Route exact path="/login" element={<LoginPage />} />
 
         <Route exact path="/faqs" element={<FAQs />} />
-
-        {/* <Route exact path="/home" element={ <HomePage /> }/> */}
-
-        {/* <Route exact path="/dashboard" element={<DashboardView />} /> */}
+        
         
         <Route element={<ProtectedRoute roles={['student', 'professor']} />}>
           <Route exact path="/dashboard" element={<DashboardView />} />
@@ -40,7 +37,6 @@ const Router = createBrowserRouter(
           <Route path="/apply" element={<StudentApplicationsView />} />
         </Route>
 
-        {/* <Route exact path="/apply" element={<StudentApplicationsView />} /> */}
 
         <Route element={<ProtectedRoute roles={['professor']} />}>
           <Route exact 

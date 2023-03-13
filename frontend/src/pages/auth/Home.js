@@ -17,8 +17,8 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const logoutAction = () => {
-    dispatch(logoutUser());
+  const logoutAction = async () => {
+    await dispatch(logoutUser());
     navigate("/login");
   };
 

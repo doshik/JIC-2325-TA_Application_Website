@@ -46,8 +46,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/dashboard"
-              active={location.pathname === "/student/dashboard"}
+              href="/dashboard"
+              active={location.pathname === "/dashboard"}
             >
               Dashboard
             </Nav.Link>
@@ -55,8 +55,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/apply"
-              active={location.pathname === "/student/apply"}
+              href="/apply"
+              active={location.pathname === "/apply"}
             >
               Open Applications
             </Nav.Link>
@@ -64,8 +64,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/apply"
-              active={location.pathname === "/student/apply"}
+              href="/apply"
+              active={location.pathname === "/apply"}
             >
               Interview Scheduling
             </Nav.Link>
@@ -86,8 +86,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/prof/dashboard"
-              active={location.pathname === "/prof/dashboard"}
+              href="/dashboard"
+              active={location.pathname === "/dashboard"}
             >
               Dashboard
             </Nav.Link>
@@ -95,8 +95,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/prof/templates"
-              active={location.pathname === "/prof/templates"}
+              href="/templates"
+              active={location.pathname === "/templates"}
             >
               Application Templates
             </Nav.Link>
@@ -104,8 +104,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/prof/templates"
-              active={location.pathname === "/prof/templates"}
+              href="/templates"
+              active={location.pathname === "/templates"}
             >
               Interview Scheduling
             </Nav.Link>

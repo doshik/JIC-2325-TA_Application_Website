@@ -103,13 +103,13 @@ function Login() {
             <Card.Text style={styles.rightCardHeader}>
               Announcements
             </Card.Text>
-            <Card.Text>
+            <div>
               <ul>
                 <li>Announcement #1</li>
                 <li>Announcement #2</li>
                 <li>Announcement #3</li>
               </ul>
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
         <Card className="mb-3 rounded-0">

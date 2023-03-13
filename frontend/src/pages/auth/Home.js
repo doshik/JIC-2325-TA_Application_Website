@@ -13,8 +13,7 @@ import { loginUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
 
 function Home() {
-    const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar",
-    email: "rchandra38@gatech.edu"}
+  const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
 
   return (
     <Row>
@@ -36,6 +35,7 @@ function Home() {
             <Card.Text>
             <strong>Email Address:</strong> {account.email}
             </Card.Text>
+            
         </Card.Body>
         </Card>
 
@@ -78,13 +78,11 @@ function Home() {
             <Card.Text style={styles.rightCardHeader}>
               Announcements
             </Card.Text>
-            <Card.Text>
-              <ul>
-                <li>Announcement #1</li>
-                <li>Announcement #2</li>
-                <li>Announcement #3</li>
-              </ul>
-            </Card.Text>
+            <ul>
+              <li>Announcement #1</li>
+              <li>Announcement #2</li>
+              <li>Announcement #3</li>
+            </ul>
           </Card.Body>
         </Card>
         <Card className="mb-3 rounded-0">

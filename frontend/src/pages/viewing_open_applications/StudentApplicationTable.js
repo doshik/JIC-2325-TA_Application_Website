@@ -54,7 +54,6 @@ const StudentApplicationTable = () => {
                     </tr>
                 </tbody>
             </Table>
-            <Button variant="secondary">Go Back</Button>{' '}
         </Container>
     );
 };

@@ -4,7 +4,7 @@ import { Form, Card, Button } from "react-bootstrap";
 const DefaultPage2 = ({ prevStep }) => {
   return (
     <>
-      <Card style={{ marginTop: 100 }}>
+      <Card className="mt-1">
         <Card.Body>
           <Form>
             <Form.Group className="mb-3">
@@ -21,9 +21,6 @@ const DefaultPage2 = ({ prevStep }) => {
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <Button variant="primary" onClick={prevStep}>
                 Previous
-              </Button>
-              <Button variant="secondary">
-                Return to Application Templates
               </Button>
             </div>
           </Form>

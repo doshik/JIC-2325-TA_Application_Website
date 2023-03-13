@@ -79,3 +79,5 @@ applicationRoutes
       res.status(400).send("accepting interview request failed");
     }
   });
+
+module.exports = applicationRoutes;

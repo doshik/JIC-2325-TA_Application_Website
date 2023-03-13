@@ -19,7 +19,6 @@ function Login() {
 
   const login = (role) => {
     if (role === "student") {
-      console.log("student");
       dispatch(loginUser("student"));
     } else if (role === "professor") {
       dispatch(loginUser("professor"));
@@ -47,34 +46,21 @@ function Login() {
           </Card.Header>
           <Card.Body>
             <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-
               <Stack
                 direction="horizontal"
                 gap={5}
                 className="d-flex align-items-center justify-content-center"
               >
                 <Button
-                  variant="primary"
                   type="button"
                   onClick={() => login("student")}
+                  className="btn btn-rectangular"
                 >
                   Login Student
                 </Button>
                 <Button
-                  variant="primary"
                   type="button"
+                  className="btn btn-rectangular"
                   onClick={() => login("professor")}
                 >
                   Login Professor

@@ -9,35 +9,44 @@ import {
   Stack,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../redux/actions/authActions";
+import { logoutUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
 
 function Home() {
   const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const logoutAction = () => {
+    dispatch(logoutUser());
+    navigate("/login");
+  };
 
   return (
     <Row>
       <Col xs={12} md={6}>
       <Card className="mb-3 rounded-0">
         <Card.Header as="h5" style={styles.leftCardHeader}>
-            Account
+          Account
         </Card.Header>
         <Card.Body>
-            <Card.Text>
+          <Card.Text>
             You are logged in.
-            </Card.Text>
-            <Card.Text>
+          </Card.Text>
+          <Card.Text>
             <strong>Username:</strong> {account.username}
-            </Card.Text>
-            <Card.Text>
+          </Card.Text>
+          <Card.Text>
             <strong>Display Name:</strong> {account.displayname}
-            </Card.Text>
-            <Card.Text>
+          </Card.Text>
+          <Card.Text>
             <strong>Email Address:</strong> {account.email}
-            </Card.Text>
-            
+          </Card.Text>
+          <div className="text-center">
+            <Button className="btn-rectangular-transparent-grey" onClick={logoutAction}>Go to Georgia Tech log out page <i className="fa fa-sign-out"></i> </Button>
+          </div>
         </Card.Body>
-        </Card>
+      </Card>
 
 
         <Card className="mb-3 rounded-0">

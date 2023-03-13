@@ -11,10 +11,10 @@ import CustomApplicationFormView from "../pages/application_form/CustomApplicati
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import DashboardView from "../pages/dashboard/DashboardView";
-import LoginPage from "../pages/login/Login";
+import LoginPage from "../pages/auth/Login";
 import FAQs from "../pages/faqs/FAQs";
 import Root from "./Root";
-import HomePage from "../pages/login/Home";
+import HomePage from "../pages/auth/Home";
 import ProtectedRoute from "./ProtectedRoute";
 
 const Router = createBrowserRouter(

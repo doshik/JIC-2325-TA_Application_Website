@@ -50,12 +50,12 @@ function Login() {
                 <Button
                   type="button"
                   onClick={() => login("student")}
-                  className="btn btn-rectangular"
+                  className="btn btn-rectangular-transparent-blue"
                 >
                   Login Student
                 </Button>
                 <Button 
-                  className="btn btn-rectangular"
+                  className="btn btn-rectangular-transparent-blue"
                   onClick={() => login("professor")}
                 >
                   Login Professor

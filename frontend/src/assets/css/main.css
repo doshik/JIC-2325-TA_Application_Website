@@ -2,3 +2,17 @@ html, body, #root, #root>div {
 height: 100%;
 margin: 0;
 }
+
+.btn-rectangular {
+    background-color: transparent;
+    color: #004f9f;
+    border: 1px solid #004f9f;
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-rectangular:hover {
+    background-color: #004f9f;
+    color: #fff;
+  }

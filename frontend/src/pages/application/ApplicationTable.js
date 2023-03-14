@@ -45,8 +45,6 @@ const ApplicationTable = () => {
 
   return (
     <>
-    <SchedulerWrapper />
-
     <Table striped bordered hover style={styles.table}>
       <thead>
         <tr>
@@ -77,10 +75,10 @@ const applicationsToRows = (applications) => {
         <td>
           <a href="">View</a>
         </td>
-        <td>
-          <button type="button">Accept</button>
-          <button type="button">Reject</button>
-        </td>
+        <select style={{width: '100%'}}>
+          <option value="accept">Accept</option>
+          <option value="reject">Reject</option>
+        </select>
       </tr>
     );
   });
@@ -89,22 +87,11 @@ const applicationsToRows = (applications) => {
 export default ApplicationTable;
 
 const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0 20px",
-    height: "100vh",
-    fontSize: "calc(10px + 2vmin)",
-    color: "white",
-  },
+  
   link: {
     color: "#61dafb",
   },
-  table: {
-    width: "75%",
-  },
+  
   tableRow: {
     display: "flex",
     flexDirection: "row",

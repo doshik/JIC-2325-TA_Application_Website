@@ -79,6 +79,15 @@ function TopNavBar() {
               Interview Scheduling
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              className="topNavLink"
+              href="/FAQs"
+              active={location.pathname === "/FAQs"}
+            >
+              FAQs
+            </Nav.Link>
+          </Nav.Item>
         </>
       )}
       {role === "professor" && (

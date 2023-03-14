@@ -3,6 +3,25 @@ Summary: We are designing a better TA application website with functionalities t
 
 ## Release Notes
 
+### Version 0.3.0:
+#### New Features
+* Frontend - updated UI to model after Buzzport
+* Frontend - created top and left nav bars
+* Frontend - created FAQs page
+* Frontend - created functionality to schedule interviews
+* Frontend - updated UI for professor course page
+* Frontend - updated UI for student and professor dashboards
+* Backend - fixed redux store by making it persistent
+* Backend - updated JWT to use cookie instead of authorization header
+* Backend - set up CI/CD so merging into main will trigger deployment into our live app
+
+#### Bug Fixes
+* We fixed major routing issues with respect to protected routes
+* Took client feedback and overhauled UI
+
+#### Known Issues
+* Data on frontend pages is still partially hard-coded since GT CAS is still a work in progress
+
 ### Version 0.2.0:
 #### New Features
 * Frontend - created customized TA application form for professors

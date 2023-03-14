@@ -13,7 +13,8 @@ import { logoutUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
 
 function Home() {
-  const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
+  const account = useSelector((state) => state.auth.user);
+  // const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -37,7 +38,7 @@ function Home() {
             <strong>Username:</strong> {account.username}
           </Card.Text>
           <Card.Text>
-            <strong>Display Name:</strong> {account.displayname}
+            <strong>Display Name:</strong> {account.name}
           </Card.Text>
           <Card.Text>
             <strong>Email Address:</strong> {account.email}

@@ -70,6 +70,15 @@ function LeftNavBar() {
               Interview Scheduling
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              className="leftNavLink"
+              href="/FAQs"
+              active={location.pathname === "/FAQs"}
+            >
+              FAQs
+            </Nav.Link>
+          </Nav.Item>
         </div>
       )}
       {role === 'professor' && (

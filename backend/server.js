@@ -7,11 +7,12 @@ require("dotenv").config();
 var app = express();
 app.use(cookies());
 
-var allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3006",
-  "http://yourapp.com",
-];
+var allowedOrigins = ["http://localhost:3000", "http://localhost:3006"];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 const temp = function (origin, callback) {
   if (!origin) return callback(null, true);
   if (allowedOrigins.indexOf(origin) === -1) {

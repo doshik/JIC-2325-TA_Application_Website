@@ -120,6 +120,7 @@ userRoutes.route("/login").post(async function (req, res) {
     name: "Student Name",
     email: "studentName@gatech.edu",
     accountType: "student",
+    username: "studentName01",
     gtID: "900000000",
     studentInfo: {
       year: "3",
@@ -133,6 +134,7 @@ userRoutes.route("/login").post(async function (req, res) {
   const professorData = {
     name: "Professor Name",
     email: "professorname@gatech.edu",
+    username: "profName01",
     accountType: "professor",
     gtID: "900000001",
     professorInfo: {
@@ -156,6 +158,7 @@ userRoutes.route("/login").post(async function (req, res) {
         email: userData.email.toLowerCase(),
         accountType: userData.accountType,
         gtID: userData.gtID,
+        username: userData.username,
         createdAt: Date(),
         professorInfo:
           userData.accountType == "professor"

@@ -10,11 +10,14 @@ app.use(cookies());
 var allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3006",
-  "http://yourapp.com",
 ];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(process.env.CLIENT_URL);
+}
+
 const temp = function (origin, callback) {
   if (!origin) return callback(null, true);
-  console.log(origin);
   if (allowedOrigins.indexOf(origin) === -1) {
     var msg =
       "The CORS policy for this site does not " +
@@ -58,9 +61,9 @@ app.use("/interview", interviewRoutes);
 // const auth = require("./routes/auth");
 // app.use("/auth", auth);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
 const db = process.env.mongoURI;
 const connectDB = async () => {

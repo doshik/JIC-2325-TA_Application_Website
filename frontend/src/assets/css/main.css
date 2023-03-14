@@ -2,3 +2,34 @@ html, body, #root, #root>div {
 height: 100%;
 margin: 0;
 }
+
+.btn-rectangular-transparent-blue {
+    background-color: transparent;
+    color: #004f9f;
+    border: 1px solid #004f9f;
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    transition: all 0.7s ease;
+  }
+  
+  .btn-rectangular-transparent-blue:hover {
+    background-color: #004f9f;
+    color: #fff;
+  }
+
+  .btn-rectangular-transparent-grey {
+    background-color: transparent;
+    color: #262626;
+    border: 1px solid #262626;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    transition: all 0.7s ease;
+  }
+  
+  .btn-rectangular-transparent-grey:hover {
+    background-color: #575757;
+    font-weight: 400;
+    border: black;
+    color: #fff;
+  }

@@ -12,6 +12,7 @@ import ApplicationTemplateView from "../pages/application_templates/ApplicationT
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import DashboardView from "../pages/dashboard/DashboardView";
 import StudentInterviewView from "../pages/interview/StudentInterviewView";
+import ProfInterviewView from "../pages/interview/ProfInterviewView";
 
 import LoginPage from "../pages/auth/Login";
 import FAQs from "../pages/faqs/FAQs";
@@ -38,7 +39,8 @@ const Router = createBrowserRouter(
           <Route path="/apply" element={<StudentApplicationsView />} />
         </Route>
 
-        <Route exact path="interviews" element={<StudentInterviewView />} />
+        <Route exact path="/interviews" element={<StudentInterviewView />} />
+        <Route exact path="/createinterviews" element={<ProfInterviewView />} />
 
         <Route element={<ProtectedRoute roles={["professor"]} />}>
           <Route

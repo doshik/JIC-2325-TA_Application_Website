@@ -113,8 +113,8 @@ function TopNavBar() {
           <Nav.Item>
             <Nav.Link
               className="topNavLink"
-              href="/templates"
-              active={location.pathname === "/templates"}
+              href="/createinterviews"
+              active={location.pathname === "/createinterviews"}
             >
               Interview Scheduling
             </Nav.Link>

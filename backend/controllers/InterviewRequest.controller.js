@@ -1,4 +1,6 @@
 const InterviewRequest = require("../models/InterviewRequest.js");
+const User = require("../models/User.js");
+
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
@@ -11,13 +13,15 @@ applicationRoutes
   .route("/prof/create")
   .post(userAuth, async function (req, res) {
     try {
+      console.log(req.body);
+      const student = await User.findOne({ gtID: req.body.student });
       const newInterviewRequest = new InterviewRequest({
-        student: req.body.student,
+        student: student,
         professor: req.user.id,
-        application: req.body.application,
+        // application: 1,
         possibleTimes: req.body.possibleTimes,
         acceptedTime: "",
-        meetingLink: req.body.meetingLink,
+        meetingLink: "",
       });
 
       const savedRequest = await newInterviewRequest.save();
@@ -25,9 +29,11 @@ applicationRoutes
       if (savedRequest) {
         res.status(200).json({ savedRequest: savedRequest });
       } else {
+        // console.log();
         res.status(400).send("adding new interview request failed");
       }
     } catch (err) {
+      console.log(err);
       res.status(400).send("adding new interview request failed");
     }
   });
@@ -60,6 +66,7 @@ applicationRoutes
   .route("/student/accept")
   .post(userAuth, async function (req, res) {
     try {
+      console.log(req.body);
       const finalizedRequest = await InterviewRequest.findOneAndUpdate(
         { student: req.user.id, _id: req.body.interviewRequestId },
         { $set: { acceptedTime: req.body.acceptedTime } },
@@ -73,9 +80,12 @@ applicationRoutes
       if (finalizedRequest && allRequests) {
         res.status(200).json({ finalizedRequest: allRequests });
       } else {
+        console.log("hi");
+
         res.status(400).send("accepting interview request failed");
       }
     } catch (err) {
+      console.log(err);
       res.status(400).send("accepting interview request failed");
     }
   });

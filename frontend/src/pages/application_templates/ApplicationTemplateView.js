@@ -10,7 +10,7 @@ const ApplicationTemplateView = () => {
       <ApplicationTemplatesTable />
       <Button
         variant="success"
-        onClick={() => navigate("/prof/templates/custom")}
+        onClick={() => navigate("/templates/custom" )}
       >
         Create New
       </Button>

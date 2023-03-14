@@ -14,19 +14,19 @@ const StudentDashboard = () => {
   const submittedCourses = Courses.filter(course => course.progress === "Submitted");
 
   return (
-    <Container>
+    <Container fluid className="mx-0">
       <Row>
         <Col>
           <h5>In Progress</h5>
           {inProgressCourses.map((course, index) => (
-            <Card key={index} className="mb-3">
+            <Card key={index} className="mb-2">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <Card.Title>{course.courseName}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{course.professor}</Card.Subtitle>
                   </div>
-                  <Button variant="primary">View/Edit</Button>
+                  <Button variant="primary" href={`submit/${course.courseName}`}>View/Edit</Button>
                 </div>
               </Card.Body>
             </Card>
@@ -37,14 +37,14 @@ const StudentDashboard = () => {
         <Col>
           <h5>Submitted</h5>
           {submittedCourses.map((course, index) => (
-            <Card key={index} className="mb-3">
+            <Card key={index} className="mb-2">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <Card.Title>{course.courseName}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{course.professor}</Card.Subtitle>
                   </div>
-                  <Button variant="primary">View Submission</Button>
+                  <Button variant="primary" href={`submit/${course.courseName}`}>View Submission</Button>
                 </div>
               </Card.Body>
             </Card>

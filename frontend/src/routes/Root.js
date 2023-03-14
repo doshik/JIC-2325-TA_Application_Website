@@ -44,6 +44,6 @@ const styles = {
     padding: "0px"
   },
   content: {
-    minHeight: "75vh",
+    minHeight: "75vh"
   }
 };

@@ -13,12 +13,12 @@ const ProfDashboard = () => {
   const submittedCourses = Courses.filter(course => course.progress === "Inactive");
 
   return (
-    <Container>
+    <Container fluid className="mx-0">
       <Row>
         <Col>
           <h5>Active</h5>
           {inProgressCourses.map((course, index) => (
-            <Card key={index} className="mb-3">
+            <Card key={index} className="mb-2">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
@@ -36,7 +36,7 @@ const ProfDashboard = () => {
         <Col>
           <h5>Inactive</h5>
           {submittedCourses.map((course, index) => (
-            <Card key={index} className="mb-3">
+            <Card key={index} className="mb-2">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>

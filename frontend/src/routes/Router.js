@@ -12,6 +12,7 @@ import ApplicationTemplateView from "../pages/application_templates/ApplicationT
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import ProfessorDashboardView from "../pages/dashboard/ProfessorDashboardView";
 import StudentDashboardView from "../pages/dashboard/StudentDashboardView";
+import StudentInterviewView from "../pages/interview/StudentInterviewView";
 import LoginPage from "../pages/auth/Login";
 import FAQs from "../pages/faqs/FAQs";
 import Root from "./Root";
@@ -35,6 +36,12 @@ const Router = createBrowserRouter(
           exact
           path="student/apply"
           element={<StudentApplicationsView />}
+        />
+
+        <Route
+          exact
+          path="student/interviews"
+          element={<StudentInterviewView />}
         />
 
         <Route

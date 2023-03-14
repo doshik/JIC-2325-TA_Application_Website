@@ -10,7 +10,7 @@ function LeftNavBar() {
 
   return (
     <Nav className="leftNavBar d-none d-md-block col-md-3 col-lg-2">
-      {role !== 'student' && role !== 'professor' && (
+      {role !== "student" && role !== "professor" && (
         <div>
           <Nav.Item>
             <Nav.Link
@@ -32,7 +32,7 @@ function LeftNavBar() {
           </Nav.Item>
         </div>
       )}
-      {role === 'student' && (
+      {role === "student" && (
         <div>
           <Nav.Item>
             <Nav.Link
@@ -64,15 +64,15 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/student/apply"
-              active={location.pathname === "/student/apply"}
+              href="/student/interviews"
+              active={location.pathname === "/student/interviews"}
             >
               Interview Scheduling
             </Nav.Link>
           </Nav.Item>
         </div>
       )}
-      {role === 'professor' && (
+      {role === "professor" && (
         <div>
           <Nav.Item>
             <Nav.Link

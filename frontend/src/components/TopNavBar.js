@@ -10,7 +10,7 @@ function TopNavBar() {
 
   return (
     <Nav className="topNavBar col-md-9 col-lg-10">
-      {role !== 'student' && role !== 'professor' && (
+      {role !== "student" && role !== "professor" && (
         <>
           <Nav.Item>
             <Nav.Link
@@ -32,7 +32,7 @@ function TopNavBar() {
           </Nav.Item>
         </>
       )}
-      {role === 'student' && (
+      {role === "student" && (
         <>
           <Nav.Item>
             <Nav.Link
@@ -64,15 +64,15 @@ function TopNavBar() {
           <Nav.Item>
             <Nav.Link
               className="topNavLink"
-              href="/student/apply"
-              active={location.pathname === "/student/apply"}
+              href="/student/interviews"
+              active={location.pathname === "/student/interviews"}
             >
               Interview Scheduling
             </Nav.Link>
           </Nav.Item>
         </>
       )}
-      {role === 'professor' && (
+      {role === "professor" && (
         <>
           <Nav.Item>
             <Nav.Link

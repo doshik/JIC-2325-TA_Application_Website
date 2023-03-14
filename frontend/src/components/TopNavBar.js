@@ -64,15 +64,6 @@ function TopNavBar() {
           <Nav.Item>
             <Nav.Link
               className="topNavLink"
-              href="/apply"
-              active={location.pathname === "/apply"}
-            >
-              Apply
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="topNavLink"
               href="/interviews"
               active={location.pathname === "/interviews"}
             >

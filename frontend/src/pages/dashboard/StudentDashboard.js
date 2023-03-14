@@ -51,9 +51,6 @@ const StudentDashboard = () => {
           ))}
         </Col>
       </Row>
-      <Row>
-        <StudentSchedulerWrapper/>
-      </Row>
     </Container>
   );
 };

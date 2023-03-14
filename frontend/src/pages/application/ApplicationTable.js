@@ -77,10 +77,10 @@ const applicationsToRows = (applications) => {
         <td>
           <a href="">View</a>
         </td>
-        <td>
-          <button type="button">Accept</button>
-          <button type="button">Reject</button>
-        </td>
+        <select style={{width: '100%'}}>
+          <option value="accept">Accept</option>
+          <option value="reject">Reject</option>
+        </select>
       </tr>
     );
   });

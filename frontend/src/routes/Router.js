@@ -21,34 +21,35 @@ const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="*" element={<p>404!</p>} /> 
+      
       <Route exact path="/" element={<Navigate to="/login" />} />
+
+      {/* unprotected routes */}
       <Route exact path="/" element={<Root />}>
         <Route exact path="/login" element={<LoginPage />} />
-
         <Route exact path="/faqs" element={<FAQs />} />
-        
-        
+
+        {/* student professor routes go in here */}
         <Route element={<ProtectedRoute roles={['student', 'professor']} />}>
           <Route exact path="/dashboard" element={<DashboardView />} />
           <Route exact path="/home" element={ <HomePage /> }/>
         </Route>
 
+        {/* student routes */}
         <Route element={<ProtectedRoute roles={['student']} />}>
           <Route path="/apply" element={<StudentApplicationsView />} />
         </Route>
 
-
+        {/* professor routes */}
         <Route element={<ProtectedRoute roles={['professor']} />}>
           <Route exact 
             path="/applications/:courseId" 
             loader={({ params }) => params.courseId} 
             element={<ProfCourseApplicationPage />} 
             />
-            
           <Route exact path="/templates" element={<ApplicationTemplateView />} />
-
           <Route exact path="/templates/default" element={<DefaultApplicationFormView />} />
-
+          
           <Route exact path="/course/:courseId" 
             loader={({ params }) => params.courseId} 
             element={<ProfCourseApplicationPage />} 

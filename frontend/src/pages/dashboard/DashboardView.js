@@ -5,10 +5,10 @@ import ProfessorDashboardView from './ProfessorDashboardView';
 // Example of a connected component
 const DashboardView = ({ auth }) => {
   return (
-    <div>
+    <>
       {auth.user.accountType === 'student' && <StudentDashboardView />}
       {auth.user.accountType === 'professor' && <ProfessorDashboardView />}
-    </div>
+    </>
   );
 };
 

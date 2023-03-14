@@ -18,9 +18,9 @@ function DefaultForm() {
     case 1:
       return (
         <div>
-          <Container className="align-content-center">
+          <Container fluid>
             <Row>
-            <Col px={4}>
+            <Col>
                 <DefaultPage1 nextStep={nextStep} />
               </Col>
             </Row>
@@ -30,9 +30,9 @@ function DefaultForm() {
     case 2:
       return (
         <div>
-          <Container>
+          <Container fluid>
             <Row>
-              <Col px={4}>
+              <Col>
                 <DefaultPage2 prevStep={prevStep} />
               </Col>
             </Row>

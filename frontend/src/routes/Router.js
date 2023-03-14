@@ -16,6 +16,7 @@ import FAQs from "../pages/faqs/FAQs";
 import Root from "./Root";
 import HomePage from "../pages/auth/Home";
 import ProtectedRoute from "./ProtectedRoute";
+import SubmitApplicationView from "../pages/submit_application/SubmitApplicationView";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +39,10 @@ const Router = createBrowserRouter(
 
         <Route element={<ProtectedRoute roles={['student']} />}>
           <Route path="/apply" element={<StudentApplicationsView />} />
+          <Route exact path="/submit/:courseId" 
+            loader={({ params }) => params.courseId} 
+            element={<SubmitApplicationView />} 
+            />
         </Route>
 
         {/* <Route exact path="/apply" element={<StudentApplicationsView />} /> */}

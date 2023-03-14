@@ -4,7 +4,7 @@ import DefaultForm from "./DefaultForm";
 const DefaultApplicationFormView = () => {
   return (
     <div>
-      <h5 style={{paddingLeft: '14px'}}>Default Application</h5>
+      <h5 className="px-3">Default Application</h5>
       <DefaultForm />
     </div>
   );

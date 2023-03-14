@@ -36,7 +36,7 @@ const ApplicationTemplatesTable = () => {
             <td>N/A</td>
             <td>No</td>
             <td>
-              <Button variant="primary" style={styles.button} onClick={() => navigate("/prof/templates/default")}>
+              <Button variant="primary" style={styles.button} onClick={() => navigate("templates/default")}>
                 View/Edit
               </Button>
             </td>

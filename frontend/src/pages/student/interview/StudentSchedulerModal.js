@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import moment from "moment";
 
-import { acceptInterviewRequest } from "../../api/interview";
+import { acceptInterviewRequest } from "../../../api/interview";
 
 const StudentSchedulerModal = ({ show, onHide, request }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import StudentSchedulerWrapper from "../interview/StudentSchedulerWrapper";
 
 const StudentDashboard = () => {
   const Courses = [

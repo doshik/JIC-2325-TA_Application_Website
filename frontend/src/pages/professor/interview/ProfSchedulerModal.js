@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-// import CalendarModal from "./CalendarModal";
+import { Modal, Button, Form } from "react-bootstrap";
 import moment from "moment";
 import { submitInterviewRequest } from "../../api/interview";
 

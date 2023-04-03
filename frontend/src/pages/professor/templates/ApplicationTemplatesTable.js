@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getApplicationTemplatesAction } from "../../redux/actions/applicationActions";
+import { getApplicationTemplatesAction } from "../../../redux/actions/applicationActions";
 
 const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();

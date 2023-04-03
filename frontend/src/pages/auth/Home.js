@@ -10,11 +10,10 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function Home() {
   const account = useSelector((state) => state.auth.user);
-  // const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -26,29 +25,28 @@ function Home() {
   return (
     <Row>
       <Col xs={12} md={6}>
-      <Card className="mb-3 rounded-0">
-        <Card.Header as="h5" style={styles.leftCardHeader}>
-          Account
-        </Card.Header>
-        <Card.Body>
-          <Card.Text>
-            You are logged in.
-          </Card.Text>
-          <Card.Text>
-            <strong>Username:</strong> {account.username}
-          </Card.Text>
-          <Card.Text>
-            <strong>Display Name:</strong> {account.name}
-          </Card.Text>
-          <Card.Text>
-            <strong>Email Address:</strong> {account.email}
-          </Card.Text>
-          <div className="text-center">
-            <Button className="btn-rectangular-transparent-grey" onClick={logoutAction}>Go to Georgia Tech log out page <i className="fa fa-sign-out"></i> </Button>
-          </div>
-        </Card.Body>
-      </Card>
-
+        <Card className="mb-3 rounded-0">
+          <Card.Header as="h5" style={styles.leftCardHeader}>
+            Account
+          </Card.Header>
+          <Card.Body>
+            <Card.Text>
+              You are logged in.
+            </Card.Text>
+            <Card.Text>
+              <strong>Username:</strong> {account.username}
+            </Card.Text>
+            <Card.Text>
+              <strong>Display Name:</strong> {account.name}
+            </Card.Text>
+            <Card.Text>
+              <strong>Email Address:</strong> {account.email}
+            </Card.Text>
+            <div className="text-center">
+              <Button className="btn-rectangular-transparent-grey" onClick={logoutAction}>Go to Georgia Tech log out page <i className="fa fa-sign-out"></i> </Button>
+            </div>
+          </Card.Body>
+        </Card>
 
         <Card className="mb-3 rounded-0">
           <Card.Header as="h5" style={styles.leftCardHeader}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import StudentSchedulerModal from "./StudentSchedulerModal";
-import { Button, Card, Row, Col, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const StudentSchedulerWrapper = ({ request, trigger }) => {
   const [showModal, setShowModal] = useState(false);

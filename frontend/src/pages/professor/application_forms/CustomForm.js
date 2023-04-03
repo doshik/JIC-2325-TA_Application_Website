@@ -1,7 +1,7 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createApplicationTemplateAction } from "../../redux/actions/applicationActions";
+import { createApplicationTemplateAction } from "../../../redux/actions/applicationActions";
 import { useNavigate } from "react-router-dom";
 
 function CustomForm() {

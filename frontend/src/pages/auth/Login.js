@@ -64,6 +64,7 @@ function Login() {
             </Form>
           </Card.Body>
         </Card>
+        
         <Card className="mb-3 rounded-0">
           <Card.Header as="h5" style={styles.leftCardHeader}>
             About the TA Application Hub

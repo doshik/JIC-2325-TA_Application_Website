@@ -1,7 +1,7 @@
 import * as React from "react";
 import CustomForm from "./CustomForm.js";
 
-const CustomApplicationFormView = () => {
+const CustomFormView = () => {
   return (
     <div>
       <h5 className="px-3">Create a Custom Application</h5>
@@ -10,4 +10,4 @@ const CustomApplicationFormView = () => {
   );
 };
 
-export default CustomApplicationFormView;
+export default CustomFormView;

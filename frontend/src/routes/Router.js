@@ -41,14 +41,22 @@ const Router = createBrowserRouter(
 
         {/* student routes */}
         <Route element={<ProtectedRoute roles={["student"]} />}>
-          <Route path="/apply" element={<StudentApplicationsView />} />
+          <Route 
+            exact
+            path="/apply" 
+            element={<StudentApplicationsView />} 
+          />
 
           <Route exact path="/submit/:courseId" 
             loader={({ params }) => params.courseId} 
             element={<SubmitApplicationView />} 
             />
 
-          <Route exact path="/interviews" element={<StudentInterviewView />} />
+          <Route 
+            exact 
+            path="/interviews" 
+            element={<StudentInterviewView />} 
+          />
 
         </Route>
 
@@ -70,25 +78,6 @@ const Router = createBrowserRouter(
             path="/templates/default"
             element={<DefaultApplicationFormView />}
           />
-          <Route
-            exact
-            path="/createinterviews"
-            element={<ProfInterviewView />}
-          />
-
-          <Route
-            exact
-            path="/course/:courseId"
-            loader={({ params }) => params.courseId}
-            element={<ProfCourseApplicationPage />}
-          />
-
-          <Route
-            exact
-            path="/course/:courseId"
-            loader={({ params }) => params.courseId}
-            element={<ProfCourseApplicationPage />}
-          />
 
           <Route
             exact
@@ -98,9 +87,8 @@ const Router = createBrowserRouter(
 
           <Route
             exact
-            path="/course/:courseId"
-            loader={({ params }) => params.courseId}
-            element={<ProfCourseApplicationPage />}
+            path="/createinterviews"
+            element={<ProfInterviewView />}
           />
         </Route>
 

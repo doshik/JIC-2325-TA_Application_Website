@@ -1,16 +1,39 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const ProfDashboard = () => {
+  const navigate = useNavigate();
+
   const Courses = [
-    { courseName: 'CS 1332', progress: "Active", courseTitle: "Data Structures & Algorithms" },
-    { courseName: 'CS 2340', progress: "Active", courseTitle: "Objects and Design" },
-    { courseName: 'CS 4641', progress: "Inactive", courseTitle: "Machine Learning" },
-    { courseName: 'CS 2110', progress: "Inactive", courseTitle: "Computer Organization and Programming"}
+    {
+      courseName: "CS 1332",
+      progress: "Active",
+      courseTitle: "Data Structures & Algorithms",
+    },
+    {
+      courseName: "CS 2340",
+      progress: "Active",
+      courseTitle: "Objects and Design",
+    },
+    {
+      courseName: "CS 4641",
+      progress: "Inactive",
+      courseTitle: "Machine Learning",
+    },
+    {
+      courseName: "CS 2110",
+      progress: "Inactive",
+      courseTitle: "Computer Organization and Programming",
+    },
   ];
 
-  const inProgressCourses = Courses.filter(course => course.progress === "Active");
-  const submittedCourses = Courses.filter(course => course.progress === "Inactive");
+  const inProgressCourses = Courses.filter(
+    (course) => course.progress === "Active"
+  );
+  const submittedCourses = Courses.filter(
+    (course) => course.progress === "Inactive"
+  );
 
   return (
     <Container fluid className="mx-0">
@@ -23,9 +46,18 @@ const ProfDashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <Card.Title>{course.courseName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{course.courseTitle}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      {course.courseTitle}
+                    </Card.Subtitle>
                   </div>
-                  <Button variant="primary">Course Info</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      navigate(`/applications/${course.courseName}`)
+                    }
+                  >
+                    Course Info
+                  </Button>
                 </div>
               </Card.Body>
             </Card>
@@ -41,9 +73,18 @@ const ProfDashboard = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <Card.Title>{course.courseName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{course.courseTitle}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      {course.courseTitle}
+                    </Card.Subtitle>
                   </div>
-                  <Button variant="primary">Course Info</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      navigate(`/applications/${course.courseName}`)
+                    }
+                  >
+                    Course Info
+                  </Button>
                 </div>
               </Card.Body>
             </Card>

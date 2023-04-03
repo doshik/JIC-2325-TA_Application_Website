@@ -39,7 +39,7 @@ function CustomForm() {
   function handleSubmit(event) {
     console.log(questions);
     dispatch(createApplicationTemplateAction(name, questions));
-    navigate("/user/prof/applicationtemplates");
+    navigate("/templates");
   }
 
   return (
@@ -91,10 +91,7 @@ function CustomForm() {
           })}
           <Row className="mt-4">
             <Col className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                onClick={() => handleAddField()}
-              >
+              <Button variant="primary" onClick={() => handleAddField()}>
                 Add Question
               </Button>
             </Col>

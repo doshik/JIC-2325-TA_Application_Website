@@ -13,8 +13,15 @@ import {
 } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
 import { useLoaderData } from "react-router-dom";
+import { getApplicationTemplatesAction } from "../../redux/actions/applicationActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfCourseApplicationPage = () => {
+  const dispatch = useDispatch();
+  const templates = useSelector(
+    (state) => state.application.applicationTemplates
+  );
+
   const courseId = useLoaderData();
   const [isHiring, setIsHiring] = React.useState(false);
   const [semester, setSemester] = React.useState("");
@@ -26,6 +33,7 @@ const ProfCourseApplicationPage = () => {
 
   const handleTemplateChange = (eventKey) => {
     setTemplate(eventKey);
+    console.log(eventKey);
   };
 
   const handleSave = () => {
@@ -44,7 +52,7 @@ const ProfCourseApplicationPage = () => {
   }
 
   return (
-    <div>      
+    <div>
       <Row className="mb-3 w-50 align-items-center">
         <Col md={4}>
           <h5>{courseId}</h5>
@@ -64,7 +72,7 @@ const ProfCourseApplicationPage = () => {
           </Form.Group>
         </Col>
       </Row>
-        <Card className="rounded-0">
+      <Card className="rounded-0">
         <Card.Body>
           <Form id="course-form">
             <Row>
@@ -76,9 +84,11 @@ const ProfCourseApplicationPage = () => {
                     title={template || "Select Application Template"}
                     onSelect={handleTemplateChange}
                   >
-                    <Dropdown.Item eventKey="Template 1">Template 1</Dropdown.Item>
-                    <Dropdown.Item eventKey="Template 2">Template 2</Dropdown.Item>
-                    <Dropdown.Item eventKey="Template 3">Template 3</Dropdown.Item>
+                    {templates.map((template) => (
+                      <Dropdown.Item eventKey={template.name}>
+                        {template.name}
+                      </Dropdown.Item>
+                    ))}
                   </DropdownButton>
                 </Form.Group>
                 <Form.Group controlId="formHiring">
@@ -129,5 +139,3 @@ const ProfCourseApplicationPage = () => {
 };
 
 export default ProfCourseApplicationPage;
-
-

@@ -98,6 +98,29 @@ applicationRoutes
     }
   });
 
+// delete a template
+applicationRoutes
+  .route("/prof/delete-template")
+  .post(userAuth, async function (req, res) {
+    try {
+      const template = await ApplicationTemplate.findOneAndDelete({
+        _id: req.body.id,
+      });
+      if (!template) {
+        res.status(400).send("Template not found");
+        return;
+      }
+
+      const templates = await ApplicationTemplate.find({
+        professor: req.user.id,
+      });
+      console.log(templates);
+      res.status(200).send({ templates: templates });
+    } catch (err) {
+      res.status(400).send("deleting application template failed");
+    }
+  });
+
 module.exports = applicationRoutes;
 
 // old endpoints

@@ -12,6 +12,7 @@ import ApplicationTemplateView from "../pages/professor/templates/ApplicationTem
 import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
 import DashboardView from "../pages/dashboard/DashboardView";
 import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
+import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
 
 import LoginPage from "../pages/auth/Login";
 import FAQs from "../pages/faqs/FAQs";
@@ -77,11 +78,15 @@ const Router = createBrowserRouter(
             path="/templates/default"
             element={<DefaultFormView />}
           />
-
           <Route
             exact
             path="/templates/custom"
             element={<CustomFormView />}
+          />
+          <Route
+            exact
+            path="/interviewscheduling"
+            element={<ProfInterviewView />}
           />
         </Route>
 

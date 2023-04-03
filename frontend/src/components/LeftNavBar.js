@@ -113,8 +113,8 @@ function LeftNavBar() {
           <Nav.Item>
             <Nav.Link
               className="leftNavLink"
-              href="/createinterviews"
-              active={location.pathname === "/createinterviews"}
+              href="/interviewscheduling"
+              active={location.pathname === "/interviewscheduling"}
             >
               Interview Scheduling
             </Nav.Link>

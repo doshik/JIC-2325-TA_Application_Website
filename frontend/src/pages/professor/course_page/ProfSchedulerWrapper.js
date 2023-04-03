@@ -8,7 +8,7 @@ const ProfSchedulerWrapper = () => {
   return (
     <>
       <Button onClick={() => setShowModal(true)} variant="primary">
-        Accept
+        Schedule Interview
       </Button>
       <ProfSchedulerModal show={showModal} onHide={() => setShowModal(false)} />
     </>

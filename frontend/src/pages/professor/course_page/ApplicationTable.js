@@ -1,6 +1,6 @@
 import * as React from "react";
 import Table from "react-bootstrap/Table";
-import SchedulerWrapper from './SchedulerWrapper';
+import ProfSchedulerWrapper from "./ProfSchedulerWrapper";
 
 const ApplicationTable = () => {
   const [applications, setApplications] = React.useState([]);
@@ -45,7 +45,7 @@ const ApplicationTable = () => {
 
   return (
     <>
-    <Table striped bordered hover style={styles.table}>
+    <Table striped bordered hover className="text-center">
       <thead>
         <tr>
           <th>Name</th>
@@ -53,6 +53,7 @@ const ApplicationTable = () => {
           <th>Year</th>
           <th>Program</th>
           <th>Status</th>
+          <th>Schedule Interview</th>
           <th>Application</th>
           <th>Action</th>
         </tr>
@@ -73,27 +74,21 @@ const applicationsToRows = (applications) => {
         <td>{application.program}</td>
         <td>{application.status}</td>
         <td>
+          <ProfSchedulerWrapper />
+        </td>
+        <td>
           <a href="">View</a>
         </td>
-        <select style={{width: '100%'}}>
-          <option value="accept">Accept</option>
-          <option value="reject">Reject</option>
-        </select>
+        <td>
+          <select id="status" className="w-100">
+            <option value="accept">Accept</option>
+            <option value="interview">Interview</option>
+            <option value="reject">Reject</option>
+          </select>
+        </td>
       </tr>
     );
   });
 };
 
 export default ApplicationTable;
-
-const styles = {
-  
-  link: {
-    color: "#61dafb",
-  },
-  
-  tableRow: {
-    display: "flex",
-    flexDirection: "row",
-  },
-};

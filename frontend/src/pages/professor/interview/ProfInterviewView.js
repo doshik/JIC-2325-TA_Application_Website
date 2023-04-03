@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table, Card } from "react-bootstrap";
-import {
-  getStudentInterviewRequests,
-  acceptInterviewRequest,
-} from "../../../api/interview";
+import { getProfInterviewRequests } from "../../../api/interview";
 import moment from "moment";
-import StudentSchedulerWrapper from "./StudentSchedulerWrapper";
 
-const StudentInterviewView = () => {
+const ProfInterviewView = () => {
   const [interviewRequests, setInterviewRequests] = React.useState([]);
   const [tempRefresh, setTempRefresh] = React.useState(1);
 
   useEffect(() => {
     // TODO: Replace this with action/redux
-    getStudentInterviewRequests().then((requests) => {
+    getProfInterviewRequests().then((requests) => {
       console.log(requests);
       setInterviewRequests(requests.interviewRequests);
     });
@@ -21,17 +17,16 @@ const StudentInterviewView = () => {
 
   return (
     <div>
-      <h5>Interview Requests</h5>
+      <h5>Pending Interviews</h5>
       <Card className="mb-3">
         <Card.Body>
           <div className="text-center">
             <Table hover size="sm">
               <thead>
                 <tr>
+                  <th scope="col">Student Name</th>
                   <th scope="col">Course Name</th>
-                  <th scope="col">Professor Name</th>
                   <th scope="col">Semester</th>
-                  <th scope="col"> Select Interview Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,15 +34,9 @@ const StudentInterviewView = () => {
                   if (request?.acceptedTime === "") {
                     return (
                       <tr>
+                        <td>John</td>
                         <td>CS 1332</td>
-                        <td>Richard Landry</td>
                         <td>Spring 2023</td>
-                        <td>
-                          <StudentSchedulerWrapper
-                            request={request}
-                            trigger={() => setTempRefresh(tempRefresh + 1)}
-                          />
-                        </td>
                       </tr>
                     );
                   } else {
@@ -60,17 +49,17 @@ const StudentInterviewView = () => {
         </Card.Body>
       </Card>
 
-      <h5>Accepted Interviews</h5>
+      <h5>Scheduled Interviews</h5>
       <Card>
         <Card.Body>
           <div className="text-center">
             <Table hover size="sm">
               <thead>
                 <tr>
+                <th scope="col">Student Name</th>
                   <th scope="col">Course Name</th>
-                  <th scope="col">Professor Name</th>
                   <th scope="col">Semester</th>
-                  <th scope="col"> Interview Time</th>
+                  <th scope="col">Interview Time</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -79,8 +68,8 @@ const StudentInterviewView = () => {
                   if (request?.acceptedTime !== "") {
                     return (
                       <tr>
+                        <td>John</td>
                         <td>CS 1332</td>
-                        <td>Richard Landry</td>
                         <td>Spring 2023</td>
                         <td>
                           {moment(request.acceptedTime).format(
@@ -109,7 +98,7 @@ const StudentInterviewView = () => {
   );
 };
 
-export default StudentInterviewView;
+export default ProfInterviewView;
 
 const styles = {
 

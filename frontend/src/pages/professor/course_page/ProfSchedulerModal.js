@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import moment from "moment";
-import { submitInterviewRequest } from "../../api/interview";
+import { submitInterviewRequest } from "../../../api/interview";
 
 const ProfSchedulerModal = ({ show, onHide }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);

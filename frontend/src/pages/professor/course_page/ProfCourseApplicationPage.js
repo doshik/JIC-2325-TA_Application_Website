@@ -124,10 +124,15 @@ const ProfCourseApplicationPage = () => {
           </Col>
         </Row>
       </Container>
+      <Row>
+        <Col className="d-flex justify-content-center mb-3">
+          <Button variant="success" className="w-25">
+            Update
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 };
 
 export default ProfCourseApplicationPage;
-
-

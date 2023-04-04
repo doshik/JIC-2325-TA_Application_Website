@@ -34,7 +34,10 @@ courseRoutes.route("/create").post(async function (req, res) {
 courseRoutes.route("/get").get(userAuth, async function (req, res) {
   try {
     console.log(req.user.id);
-    const courses = await Course.find({ professor: req.user.id });
+    const courses = await Course.find({ professor: req.user.id }).populate(
+      "application"
+    );
+
     if (courses) {
       res.status(200).json({ courses: courses });
     } else {
@@ -42,6 +45,34 @@ courseRoutes.route("/get").get(userAuth, async function (req, res) {
     }
   } catch (err) {
     res.status(400).send("getting courses failed");
+  }
+});
+
+// update course
+courseRoutes.route("/update").post(userAuth, async function (req, res) {
+  try {
+    const course = await Course.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        $set: {
+          active: req.body.active,
+          application: req.body.application ?? null,
+        },
+      },
+      { new: true }
+    );
+
+    if (!course) {
+      res.status(400).send("Course not found");
+    }
+
+    const courses = await Course.find({ professor: req.user.id }).populate(
+      "application"
+    );
+    res.status(200).json({ courses: courses });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("updating course failed");
   }
 });
 

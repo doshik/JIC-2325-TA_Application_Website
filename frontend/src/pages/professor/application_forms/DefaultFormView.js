@@ -1,7 +1,7 @@
 import * as React from "react";
 import DefaultForm from "./DefaultForm";
 
-const DefaultApplicationFormView = () => {
+const DefaultFormView = () => {
   return (
     <div>
       <h5 className="px-3">Default Application</h5>
@@ -10,4 +10,4 @@ const DefaultApplicationFormView = () => {
   );
 };
 
-export default DefaultApplicationFormView;
+export default DefaultFormView;

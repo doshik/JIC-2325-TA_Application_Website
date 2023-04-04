@@ -5,23 +5,29 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
-import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
-import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
-import EditApplicationFormView from "../pages/application_form/EditApplicationFormView";
-import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
-import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
-import ApplicationStatus from "../pages/application_status/ApplicationStatus";
-import DashboardView from "../pages/dashboard/DashboardView";
-import StudentInterviewView from "../pages/interview/StudentInterviewView";
-import ProfInterviewView from "../pages/interview/ProfInterviewView";
 
-import LoginPage from "../pages/auth/Login";
-import FAQs from "../pages/faqs/FAQs";
 import Root from "./Root";
-import HomePage from "../pages/auth/Home";
 import ProtectedRoute from "./ProtectedRoute";
-import SubmitApplicationView from "../pages/submit_application/SubmitApplicationView";
+
+// General Pages
+import LoginPage from "../pages/auth/Login";
+import HomePage from "../pages/auth/Home";
+import FAQs from "../pages/faqs/FAQs";
+import DashboardView from "../pages/dashboard/DashboardView";
+
+// Professor View
+import ProfCoursePage from "../pages/professor/course_page/ProfCoursePage";
+import ApplicationTemplateView from "../pages/professor/templates/ApplicationTemplateView";
+import DefaultFormView from "../pages/professor/application_forms/DefaultFormView";
+import CustomFormView from "../pages/professor/application_forms/CustomFormView";
+import EditApplicationFormView from "../pages/professor/application_forms/EditApplicationFormView";
+import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
+
+// Student View
+import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
+import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
+import SubmitApplicationView from "../pages/student/submit_application/SubmitApplicationView";
+import ApplicationStatus from "../pages/student/application_status/ApplicationStatus"
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -77,7 +83,7 @@ const Router = createBrowserRouter(
             exact
             path="/applications/:courseId"
             loader={({ params }) => params.courseId}
-            element={<ProfCourseApplicationPage />}
+            element={<ProfCoursePage />}
           />
           <Route
             exact
@@ -87,15 +93,13 @@ const Router = createBrowserRouter(
           <Route
             exact
             path="/templates/default"
-            element={<DefaultApplicationFormView />}
+            element={<DefaultFormView />}
           />
-
           <Route
             exact
             path="/templates/custom"
-            element={<CustomApplicationFormView />}
+            element={<CustomFormView />}
           />
-
           <Route
             exact
             path="/templates/edit"
@@ -104,7 +108,7 @@ const Router = createBrowserRouter(
 
           <Route
             exact
-            path="/createinterviews"
+            path="/interviewscheduling"
             element={<ProfInterviewView />}
           />
         </Route>

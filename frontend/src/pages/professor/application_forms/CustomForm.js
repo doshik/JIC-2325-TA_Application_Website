@@ -1,17 +1,22 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   createApplicationTemplateAction,
   updateApplicationTemplateAction,
-} from "../../redux/actions/applicationActions";
-import { useNavigate, useParams } from "react-router-dom";
+} from "../../../redux/actions/applicationActions";
+
 
 function CustomForm({ template }) {
   const [name, setName] = useState(template?.name ?? "");
   const [questions, setQuestions] = useState(
     template?.questions ?? [{ question: null }]
   );
+  
+  // To Do: Replace this form with MS Forms or add page number selection
+  // const [pageNumbers, setPageNumbers] = useState([{ value: null }]);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

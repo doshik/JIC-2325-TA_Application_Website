@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getApplicationTemplatesAction,
   deleteApplicationTemplateAction,
-} from "../../redux/actions/applicationActions";
+} from "../../../redux/actions/applicationActions";
 
 const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const ApplicationTemplatesTable = () => {
               <Button
                 variant="primary"
                 style={styles.button}
-                onClick={() => navigate("templates/default")}
+                onClick={() => navigate("/templates/default")}
               >
                 View
               </Button>

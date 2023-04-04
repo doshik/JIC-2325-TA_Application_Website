@@ -10,11 +10,10 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function Home() {
   const account = useSelector((state) => state.auth.user);
-  // const account = {username: "rchandra38", displayname: "Ritvik Chandrashekhar", email: "rchandra38@gatech.edu"}
   const dispatch = useDispatch();
   const navigate = useNavigate();
   

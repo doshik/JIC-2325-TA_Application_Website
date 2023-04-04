@@ -57,7 +57,9 @@ const ApplicationTemplatesTable = () => {
                 <td>
                   <Button
                     variant="primary"
-                    onClick={() => navigate(`${template.url}`)}
+                    onClick={() =>
+                      navigate("/templates/edit", { state: { template } })
+                    }
                     style={styles.button}
                   >
                     View/Edit

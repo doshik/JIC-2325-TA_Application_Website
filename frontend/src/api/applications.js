@@ -28,3 +28,15 @@ export const deleteApplicationTemplate = async (id) => {
   });
   return response.data;
 };
+
+// a function to update a custom application template for a professor
+export const updateApplicationTemplate = async (id, name, questions) => {
+  const response = await post(`/application/prof/update-template`, {
+    id,
+    name,
+    questions,
+  }).catch((err) => {
+    throw err;
+  });
+  return response.data;
+};

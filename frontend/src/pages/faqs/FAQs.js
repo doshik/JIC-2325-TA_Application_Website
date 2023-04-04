@@ -75,5 +75,5 @@ export default FAQs;
 const styles = {
   container: {
     minHeight: "75vh",
-  },
+  }
 };

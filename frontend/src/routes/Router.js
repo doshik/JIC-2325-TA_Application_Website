@@ -6,6 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+
 import Root from "./Root";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -64,6 +65,13 @@ const Router = createBrowserRouter(
             path="/submit/:courseId"
             loader={({ params }) => params.courseId}
             element={<SubmitApplicationView />}
+          />
+
+          <Route 
+            exact 
+            path="/status/:courseId" 
+            loader={({ params }) => params.courseId} 
+            element={<ApplicationStatus />} 
           />
 
           <Route exact path="/interviews" element={<StudentInterviewView />} />

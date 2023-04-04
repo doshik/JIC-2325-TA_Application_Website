@@ -43,7 +43,7 @@ const StudentDashboard = () => {
                     <Card.Title>{course.courseName}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{course.professor}</Card.Subtitle>
                   </div>
-                  <Button variant="primary" href={`submit/${course.courseName}`}>View Submission</Button>
+                  <Button variant="primary" href={`status/${course.courseName}`}>View Submission</Button>
                 </div>
               </Card.Body>
             </Card>

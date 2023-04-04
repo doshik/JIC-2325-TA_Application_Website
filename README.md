@@ -3,6 +3,25 @@ Summary: We are designing a better TA application website with functionalities t
 
 ## Release Notes
 
+### Version 0.4.0:
+#### New Features
+* Frontend - replaced placeholder text on login and home screens
+* Frontend - updated UI for interview scheduling
+* Frontend - incorporated interview scheduling into professor course page
+* Frontend - created new error page for non-existent routes
+* Frontend - created application status page
+* Backend - added ability to cancel interviews
+* Backend - completed functionality for editing, assigning and deleting application templates
+
+
+#### Bug Fixes
+* Fixed routing for buttons throughout website
+
+#### Known Issues
+* Data on frontend pages is still partially hard-coded since GT CAS is still a work in progress
+* Framework needs to be converted to Symfony
+* Application submission process still a work in progress
+
 ### Version 0.3.0:
 #### New Features
 * Frontend - updated UI to model after Buzzport

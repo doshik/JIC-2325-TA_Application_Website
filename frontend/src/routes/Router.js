@@ -14,6 +14,7 @@ import LoginPage from "../pages/auth/Login";
 import HomePage from "../pages/auth/Home";
 import FAQs from "../pages/faqs/FAQs";
 import DashboardView from "../pages/dashboard/DashboardView";
+import Error from "../pages/error/Error";
 
 // Professor View
 import ProfCoursePage from "../pages/professor/course_page/ProfCoursePage";
@@ -32,12 +33,9 @@ import ApplicationStatus from "../pages/student/application_status/ApplicationSt
 const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="*" element={<p>404!</p>} />
-
-      <Route exact path="/" element={<Navigate to="/login" />} />
-
       {/* unprotected routes */}
       <Route exact path="/" element={<Root />}>
+        <Route path="*" element={<Error />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/faqs" element={<FAQs />} />
 

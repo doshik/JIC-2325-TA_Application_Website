@@ -7,7 +7,6 @@ import {
   updateApplicationTemplateAction,
 } from "../../../redux/actions/applicationActions";
 
-
 function CustomForm({ template }) {
   const [name, setName] = useState(template?.name ?? "");
   const [questions, setQuestions] = useState(

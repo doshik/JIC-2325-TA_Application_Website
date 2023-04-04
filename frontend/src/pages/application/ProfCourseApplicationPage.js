@@ -12,20 +12,28 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { getApplicationTemplatesAction } from "../../redux/actions/applicationActions";
 import { useDispatch, useSelector } from "react-redux";
 
+import { updateCourseAction } from "../../redux/actions/courseActions";
+
 const ProfCourseApplicationPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const templates = useSelector(
     (state) => state.application.applicationTemplates
   );
+  const location = useLocation();
+  const { course } = location.state;
+  console.log(course);
 
-  const courseId = useLoaderData();
-  const [isHiring, setIsHiring] = React.useState(false);
+  const courseId = course.courseId;
+  const [isHiring, setIsHiring] = React.useState(course?.active);
   const [semester, setSemester] = React.useState("");
-  const [template, setTemplate] = React.useState("");
+  const [template, setTemplate] = React.useState(
+    course?.application?.name ?? ""
+  );
 
   const handleSemesterChange = (eventKey) => {
     setSemester(eventKey);
@@ -37,9 +45,10 @@ const ProfCourseApplicationPage = () => {
   };
 
   const handleSave = () => {
-    const form = document.getElementById("course-form");
-    const formData = new FormData(form);
-    // Add logic here to handle form data submission
+    const appTemplate = templates.filter((item) => item.name === template)[0]
+      ._id;
+    dispatch(updateCourseAction(course._id, appTemplate, isHiring));
+    navigate("/dashboard");
   };
 
   if (!courseId) {
@@ -113,6 +122,7 @@ const ProfCourseApplicationPage = () => {
                     rows={3}
                     placeholder="Enter course description"
                     name="courseDescription"
+                    value={course.courseTitle}
                   />
                 </Form.Group>
               </Col>

@@ -15,29 +15,6 @@ const ProfDashboard = () => {
     dispatch(getCoursesAction());
   }, [dispatch]);
 
-  const Courses = [
-    {
-      courseName: "CS 1332",
-      progress: "Active",
-      courseTitle: "Data Structures & Algorithms",
-    },
-    {
-      courseName: "CS 2340",
-      progress: "Active",
-      courseTitle: "Objects and Design",
-    },
-    {
-      courseName: "CS 4641",
-      progress: "Inactive",
-      courseTitle: "Machine Learning",
-    },
-    {
-      courseName: "CS 2110",
-      progress: "Inactive",
-      courseTitle: "Computer Organization and Programming",
-    },
-  ];
-
   const inProgressCourses = courses.filter((course) => course.active === true);
   const submittedCourses = courses.filter((course) => course.active === false);
 
@@ -58,7 +35,11 @@ const ProfDashboard = () => {
                   </div>
                   <Button
                     variant="primary"
-                    onClick={() => navigate(`/applications/${course.courseId}`)}
+                    onClick={() =>
+                      navigate(`/applications/${course.courseId}`, {
+                        state: { course },
+                      })
+                    }
                   >
                     Course Info
                   </Button>
@@ -83,7 +64,11 @@ const ProfDashboard = () => {
                   </div>
                   <Button
                     variant="primary"
-                    onClick={() => navigate(`/applications/${course.courseId}`)}
+                    onClick={() =>
+                      navigate(`/applications/${course.courseId}`, {
+                        state: { course },
+                      })
+                    }
                   >
                     Course Info
                   </Button>

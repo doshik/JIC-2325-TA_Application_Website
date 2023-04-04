@@ -6,7 +6,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-
 import Root from "./Root";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -28,6 +27,7 @@ import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
 import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
 import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
 import SubmitApplicationView from "../pages/student/submit_application/SubmitApplicationView";
+import ApplicationStatus from "../pages/student/application_status/ApplicationStatus"
 
 const Router = createBrowserRouter(
   createRoutesFromElements(

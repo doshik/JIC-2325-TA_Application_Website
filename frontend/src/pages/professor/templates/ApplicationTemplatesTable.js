@@ -42,7 +42,7 @@ const ApplicationTemplatesTable = () => {
               <Button
                 variant="primary"
                 style={styles.button}
-                onClick={() => navigate("templates/default")}
+                onClick={() => navigate("/templates/default")}
               >
                 View
               </Button>

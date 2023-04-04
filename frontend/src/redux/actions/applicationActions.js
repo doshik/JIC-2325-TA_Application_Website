@@ -8,6 +8,7 @@ import {
   getApplicationTemplates,
   createApplicationTemplate,
   deleteApplicationTemplate,
+  updateApplicationTemplate,
 } from "../../api/applications";
 
 // Get all application templates
@@ -58,3 +59,20 @@ export const deleteApplicationTemplateAction = (id) => async (dispatch) => {
     });
   }
 };
+
+// Update an application template
+export const updateApplicationTemplateAction =
+  (id, name, questions) => async (dispatch) => {
+    try {
+      const response = await updateApplicationTemplate(id, name, questions);
+      dispatch({
+        type: SAVE_APPLICATION_TEMPLATES,
+        payload: response.templates,
+      });
+    } catch (err) {
+      dispatch({
+        type: APPLICATION_TEMPLATES_ERROR,
+        payload: err,
+      });
+    }
+  };

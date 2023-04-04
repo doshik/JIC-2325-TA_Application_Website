@@ -121,6 +121,30 @@ applicationRoutes
     }
   });
 
+// update a template
+applicationRoutes
+  .route("/prof/update-template")
+  .post(userAuth, async function (req, res) {
+    try {
+      const template = await ApplicationTemplate.findOneAndUpdate(
+        { _id: req.body.id },
+        { $set: { questions: req.body.questions, name: req.body.name } }
+      );
+
+      if (!template) {
+        res.status(400).send("Template not found");
+        return;
+      }
+
+      const templates = await ApplicationTemplate.find({
+        professor: req.user.id,
+      });
+      res.status(200).send({ templates: templates });
+    } catch (err) {
+      res.status(400).send("updating application template failed");
+    }
+  });
+
 module.exports = applicationRoutes;
 
 // old endpoints

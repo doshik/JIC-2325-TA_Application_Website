@@ -8,6 +8,7 @@ import {
 import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
 import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
+import EditApplicationFormView from "../pages/application_form/EditApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
 import DashboardView from "../pages/dashboard/DashboardView";
@@ -41,23 +42,25 @@ const Router = createBrowserRouter(
 
         {/* student routes */}
         <Route element={<ProtectedRoute roles={["student"]} />}>
-          <Route 
+          <Route exact path="/apply" element={<StudentApplicationsView />} />
+
+          <Route
             exact
-            path="/apply" 
-            element={<StudentApplicationsView />} 
+            path="/submit/:courseId"
+            loader={({ params }) => params.courseId}
+            element={<SubmitApplicationView />}
           />
 
-          <Route exact path="/submit/:courseId" 
-            loader={({ params }) => params.courseId} 
-            element={<SubmitApplicationView />} 
-            />
+          <Route exact path="/interviews" element={<StudentInterviewView />} />
 
-          <Route 
-            exact 
-            path="/interviews" 
-            element={<StudentInterviewView />} 
+          <Route
+            exact
+            path="/submit/:courseId"
+            loader={({ params }) => params.courseId}
+            element={<SubmitApplicationView />}
           />
 
+          <Route exact path="/interviews" element={<StudentInterviewView />} />
         </Route>
 
         {/* professor routes */}
@@ -87,36 +90,16 @@ const Router = createBrowserRouter(
 
           <Route
             exact
+            path="/templates/edit"
+            element={<EditApplicationFormView />}
+          />
+
+          <Route
+            exact
             path="/createinterviews"
             element={<ProfInterviewView />}
           />
         </Route>
-
-        {/* <Route exact 
-          path="prof/applications/:courseId" 
-          loader={({ params }) => params.courseId} 
-          element={<ProfCourseApplicationPage />} 
-          />
-          
-        <Route exact path="prof/templates" element={<ApplicationTemplateView />} />
-
-        <Route exact path="prof/templates/default" element={<DefaultApplicationFormView />} />
-
-        <Route exact path="prof/course/:courseId" 
-          loader={({ params }) => params.courseId} 
-          element={<ProfCourseApplicationPage />} 
-          />
-
-        <Route exact 
-          path="prof/templates/custom" 
-          element={<CustomApplicationFormView />} 
-          />
-
-        <Route exact 
-          path="prof/course/:courseId" 
-          loader={({ params }) => params.courseId} 
-          element={<ProfCourseApplicationPage />} 
-          /> */}
       </Route>
     </>
   )

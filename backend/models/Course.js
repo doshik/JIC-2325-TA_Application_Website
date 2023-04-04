@@ -6,9 +6,8 @@ const courseSchema = new Schema({
     type: String,
     required: true,
   },
-  name: {
+  courseTitle: {
     type: String,
-    required: true,
   },
   professor: {
     type: Schema.Types.ObjectId,
@@ -16,9 +15,9 @@ const courseSchema = new Schema({
   },
   application: {
     type: Schema.Types.ObjectId,
-    ref: "Application",
+    ref: "ApplicationTemplate",
   },
-  acceptingApplications: {
+  active: {
     type: Boolean,
     default: false,
   },

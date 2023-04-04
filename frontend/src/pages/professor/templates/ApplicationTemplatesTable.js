@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getApplicationTemplatesAction } from "../../../redux/actions/applicationActions";
+import {
+  getApplicationTemplatesAction,
+  deleteApplicationTemplateAction,
+} from "../../redux/actions/applicationActions";
 
 const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();
@@ -36,8 +39,12 @@ const ApplicationTemplatesTable = () => {
             <td>N/A</td>
             <td>No</td>
             <td>
-              <Button variant="primary" style={styles.button} onClick={() => navigate("templates/default")}>
-                View/Edit
+              <Button
+                variant="primary"
+                style={styles.button}
+                onClick={() => navigate("templates/default")}
+              >
+                View
               </Button>
             </td>
           </tr>
@@ -50,9 +57,21 @@ const ApplicationTemplatesTable = () => {
                 <td>
                   <Button
                     variant="primary"
-                    onClick={() => navigate(`${template.url}`)}
-                    style={styles.button}>
+                    onClick={() =>
+                      navigate("/templates/edit", { state: { template } })
+                    }
+                    style={styles.button}
+                  >
                     View/Edit
+                  </Button>
+                  <Button
+                    variant="danger"
+                    style={styles.button}
+                    onClick={() =>
+                      dispatch(deleteApplicationTemplateAction(template._id))
+                    }
+                  >
+                    Delete
                   </Button>
                 </td>
               </tr>

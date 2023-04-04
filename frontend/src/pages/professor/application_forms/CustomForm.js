@@ -1,6 +1,7 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import CustomForm from "./frontend/src/pages/professor/application_forms/CustomForm.js";
 import { createApplicationTemplateAction } from "../../../redux/actions/applicationActions";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +12,18 @@ function CustomForm() {
   // To Do: Replace this form with MS Forms or add page number selection
   // const [pageNumbers, setPageNumbers] = useState([{ value: null }]);
 
+import {
+  createApplicationTemplateAction,
+  updateApplicationTemplateAction,
+} from "../../redux/actions/applicationActions";
+import { useNavigate, useParams } from "react-router-dom";
+
+
+function CustomForm({ template }) {
+  const [name, setName] = useState(template?.name ?? "");
+  const [questions, setQuestions] = useState(
+    template?.questions ?? [{ question: null }]
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,8 +51,12 @@ function CustomForm() {
 
   function handleSubmit(event) {
     console.log(questions);
-    dispatch(createApplicationTemplateAction(name, questions));
-    navigate("/user/prof/applicationtemplates");
+    if (template) {
+      dispatch(updateApplicationTemplateAction(template._id, name, questions));
+    } else {
+      dispatch(createApplicationTemplateAction(name, questions));
+    }
+    navigate("/templates");
   }
 
   return (
@@ -56,6 +73,7 @@ function CustomForm() {
                   as="textarea"
                   onChange={(e) => handleNameChange(e)}
                   rows="1"
+                  value={name}
                 />
               </Col>
             </Form.Group>
@@ -91,10 +109,7 @@ function CustomForm() {
           })}
           <Row className="mt-4">
             <Col className="d-flex justify-content-center">
-              <Button
-                variant="primary"
-                onClick={() => handleAddField()}
-              >
+              <Button variant="primary" onClick={() => handleAddField()}>
                 Add Question
               </Button>
             </Col>

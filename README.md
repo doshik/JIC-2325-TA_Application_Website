@@ -5,22 +5,20 @@ Summary: We are designing a better TA application website with functionalities t
 
 ### Version 0.4.0:
 #### New Features
-* Frontend - replaced placeholder text on login and home screens
-* Frontend - updated UI for interview scheduling
-* Frontend - incorporated interview scheduling into professor course page
-* Frontend - created new error page for non-existent routes
-* Frontend - created application status page
-* Backend - added ability to cancel interviews
-* Backend - completed functionality for editing, assigning and deleting application templates
-
+* Frontend - updated Interview Scheduling UI
+* Frontend - created course TA Application menu/features 
+* Frontend - updated/added features to TA Application Template System
+* Frontend - added student TA Application status page and features
+* Backend - added more Interview Scheduling functionality, including canceling meetings
+* Backend - added course objects and backend functionality for creating/updating/retrieving application data in them
+* Backend - migrated professor dashboard to retrieve courses from backend
+* Backend - initialized Symphony project 
 
 #### Bug Fixes
-* Fixed routing for buttons throughout website
+* Fixed the application templates from disappearing when saved with a duplicate name
 
 #### Known Issues
-* Data on frontend pages is still partially hard-coded since GT CAS is still a work in progress
-* Framework needs to be converted to Symfony
-* Application submission process still a work in progress
+* React render updates are a little behind when interacting with the app
 
 ### Version 0.3.0:
 #### New Features

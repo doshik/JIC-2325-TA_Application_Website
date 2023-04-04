@@ -10,6 +10,7 @@ import DefaultApplicationFormView from "../pages/application_form/DefaultApplica
 import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
+import ApplicationStatus from "../pages/application_status/ApplicationStatus";
 import DashboardView from "../pages/dashboard/DashboardView";
 import StudentInterviewView from "../pages/interview/StudentInterviewView";
 import ProfInterviewView from "../pages/interview/ProfInterviewView";
@@ -56,6 +57,13 @@ const Router = createBrowserRouter(
             exact 
             path="/interviews" 
             element={<StudentInterviewView />} 
+          />
+
+          <Route 
+            exact 
+            path="/status/:courseId" 
+            loader={({ params }) => params.courseId} 
+            element={<ApplicationStatus />} 
           />
 
         </Route>

@@ -9,6 +9,7 @@ Summary: We are designing a better TA application website with functionalities t
 * Frontend - created course TA Application menu/features 
 * Frontend - updated/added features to TA Application Template System
 * Frontend - added student TA Application status page and features
+* Frontend - replaced placeholder text on login and home screens
 * Backend - added more Interview Scheduling functionality, including canceling meetings
 * Backend - added course objects and backend functionality for creating/updating/retrieving application data in them
 * Backend - migrated professor dashboard to retrieve courses from backend
@@ -16,9 +17,12 @@ Summary: We are designing a better TA application website with functionalities t
 
 #### Bug Fixes
 * Fixed the application templates from disappearing when saved with a duplicate name
+* Fixed routing for buttons throughout website
 
 #### Known Issues
-* React render updates are a little behind when interacting with the app
+* Data on frontend pages is still partially hard-coded since GT CAS is still a work in progress
+* Framework needs to be converted to Symfony
+* Application submission process still a work in progress
 
 ### Version 0.3.0:
 #### New Features

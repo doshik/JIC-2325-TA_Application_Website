@@ -5,21 +5,27 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import ProfCourseApplicationPage from "../pages/application/ProfCourseApplicationPage";
-import DefaultApplicationFormView from "../pages/application_form/DefaultApplicationFormView";
-import CustomApplicationFormView from "../pages/application_form/CustomApplicationFormView";
-import EditApplicationFormView from "../pages/application_form/EditApplicationFormView";
-import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
-import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
+
+import Root from "./Root";
+import ProtectedRoute from "./ProtectedRoute";
+
+// General Pages
+import LoginPage from "../pages/auth/Login";
+import HomePage from "../pages/auth/Home";
+import FAQs from "../pages/faqs/FAQs";
 import DashboardView from "../pages/dashboard/DashboardView";
-import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
+
+// Professor View
+import ProfCoursePage from "../pages/professor/course_page/ProfCoursePage";
+import ApplicationTemplateView from "../pages/professor/templates/ApplicationTemplateView";
+import DefaultFormView from "../pages/professor/application_forms/DefaultFormView";
+import CustomFormView from "../pages/professor/application_forms/CustomFormView";
+import EditApplicationFormView from "../pages/professor/application_forms/EditApplicationFormView";
 import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
 
-import LoginPage from "../pages/auth/Login";
-import FAQs from "../pages/faqs/FAQs";
-import Root from "./Root";
-import HomePage from "../pages/auth/Home";
-import ProtectedRoute from "./ProtectedRoute";
+// Student View
+import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
+import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
 import SubmitApplicationView from "../pages/student/submit_application/SubmitApplicationView";
 
 const Router = createBrowserRouter(
@@ -69,7 +75,7 @@ const Router = createBrowserRouter(
             exact
             path="/applications/:courseId"
             loader={({ params }) => params.courseId}
-            element={<ProfCourseApplicationPage />}
+            element={<ProfCoursePage />}
           />
           <Route
             exact

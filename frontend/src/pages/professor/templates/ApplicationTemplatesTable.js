@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getApplicationTemplatesAction,
   deleteApplicationTemplateAction,
-} from "../../redux/actions/applicationActions";
+} from "../../../redux/actions/applicationActions";
 
 const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();

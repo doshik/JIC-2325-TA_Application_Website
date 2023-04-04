@@ -13,12 +13,12 @@ import {
 } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
-import { getApplicationTemplatesAction } from "../../redux/actions/applicationActions";
+import { getApplicationTemplatesAction } from "../../../redux/actions/applicationActions";
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateCourseAction } from "../../redux/actions/courseActions";
+import { updateCourseAction } from "../../../redux/actions/courseActions";
 
-const ProfCourseApplicationPage = () => {
+const ProfCoursePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const templates = useSelector(
@@ -155,4 +155,4 @@ const ProfCourseApplicationPage = () => {
   );
 };
 
-export default ProfCourseApplicationPage;
+export default ProfCoursePage;

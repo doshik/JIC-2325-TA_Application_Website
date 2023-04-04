@@ -11,6 +11,7 @@ import CustomApplicationFormView from "../pages/application_form/CustomApplicati
 import EditApplicationFormView from "../pages/application_form/EditApplicationFormView";
 import ApplicationTemplateView from "../pages/application_templates/ApplicationTemplateView";
 import StudentApplicationsView from "../pages/viewing_open_applications/StudentApplicationsView";
+import ApplicationStatus from "../pages/application_status/ApplicationStatus";
 import DashboardView from "../pages/dashboard/DashboardView";
 import StudentInterviewView from "../pages/interview/StudentInterviewView";
 import ProfInterviewView from "../pages/interview/ProfInterviewView";
@@ -58,6 +59,13 @@ const Router = createBrowserRouter(
             path="/submit/:courseId"
             loader={({ params }) => params.courseId}
             element={<SubmitApplicationView />}
+          />
+
+          <Route 
+            exact 
+            path="/status/:courseId" 
+            loader={({ params }) => params.courseId} 
+            element={<ApplicationStatus />} 
           />
 
           <Route exact path="/interviews" element={<StudentInterviewView />} />

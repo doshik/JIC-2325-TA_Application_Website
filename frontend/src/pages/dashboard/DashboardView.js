@@ -1,19 +1,17 @@
-import { connect } from 'react-redux';
-import StudentDashboardView from './StudentDashboardView';
-import ProfessorDashboardView from './ProfessorDashboardView';
+import { useSelector } from "react-redux";
+import StudentDashboardView from "./StudentDashboardView";
+import ProfessorDashboardView from "./ProfessorDashboardView";
 
 // Example of a connected component
-const DashboardView = ({ auth }) => {
+const DashboardView = () => {
+  const auth = useSelector((state) => state.auth);
+
   return (
     <>
-      {auth.user.accountType === 'student' && <StudentDashboardView />}
-      {auth.user.accountType === 'professor' && <ProfessorDashboardView />}
+      {auth.user.accountType === "student" && <StudentDashboardView />}
+      {auth.user.accountType === "professor" && <ProfessorDashboardView />}
     </>
   );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth // Assuming user information is stored in the Redux store
-});
-
-export default connect(mapStateToProps)(DashboardView);
+export default DashboardView;

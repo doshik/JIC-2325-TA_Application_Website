@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table, Card } from "react-bootstrap";
-import { getProfInterviewRequests } from "../../../api/interview";
+import { getProfInterviewRequests, deleteInterviewRequest } from "../../../api/interview";
 import moment from "moment";
 
 const ProfInterviewView = () => {
@@ -77,11 +77,16 @@ const ProfInterviewView = () => {
                           )}
                         </td>
                         <td>
-                          <div>
-                            <Button variant="danger" className="btn-sm w-auto">
-                              Cancel
-                            </Button>
-                          </div>
+                          <Button 
+                            variant="danger" 
+                            className="btn-sm w-auto" 
+                            onClick={() =>
+                              deleteInterviewRequest(request._id).then(() => {
+                                setTempRefresh(tempRefresh + 1);
+                              })
+                            }>
+                            Cancel
+                          </Button>
                         </td>
                       </tr>
                     );
@@ -100,6 +105,3 @@ const ProfInterviewView = () => {
 
 export default ProfInterviewView;
 
-const styles = {
-
-};

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Table, Card } from "react-bootstrap";
 import {
   getStudentInterviewRequests,
-  acceptInterviewRequest,
+  deleteInterviewRequest,
 } from "../../../api/interview";
 import moment from "moment";
 import StudentSchedulerWrapper from "./StudentSchedulerWrapper";
@@ -88,11 +88,16 @@ const StudentInterviewView = () => {
                           )}
                         </td>
                         <td>
-                          <div>
-                            <Button variant="danger" className="btn-sm w-auto">
-                              Cancel
-                            </Button>
-                          </div>
+                          <Button 
+                            variant="danger" 
+                            className="btn-sm w-auto" 
+                            onClick={() =>
+                              deleteInterviewRequest(request._id).then(() => {
+                                setTempRefresh(tempRefresh + 1);
+                              })
+                            }>
+                            Cancel
+                          </Button>
                         </td>
                       </tr>
                     );

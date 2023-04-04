@@ -1,4 +1,4 @@
-import { get, post } from "./main";
+import { get, post, del } from "./main";
 
 // function to submit interview request
 export const submitInterviewRequest = async (student, possibleTimes) => {
@@ -37,6 +37,14 @@ export const acceptInterviewRequest = async (
     acceptedTime: acceptedTime,
   }).catch((err) => {
     throw err;
+  });
+  return response.data;
+};
+
+// function to delete an interview request
+export const deleteInterviewRequest = async (interviewRequestId) => {
+  const response = await del(`/interview/delete/${interviewRequestId}`).catch((err) => {
+      throw err;
   });
   return response.data;
 };

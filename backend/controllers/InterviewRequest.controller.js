@@ -111,4 +111,25 @@ applicationRoutes
     }
   });
 
+// @route DELETE api/interview/delete/:id
+// @desc Delete an interview request
+// @access Public
+applicationRoutes
+.route("/delete/:id")
+.delete(userAuth, async function (req, res) {
+  try {
+    const deletedRequest = await InterviewRequest.findOneAndDelete({
+      _id: req.params.id,
+    });
+
+    if (deletedRequest) {
+      res.status(200).json({ deletedRequest: deletedRequest });
+    } else {
+      res.status(400).send("deleting interview request failed");
+    }
+  } catch (err) {
+    res.status(400).send("deleting interview request failed");
+  }
+});
+
 module.exports = applicationRoutes;

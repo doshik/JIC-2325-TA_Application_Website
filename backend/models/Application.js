@@ -19,10 +19,14 @@ var applicationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "ApplicationTemplate",
     },
-    data: {
-      type: Object,
-      default: {},
+    responses: {
+      type: Array,
+      default: [],
     },
+    submitted: {
+      type: Boolean,
+      default: false,
+    }
   },
 
   { timestamps: true }
@@ -45,9 +49,7 @@ var applicationTemplateSchema = new Schema({
 });
 
 Application = mongoose.model("Application", applicationSchema);
-ApplicationTemplate = mongoose.model(
-  "ApplicationTemplate",
-  applicationTemplateSchema
-);
+ApplicationTemplate = mongoose.model("ApplicationTemplate", applicationTemplateSchema);
+
 module.exports = Application;
 module.exports = ApplicationTemplate;

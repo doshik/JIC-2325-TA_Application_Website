@@ -1,17 +1,18 @@
 import { get, post, del } from "./main";
 
 // a function to get all application templates for a professor
-export const getApplications = async () => {
-  const response = await get(`/application/student/get-submissions`).catch((err) => {
+export const getApplicationTemplates = async () => {
+  const response = await get(`/application/prof/get-templates`).catch((err) => {
     throw err;
   });
   return response.data;
 };
 
 // a function to create a custom application template for a professor
-export const createApplication = async (responses) => {
-  const response = await post(`/application/student/save-submission`, {
-    responses,
+export const createApplicationTemplate = async (name, questions) => {
+  const response = await post(`/application/prof/save-template`, {
+    name,
+    questions,
   }).catch((err) => {
     throw err;
   });
@@ -19,8 +20,8 @@ export const createApplication = async (responses) => {
 };
 
 // a function to delete a custom application template for a professor
-export const deleteApplication = async (id) => {
-  const response = await post(`/application/student/delete-submission`, {
+export const deleteApplicationTemplate = async (id) => {
+  const response = await post(`/application/prof/delete-template`, {
     id,
   }).catch((err) => {
     throw err;
@@ -29,10 +30,11 @@ export const deleteApplication = async (id) => {
 };
 
 // a function to update a custom application template for a professor
-export const updateApplication = async (id, responses) => {
-  const response = await post(`/application/student/update-submission`, {
+export const updateApplicationTemplate = async (id, name, questions) => {
+  const response = await post(`/application/prof/update-template`, {
     id,
-    responses,
+    name,
+    questions,
   }).catch((err) => {
     throw err;
   });

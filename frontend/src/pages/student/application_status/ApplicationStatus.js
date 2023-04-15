@@ -22,7 +22,7 @@ const ApplicationStatus = () => {
   const [isHiring, setIsHiring] = React.useState(false);
   const [semester, setSemester] = React.useState("");
   const [template, setTemplate] = React.useState("");
-  const status = "Submitted" 
+  const status = "submitted" 
 
   const handleSemesterChange = (eventKey) => {
     setSemester(eventKey);
@@ -60,28 +60,28 @@ const ApplicationStatus = () => {
                 <ProgressBar>
                 <ProgressBar
                     striped
-                    variant={status === 'Submitted' ? 'primary' : 'dark'}
+                    variant={status === 'submitted' ? 'primary' : 'dark'}
                     now={25}
                     key={1}
                     label="Submitted"
                 />
                 <ProgressBar
                     striped
-                    variant={status === 'Interview' ? 'primary' : 'dark'}
+                    variant={status === 'interview' ? 'primary' : 'dark'}
                     now={25}
                     key={2}
                     label="Interview"
                 />
                 <ProgressBar
                     striped
-                    variant={status === 'Hired' ? 'primary' : 'dark'}
+                    variant={status === 'hired' ? 'primary' : 'dark'}
                     now={25}
                     key={3}
                     label="Hired"
                 />
                 <ProgressBar
                     striped
-                    variant={status === 'Denied' ? 'primary' : 'dark'}
+                    variant={status === 'denied' ? 'primary' : 'dark'}
                     now={25}
                     key={4}
                     label="Denied"

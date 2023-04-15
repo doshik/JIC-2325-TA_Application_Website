@@ -10,9 +10,9 @@ const interviewRequestSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  application: {
+  course: {
     type: Schema.Types.ObjectId,
-    ref: "Application",
+    ref: "Course",
   },
   possibleTimes: {
     type: Array,

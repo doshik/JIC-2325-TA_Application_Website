@@ -45,9 +45,7 @@ applicationRoutes
   .route("/student/get")
   .get(userAuth, async function (req, res) {
     try {
-      const interviewRequests = await InterviewRequest.find({
-        student: req.user.id,
-      });
+      const interviewRequests = await InterviewRequest.find({student: req.user.id,}).populate(["student", "professor"]);
 
       if (interviewRequests) {
         res.status(200).json({ interviewRequests: interviewRequests });
@@ -66,9 +64,7 @@ applicationRoutes
 .route("/prof/get")
 .get(userAuth, async function (req, res) {
   try {
-    const interviewRequests = await InterviewRequest.find({
-      professor: req.user.id,
-    });
+    const interviewRequests = await InterviewRequest.find({professor: req.user.id,}).populate(["student", "professor"]);
 
     if (interviewRequests) {
       res.status(200).json({ interviewRequests: interviewRequests });

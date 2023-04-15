@@ -15,10 +15,6 @@ var applicationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Course",
     },
-    template: {
-      type: Schema.Types.ObjectId,
-      ref: "ApplicationTemplate",
-    },
     responses: {
       type: Array,
       default: [],
@@ -26,6 +22,9 @@ var applicationSchema = new Schema(
     submitted: {
       type: Boolean,
       default: false,
+    },
+    status: {
+      type: String
     }
   },
 

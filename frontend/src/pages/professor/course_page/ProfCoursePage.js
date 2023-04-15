@@ -26,13 +26,12 @@ const ProfCoursePage = () => {
   );
   const location = useLocation();
   const { course } = location.state;
-  console.log(course);
 
   const courseId = course.courseId;
   const [isHiring, setIsHiring] = React.useState(course?.active);
-  const [semester, setSemester] = React.useState("");
+  const [semester, setSemester] = React.useState("Spring 2023");
   const [template, setTemplate] = React.useState(
-    course?.application?.name ?? ""
+    course?.applicationTemplate?.name ?? ""
   );
 
   const handleSemesterChange = (eventKey) => {
@@ -41,14 +40,12 @@ const ProfCoursePage = () => {
 
   const handleTemplateChange = (eventKey) => {
     setTemplate(eventKey);
-    console.log(eventKey);
   };
 
   const handleSave = () => {
     const appTemplate = templates.filter((item) => item.name === template)[0]
       ._id;
     dispatch(updateCourseAction(course._id, appTemplate, isHiring));
-    navigate("/dashboard");
   };
 
   if (!courseId) {
@@ -72,6 +69,7 @@ const ProfCoursePage = () => {
               variant="secondary"
               title={semester || "Select Semester"}
               onSelect={handleSemesterChange}
+              default="Spring 2023"
             >
               <Dropdown.Item eventKey="Fall 2021">Fall 2021</Dropdown.Item>
               <Dropdown.Item eventKey="Spring 2022">Spring 2022</Dropdown.Item>

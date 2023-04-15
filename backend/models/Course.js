@@ -13,9 +13,12 @@ const courseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  application: {
+  applicationTemplate: {
     type: Schema.Types.ObjectId,
     ref: "ApplicationTemplate",
+  },
+  description: {
+    type: String,
   },
   active: {
     type: Boolean,

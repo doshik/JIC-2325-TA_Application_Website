@@ -38,14 +38,42 @@ const ApplicationTable = () => {
       status: "Accepted",
       application: "View",
     },
+    {
+      name: "John",
+      email: "georgepburdell@gatech.edu",
+      year: "1",
+      program: "Computer Science",
+      status: "Accepted",
+      application: "View",
+    },
+    {
+      name: "John",
+      email: "georgepburdell@gatech.edu",
+      year: "1",
+      program: "Computer Science",
+      status: "Accepted",
+      application: "View",
+    },{
+      name: "John",
+      email: "georgepburdell@gatech.edu",
+      year: "1",
+      program: "Computer Science",
+      status: "Accepted",
+      application: "View",
+    },
+    {
+      name: "John",
+      email: "georgepburdell@gatech.edu",
+      year: "1",
+      program: "Computer Science",
+      status: "Accepted",
+      application: "View",
+    }
   ];
-
-  testApplications.push(...testApplications);
-  testApplications.push(...testApplications);
 
   return (
     <>
-    <Table striped bordered hover className="text-center">
+    <Table hover className="text-center">
       <thead>
         <tr>
           <th>Name</th>
@@ -58,37 +86,33 @@ const ApplicationTable = () => {
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>{applicationsToRows(testApplications)}</tbody>
+      <tbody>
+        {testApplications && testApplications.map((application) => (
+          <tr>
+            <td>{application.name}</td>
+            <td>{application.email}</td>
+            <td>{application.year}</td>
+            <td>{application.program}</td>
+            <td>{application.status}</td>
+            <td>
+              <ProfSchedulerWrapper />
+            </td>
+            <td>
+              <a href="">View</a>
+            </td>
+            <td>
+              <select id="status" className="w-100">
+                <option value="accept">Accept</option>
+                <option value="interview">Interview</option>
+                <option value="reject">Reject</option>
+              </select>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </Table>
     </>
   );
-};
-
-const applicationsToRows = (applications) => {
-  return applications.map((application) => {
-    return (
-      <tr>
-        <td>{application.name}</td>
-        <td>{application.email}</td>
-        <td>{application.year}</td>
-        <td>{application.program}</td>
-        <td>{application.status}</td>
-        <td>
-          <ProfSchedulerWrapper />
-        </td>
-        <td>
-          <a href="">View</a>
-        </td>
-        <td>
-          <select id="status" className="w-100">
-            <option value="accept">Accept</option>
-            <option value="interview">Interview</option>
-            <option value="reject">Reject</option>
-          </select>
-        </td>
-      </tr>
-    );
-  });
 };
 
 export default ApplicationTable;

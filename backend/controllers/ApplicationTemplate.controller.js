@@ -1,16 +1,19 @@
-const ApplicationTemplate = require("../models/Application.js");
+const User = require("../models/User.js");
+const Course = require("../models/Course.js");
+const Application = require("../models/Application.js");
+const ApplicationTemplate = require("../models/ApplicationTemplate.js");
 const express = require("express");
-const applicationRoutes = express.Router();
+const applicationTemplateRoutes = express.Router();
+const mongoose = require("mongoose");
 const { userAuth } = require("../middleware/auth");
 
-// @route POST api/application/prof/save-template
+// @route POST api/application_templates/save-template
 // @desc Professor saves a TA application template
 // @access Public
-applicationRoutes
-  .route("/prof/save-template")
+applicationTemplateRoutes
+  .route("/save-template")
   .post(userAuth, async function (req, res) {
     try {
-      console.log(req.body);
       const newTemplate = new ApplicationTemplate({
         name: req.body.name,
         professor: req.user.id,
@@ -29,11 +32,11 @@ applicationRoutes
     }
   });
 
-// @route GET api/application/prof/get-templates
+// @route GET api/application_templates/get-templates
 // @desc Professor gets all own TA application templates
 // @access Public
-applicationRoutes
-  .route("/prof/get-templates")
+applicationTemplateRoutes
+  .route("/get-templates")
   .get(userAuth, async function (req, res) {
     try {
       const templates = await ApplicationTemplate.find({
@@ -47,8 +50,8 @@ applicationRoutes
   });
 
 // delete a template
-applicationRoutes
-  .route("/prof/delete-template")
+applicationTemplateRoutes
+  .route("/delete-template")
   .post(userAuth, async function (req, res) {
     try {
       const template = await ApplicationTemplate.findOneAndDelete({
@@ -62,7 +65,6 @@ applicationRoutes
       const templates = await ApplicationTemplate.find({
         professor: req.user.id,
       });
-      console.log(templates);
       res.status(200).send({ templates: templates });
     } catch (err) {
       res.status(400).send("deleting application template failed");
@@ -70,8 +72,8 @@ applicationRoutes
   });
 
 // update a template
-applicationRoutes
-  .route("/prof/update-template")
+applicationTemplateRoutes
+  .route("/update-template")
   .post(userAuth, async function (req, res) {
     try {
       const template = await ApplicationTemplate.findOneAndUpdate(
@@ -93,7 +95,7 @@ applicationRoutes
     }
   });
 
-module.exports = applicationRoutes;
+module.exports = applicationTemplateRoutes;
 
 // old endpoints
 

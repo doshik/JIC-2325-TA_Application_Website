@@ -49,6 +49,9 @@ app.use(bodyParser.json({ limit: "500mb" }));
 applicationRoutes = require("./controllers/Application.controller");
 app.use("/application", applicationRoutes);
 
+applicationTemplateRoutes = require("./controllers/ApplicationTemplate.controller");
+app.use("/application_templates", applicationTemplateRoutes);
+
 userRoutes = require("./controllers/User.controller");
 app.use("/user", userRoutes);
 

@@ -17,7 +17,7 @@ import {
       const response = await getApplications();
       dispatch({
         type: GET_APPLICATIONS,
-        payload: response,
+        payload: response.submissions,
       });
     } catch (err) {
       dispatch({
@@ -34,7 +34,7 @@ import {
         const response = await createApplication(responses);
         dispatch({
           type: SAVE_APPLICATION,
-          payload: response,
+          payload: response.submissions,
         });
       } catch (err) {
         dispatch({
@@ -50,7 +50,7 @@ import {
       const response = await deleteApplication(id);
       dispatch({
         type: SAVE_APPLICATION,
-        payload: response,
+        payload: response.submissions,
       });
     } catch (err) {
       dispatch({
@@ -67,7 +67,7 @@ import {
         const response = await updateApplication(id, responses);
         dispatch({
           type: SAVE_APPLICATION,
-          payload: response,
+          payload: response.submissions,
         });
       } catch (err) {
         dispatch({

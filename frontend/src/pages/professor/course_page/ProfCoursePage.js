@@ -22,7 +22,7 @@ const ProfCoursePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const templates = useSelector(
-    (state) => state.application.applicationTemplates
+    (state) => state.application_templates.applicationTemplates
   );
   const location = useLocation();
   const { course } = location.state;

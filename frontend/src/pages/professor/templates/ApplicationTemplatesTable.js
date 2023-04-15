@@ -13,11 +13,9 @@ const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const applicationTemplates = useSelector(
-    (state) => state.application.applicationTemplates
+    (state) => state.application_templates.applicationTemplates
   );
-
-  console.log(applicationTemplates);
-
+  
   useEffect(() => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
@@ -48,8 +46,7 @@ const ApplicationTemplatesTable = () => {
               </Button>
             </td>
           </tr>
-          {applicationTemplates &&
-            applicationTemplates.map((template) => (
+          {applicationTemplates && applicationTemplates.map((template) => (
               <tr key={template.id}>
                 <th scope="row">{template.name}</th>
                 <td> {template.modified} </td>

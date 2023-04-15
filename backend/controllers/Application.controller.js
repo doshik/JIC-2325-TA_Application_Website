@@ -1,13 +1,17 @@
+const User = require("../models/User.js");
+const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
+const ApplicationTemplate = require("../models/ApplicationTemplate.js");
 const express = require("express");
 const applicationRoutes = express.Router();
+const mongoose = require("mongoose");
 const { userAuth } = require("../middleware/auth");
 
-// @route POST api/application/student/save-submission
+// @route POST api/application/save-submission
 // @desc Student saves a TA application submission
 // @access Public
 applicationRoutes
-  .route("/student/save-submission")
+  .route("/save-submission")
   .post(userAuth, async function (req, res) {
     try {
       console.log(req.body);
@@ -28,11 +32,11 @@ applicationRoutes
     }
   });
 
-// @route GET api/application/student/get-submissions
+// @route GET api/application/get-submissions
 // @desc Student gets all own TA application submissions
 // @access Public
 applicationRoutes
-  .route("/student/get-submissions")
+  .route("/get-submissions")
   .get(userAuth, async function (req, res) {
     try {
       const submissions = await Application.find({
@@ -47,7 +51,7 @@ applicationRoutes
 
 // delete a submission
 applicationRoutes
-  .route("/student/delete-submission")
+  .route("/delete-submission")
   .post(userAuth, async function (req, res) {
     try {
       const submission = await Application.findOneAndDelete({
@@ -61,7 +65,6 @@ applicationRoutes
       const submissions = await Application.find({
         student: req.user.id,
       });
-      console.log(submissions);
       res.status(200).send({ submissions: submissions });
     } catch (err) {
       res.status(400).send("deleting application template failed");
@@ -70,7 +73,7 @@ applicationRoutes
 
 // update a submission
 applicationRoutes
-  .route("/student/update-submission")
+  .route("/update-submission")
   .post(userAuth, async function (req, res) {
     try {
       const submission = await Application.findOneAndUpdate(

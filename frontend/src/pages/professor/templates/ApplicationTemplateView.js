@@ -1,6 +1,6 @@
 import * as React from "react";
 import ApplicationTemplatesTable from "./ApplicationTemplatesTable";
-import { Button, Row, Col, Stack } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ApplicationTemplateView = () => {
@@ -10,7 +10,7 @@ const ApplicationTemplateView = () => {
       <ApplicationTemplatesTable />
       <Button
         variant="success"
-        onClick={() => navigate("/templates/custom" )}
+        onClick={() => navigate("/templates/custom")}
       >
         Create New
       </Button>

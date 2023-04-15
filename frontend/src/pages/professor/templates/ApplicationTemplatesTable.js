@@ -31,7 +31,7 @@ const ApplicationTemplatesTable = () => {
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Default</th>
+            <td scope="row">Default</td>
             <td>
               <Button
                 variant="primary"
@@ -44,7 +44,7 @@ const ApplicationTemplatesTable = () => {
           </tr>
           {applicationTemplates && applicationTemplates.map((template) => (
               <tr key={template.id}>
-                <th scope="row">{template.name}</th>
+                <td scope="row">{template.name}</td>
                 <td>
                   <Button
                     variant="primary"

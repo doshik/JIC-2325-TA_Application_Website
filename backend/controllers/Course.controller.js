@@ -16,7 +16,7 @@ courseRoutes.route("/create").post(async function (req, res) {
       courseId: req.body.courseId,
       courseTitle: req.body.courseTitle,
       professor: "640fbf027649f186652b1b3b",
-      application: null,
+      applicationTemplate: null,
       active: req.body.active,
     });
 
@@ -34,7 +34,7 @@ courseRoutes.route("/create").post(async function (req, res) {
 courseRoutes.route("/prof/get").get(userAuth, async function (req, res) {
   try {
     const courses = await Course.find({ professor: req.user.id }).populate(
-      "application"
+      "applicationTemplate"
     );
 
     if (courses) {
@@ -53,7 +53,7 @@ courseRoutes.route("/prof/get").get(userAuth, async function (req, res) {
 courseRoutes.route("/student/get").get(userAuth, async function (req, res) {
   try {
     const courses = await Course.find({ active: true }).populate(
-      ["application", "professor"]
+      ["applicationTemplate", "professor"]
     );
 
     if (courses) {
@@ -74,7 +74,7 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
       {
         $set: {
           active: req.body.active,
-          application: req.body.application ?? null,
+          applicationTemplate: req.body.applicationTemplate ?? null,
         },
       },
       { new: true }
@@ -85,7 +85,7 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
     }
 
     const courses = await Course.find({ professor: req.user.id }).populate(
-      "application"
+      "applicationTemplate"
     );
     res.status(200).json({ courses: courses });
   } catch (err) {

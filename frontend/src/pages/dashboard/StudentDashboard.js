@@ -15,11 +15,8 @@ const StudentDashboard = () => {
     dispatch(getApplicationsAction());
   }, [dispatch]);
 
-  const inProgressApplications = [];
-  const submittedApplications = [];
-
-  // const inProgressApplications = applications.filter(application => application.submitted);
-  // const submittedApplications = applications.filter(application => !application.submitted);
+  const inProgressApplications = applications.filter(application => !application.submitted);
+  const submittedApplications = applications.filter(application => application.submitted);
 
   return (
     <Container fluid className="mx-0">
@@ -33,10 +30,10 @@ const StudentDashboard = () => {
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <Card.Title>{application.courseName}</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">{application.professor}</Card.Subtitle>
+                      <Card.Title>{application.course.courseTitle}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
                     </div>
-                    <Button variant="primary" href={`submit/${application.courseName}`}>View/Edit</Button>
+                    <Button variant="primary" href={`submit/${application.course.courseTitle}`}>View/Edit</Button>
                   </div>
                 </Card.Body>
               </Card>
@@ -61,10 +58,10 @@ const StudentDashboard = () => {
                   <Card.Body>
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
-                        <Card.Title>{application.courseName}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{application.professor}</Card.Subtitle>
+                        <Card.Title>{application.course.courseTitle}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
                       </div>
-                      <Button variant="primary" href={`status/${application.courseName}`}>View Submission</Button>
+                      <Button variant="primary" href={`status/${application.course.courseTitle}`}>View Submission</Button>
                     </div>
                   </Card.Body>
                 </Card>

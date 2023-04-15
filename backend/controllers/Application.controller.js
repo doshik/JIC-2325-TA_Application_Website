@@ -41,7 +41,7 @@ applicationRoutes
     try {
       const submissions = await Application.find({
         student: req.user.id,
-      });
+      }).populate(["student", "professor", "course"]);
 
       res.status(200).send({ submissions: submissions });
     } catch (err) {

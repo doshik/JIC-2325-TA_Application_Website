@@ -73,7 +73,7 @@ const ApplicationTable = () => {
 
   return (
     <>
-    <Table striped bordered hover className="text-center">
+    <Table hover className="text-center">
       <thead>
         <tr>
           <th>Name</th>

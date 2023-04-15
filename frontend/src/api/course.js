@@ -17,10 +17,10 @@ export const getStudentCourses = async () => {
 };
 
 // function to update a course
-export const updateCourse = async (id, application, active) => {
+export const updateCourse = async (id, applicationTemplate, active) => {
   const response = await post("/course/update", {
     id: id,
-    application: application,
+    applicationTemplate: applicationTemplate,
     active: active,
   }).catch((err) => {
     throw err;

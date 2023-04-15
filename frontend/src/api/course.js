@@ -1,8 +1,16 @@
 import { get, post } from "./main";
 
 // function to get all courses for a professor
-export const getCourses = async () => {
-  const response = await get("/course/get").catch((err) => {
+export const getProfCourses = async () => {
+  const response = await get("/course/prof/get").catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
+// function to get all courses for a student
+export const getStudentCourses = async () => {
+  const response = await get("/course/student/get").catch((err) => {
     throw err;
   });
   return response.data;

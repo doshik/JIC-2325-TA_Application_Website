@@ -3,7 +3,7 @@ import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getCoursesAction } from "../../redux/actions/courseActions";
+import { getProfCoursesAction } from "../../redux/actions/courseActions";
 import { useEffect } from "react";
 
 const ProfDashboard = () => {
@@ -12,7 +12,7 @@ const ProfDashboard = () => {
   const courses = useSelector((state) => state.course.courses);
 
   useEffect(() => {
-    dispatch(getCoursesAction());
+    dispatch(getProfCoursesAction());
   }, [dispatch]);
 
   const activeCourses = courses.filter((course) => course.active === true);
@@ -62,7 +62,7 @@ const ProfDashboard = () => {
       <Row className="mt-2">
         <Col>
           <h5>Inactive</h5>
-          {activeCourses.length > 0 ? (
+          {inactiveCourses.length > 0 ? (
             <>
               {inactiveCourses.map((course, index) => (
                 <Card key={index} className="mb-2">

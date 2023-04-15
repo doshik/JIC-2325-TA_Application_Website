@@ -26,16 +26,12 @@ const ApplicationTemplatesTable = () => {
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Last Modified</th>
-            <th scope="col">Assigned to Course?</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Default</th>
-            <td>N/A</td>
-            <td>No</td>
             <td>
               <Button
                 variant="primary"
@@ -49,8 +45,6 @@ const ApplicationTemplatesTable = () => {
           {applicationTemplates && applicationTemplates.map((template) => (
               <tr key={template.id}>
                 <th scope="row">{template.name}</th>
-                <td> {template.modified} </td>
-                <td>{template.assigned}</td>
                 <td>
                   <Button
                     variant="primary"

@@ -28,14 +28,32 @@ courseRoutes.route("/create").post(async function (req, res) {
   }
 });
 
-// @route GET api/course/get
-// @desc Get a course
+// @route GET api/course/prof/get
+// @desc Get a professors courses
 // @access Public
-courseRoutes.route("/get").get(userAuth, async function (req, res) {
+courseRoutes.route("/prof/get").get(userAuth, async function (req, res) {
   try {
-    console.log(req.user.id);
     const courses = await Course.find({ professor: req.user.id }).populate(
       "application"
+    );
+
+    if (courses) {
+      res.status(200).json({ courses: courses });
+    } else {
+      res.status(400).send("getting courses failed");
+    }
+  } catch (err) {
+    res.status(400).send("getting courses failed");
+  }
+});
+
+// @route GET api/course/student/get
+// @desc Get a students courses
+// @access Public
+courseRoutes.route("/student/get").get(userAuth, async function (req, res) {
+  try {
+    const courses = await Course.find({ active: true }).populate(
+      ["application", "professor"]
     );
 
     if (courses) {

@@ -15,6 +15,10 @@ var applicationTemplateSchema = new Schema({
     type: Array,
     default: [],
   },
+  assignedToCourse: {
+    type: Boolean,
+    default: false
+  }
 });
 
 ApplicationTemplate = mongoose.model("ApplicationTemplate", applicationTemplateSchema);

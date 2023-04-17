@@ -1,20 +1,39 @@
 import {
     SAVE_APPLICATION,
     GET_APPLICATIONS,
+    UPDATE_APPLICATION,
     APPLICATION_ERROR,
   } from "./types";
   
   import {
-    getApplications,
+    getStudentApplications,
+    getProfApplications,
     createApplication,
     deleteApplication,
     updateApplication,
+    updateApplicationStatus
   } from "../../api/applications";
   
   // Get all applications
-  export const getApplicationsAction = () => async (dispatch) => {
+  export const getStudentApplicationsAction = () => async (dispatch) => {
     try {
-      const response = await getApplications();
+      const response = await getStudentApplications();
+      dispatch({
+        type: GET_APPLICATIONS,
+        payload: response.submissions,
+      });
+    } catch (err) {
+      dispatch({
+        type: APPLICATION_ERROR,
+        payload: err,
+      });
+    }
+  };
+
+  // Get all applications for a course
+  export const getProfApplicationsAction = (course) => async (dispatch) => {
+    try {
+      const response = await getProfApplications(course);
       dispatch({
         type: GET_APPLICATIONS,
         payload: response.submissions,
@@ -59,6 +78,23 @@ import {
       });
     }
   };
+
+  // Update an application status
+  export const updateApplicationStatusAction =
+    (id, status) => async (dispatch) => {
+      try {
+        const response = await updateApplicationStatus(id, status);
+        dispatch({
+          type: UPDATE_APPLICATION,
+          payload: response.submissions,
+        });
+      } catch (err) {
+        dispatch({
+          type: APPLICATION_ERROR,
+          payload: err,
+        });
+      }
+    };
   
   // Update an application
   export const updateApplicationAction =
@@ -66,7 +102,7 @@ import {
       try {
         const response = await updateApplication(id, responses);
         dispatch({
-          type: SAVE_APPLICATION,
+          type: UPDATE_APPLICATION,
           payload: response.submissions,
         });
       } catch (err) {

@@ -14,7 +14,6 @@ applicationRoutes
   .route("/save-submission")
   .post(userAuth, async function (req, res) {
     try {
-      console.log(req.body);
       const newSubmission = new Application({
         student: req.user.id,
         responses: req.body.responses,
@@ -32,15 +31,34 @@ applicationRoutes
     }
   });
 
-// @route GET api/application/get-submissions
+// @route GET api/application/student/get-submissions
 // @desc Student gets all own TA application submissions
 // @access Public
 applicationRoutes
-  .route("/get-submissions")
+  .route("/student/get-submissions")
   .get(userAuth, async function (req, res) {
     try {
       const submissions = await Application.find({
         student: req.user.id,
+      }).populate(["student", "professor", "course"]);
+
+      res.status(200).send({ submissions: submissions });
+    } catch (err) {
+      res.status(400).send("getting applications failed");
+    }
+  });
+
+// @route GET api/application/prof/get-submissions
+// @desc Prof gets all TA application submissions for a course
+// @access Public
+applicationRoutes
+  .route("/prof/get-submissions")
+  .get(userAuth, async function (req, res) {
+    try {
+      const submissions = await Application.find({
+        professor: req.user.id,
+        course: req.query.course,
+        submitted: true
       }).populate(["student", "professor", "course"]);
 
       res.status(200).send({ submissions: submissions });
@@ -67,7 +85,7 @@ applicationRoutes
       });
       res.status(200).send({ submissions: submissions });
     } catch (err) {
-      res.status(400).send("deleting application template failed");
+      res.status(400).send("deleting application failed");
     }
   });
 
@@ -91,7 +109,31 @@ applicationRoutes
       });
       res.status(200).send({ submissions: submissions });
     } catch (err) {
-      res.status(400).send("updating application template failed");
+      res.status(400).send("updating application failed");
+    }
+  });
+
+// update a submission's status
+applicationRoutes
+  .route("/update-status")
+  .post(userAuth, async function (req, res) {
+    try {
+      const submission = await Application.findOneAndUpdate(
+        { _id: req.body.id },
+        { $set: { status: req.body.status } }
+      );
+
+      if (!submission) {
+        res.status(400).send("Application not found");
+        return;
+      }
+
+      const submissions = await Application.find({
+        student: req.user.id,
+      });
+      res.status(200).send({ submissions: submissions });
+    } catch (err) {
+      res.status(400).send("updating application status failed");
     }
   });
 

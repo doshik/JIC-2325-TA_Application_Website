@@ -1,6 +1,7 @@
 import {
     SAVE_APPLICATION,
     GET_APPLICATIONS,
+    UPDATE_APPLICATION,
     APPLICATION_ERROR,
   } from "../actions/types";
   
@@ -16,6 +17,11 @@ import {
           applications: action.payload,
         };
       case GET_APPLICATIONS:
+        return {
+          ...state,
+          applications: action.payload,
+        };
+      case UPDATE_APPLICATION:
         return {
           ...state,
           applications: action.payload,

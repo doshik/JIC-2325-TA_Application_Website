@@ -16,12 +16,21 @@ export const getStudentCourses = async () => {
   return response.data;
 };
 
+// function to get a course for a professor
+export const getCourse = async (courseId) => {
+  const response = await get("/course/prof/getacourse", {courseId: courseId}).catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
 // function to update a course
-export const updateCourse = async (id, applicationTemplate, active) => {
+export const updateCourse = async (id, applicationTemplate, active, description) => {
   const response = await post("/course/update", {
     id: id,
     applicationTemplate: applicationTemplate,
     active: active,
+    description: description
   }).catch((err) => {
     throw err;
   });

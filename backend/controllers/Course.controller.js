@@ -18,6 +18,7 @@ courseRoutes.route("/create").post(async function (req, res) {
       professor: "640fbf027649f186652b1b3b",
       applicationTemplate: null,
       active: req.body.active,
+      description: req.body.description
     });
 
     const finalCourse = await newCourse.save();
@@ -66,6 +67,30 @@ courseRoutes.route("/student/get").get(userAuth, async function (req, res) {
   }
 });
 
+// @route GET api/course/prof/get
+// @desc Get a professors courses
+// @access Public
+courseRoutes.route("/prof/getacourse").get(userAuth, async function (req, res) {
+  try {
+    const courses = await Course.findOne(
+      // { professor: req.user.id },
+      { courseId: req.body.courseId }
+    ).populate(
+      "applicationTemplate"
+    );
+
+    console.log(req.body);
+
+    if (courses) {
+      res.status(200).json({ courses: courses });
+    } else {
+      res.status(400).send("getting courses failed");
+    }
+  } catch (err) {
+    res.status(400).send("getting courses failed");
+  }
+});
+
 // update course
 courseRoutes.route("/update").post(userAuth, async function (req, res) {
   try {
@@ -75,6 +100,7 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
         $set: {
           active: req.body.active,
           applicationTemplate: req.body.applicationTemplate ?? null,
+          description: req.body.description
         },
       },
       { new: true }

@@ -30,6 +30,7 @@ const ProfCoursePage = () => {
   const courseId = course.courseId;
   const [isHiring, setIsHiring] = React.useState(course?.active);
   const [semester, setSemester] = React.useState("Spring 2023");
+  const [description, setDescription] = React.useState(course?.description || "");
   const [template, setTemplate] = React.useState(
     course?.applicationTemplate?.name ?? ""
   );
@@ -42,10 +43,14 @@ const ProfCoursePage = () => {
     setTemplate(eventKey);
   };
 
+  function handleDescriptionChange(event) {
+    setDescription(event.target.value);
+  }
+
   const handleSave = () => {
-    const appTemplate = templates.filter((item) => item.name === template)[0]
-      ._id;
-    dispatch(updateCourseAction(course._id, appTemplate, isHiring));
+    const appTemplate = templates.filter((item) => item.name === template)[0]._id;
+    dispatch(updateCourseAction(course._id, appTemplate, isHiring, description));
+    navigate("/dashboard");
   };
 
   if (!courseId) {
@@ -59,14 +64,14 @@ const ProfCoursePage = () => {
 
   return (
     <div>
-      <Row className="mb-3 w-50 align-items-center">
-        <Col md={4}>
+      <Row className="mb-3 w-25 align-items-center">
+        <Col md={3}>
           <h5>{courseId}</h5>
         </Col>
-        <Col md={8}>
+        <Col md={9}>
           <Form.Group controlId="formSemester">
             <DropdownButton
-              variant="secondary"
+              variant="dark"
               title={semester || "Select Semester"}
               onSelect={handleSemesterChange}
               default="Spring 2023"
@@ -103,7 +108,6 @@ const ProfCoursePage = () => {
                     <ToggleButton
                       id="hiring-toggle"
                       variant={isHiring ? "success" : "danger"}
-                      value="hiring"
                       onChange={() => setIsHiring(!isHiring)}
                     >
                       {isHiring ? "Hiring" : "Not Hiring"}
@@ -120,7 +124,8 @@ const ProfCoursePage = () => {
                     rows={3}
                     placeholder="Enter course description"
                     name="courseDescription"
-                    value={course.courseTitle}
+                    value={description}
+                    onChange={(e) => handleDescriptionChange(e)}
                   />
                 </Form.Group>
               </Col>
@@ -135,20 +140,23 @@ const ProfCoursePage = () => {
           </Row>
         </Card.Body>
       </Card>
-      <Container fluid>
-        <Row className="mt-3">
-          <Col className="px-0">
-            <ApplicationTable />
-          </Col>
-        </Row>
-      </Container>
-      <Row>
-        <Col className="d-flex justify-content-center mb-3">
-          <Button variant="success" className="w-25">
-            Update
-          </Button>
-        </Col>
-      </Row>
+      {course.active ? (
+        <Container fluid>
+          <Row className="mt-3">
+            <Col className="px-0">
+              <ApplicationTable course={course}/>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <Card className="mt-3 text-center">
+          <Card.Body>
+            <Card.Text>
+              This course is not active.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      )}
     </div>
   );
 };

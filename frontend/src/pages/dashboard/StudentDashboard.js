@@ -3,7 +3,7 @@ import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getApplicationsAction } from "../../redux/actions/applicationActions";
+import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
 import { useEffect } from "react";
 
 const StudentDashboard = () => {
@@ -12,7 +12,7 @@ const StudentDashboard = () => {
   const applications = useSelector((state) => state.application.applications);
 
   useEffect(() => {
-    dispatch(getApplicationsAction());
+    dispatch(getStudentApplicationsAction());
   }, [dispatch]);
 
   const inProgressApplications = applications.filter(application => !application.submitted);

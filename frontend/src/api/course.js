@@ -1,19 +1,36 @@
 import { get, post } from "./main";
 
 // function to get all courses for a professor
-export const getCourses = async () => {
-  const response = await get("/course/get").catch((err) => {
+export const getProfCourses = async () => {
+  const response = await get("/course/prof/get").catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
+// function to get all courses for a student
+export const getStudentCourses = async () => {
+  const response = await get("/course/student/get").catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
+// function to get a course for a professor
+export const getCourse = async (courseId) => {
+  const response = await get("/course/prof/getacourse", {courseId: courseId}).catch((err) => {
     throw err;
   });
   return response.data;
 };
 
 // function to update a course
-export const updateCourse = async (id, application, active) => {
+export const updateCourse = async (id, applicationTemplate, active, description) => {
   const response = await post("/course/update", {
     id: id,
-    application: application,
+    applicationTemplate: applicationTemplate,
     active: active,
+    description: description
   }).catch((err) => {
     throw err;
   });

@@ -1,27 +1,34 @@
 import { get, post, del } from "./main";
 
-// a function to get all application templates for a professor
-export const getApplicationTemplates = async () => {
-  const response = await get(`/application/prof/get-templates`).catch((err) => {
+// a function to get all applications for a student
+export const getStudentApplications = async () => {
+  const response = await get(`/application/student/get-submissions`).catch((err) => {
     throw err;
   });
   return response.data;
 };
 
-// a function to create a custom application template for a professor
-export const createApplicationTemplate = async (name, questions) => {
-  const response = await post(`/application/prof/save-template`, {
-    name,
-    questions,
+// a function to get all applications for a student
+export const getProfApplications = async (course) => {
+  const response = await get(`/application/prof/get-submissions?course=${course}`).catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
+// a function to create an application for a student
+export const createApplication = async (responses) => {
+  const response = await post(`/application/save-submission`, {
+    responses,
   }).catch((err) => {
     throw err;
   });
   return response.data;
 };
 
-// a function to delete a custom application template for a professor
-export const deleteApplicationTemplate = async (id) => {
-  const response = await post(`/application/prof/delete-template`, {
+// a function to delete an application for a student
+export const deleteApplication = async (id) => {
+  const response = await post(`/application/delete-submission`, {
     id,
   }).catch((err) => {
     throw err;
@@ -29,12 +36,22 @@ export const deleteApplicationTemplate = async (id) => {
   return response.data;
 };
 
-// a function to update a custom application template for a professor
-export const updateApplicationTemplate = async (id, name, questions) => {
-  const response = await post(`/application/prof/update-template`, {
+// a function to update an application for a student
+export const updateApplication = async (id, responses) => {
+  const response = await post(`/application/update-submission`, {
     id,
-    name,
-    questions,
+    responses,
+  }).catch((err) => {
+    throw err;
+  });
+  return response.data;
+};
+
+// a function to update an application status
+export const updateApplicationStatus = async (id, status) => {
+  const response = await post(`/application/update-status`, {
+    id,
+    status,
   }).catch((err) => {
     throw err;
   });

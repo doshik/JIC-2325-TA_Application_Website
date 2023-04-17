@@ -120,12 +120,12 @@ app.post("/newAccount", (req, res) => {
     (mongoose.Types.ObjectId(req.body.courseId))
     .then((course) => {
         console.log(course)
-        course.application = mongoose.Types.ObjectId(req.body.applicationId);
+        course.applicationTemplate = mongoose.Types.ObjectId(req.body.applicationId);
         course
         .save()
         .then((course) => {
             console.log(course);
-            res.json("Application " + course.application + " has been assigned to course " + course.name + "!");
+            res.json("Application " + course.applicationTemplate + " has been assigned to course " + course.name + "!");
         })
         .catch((err) => console.log(err));
     })

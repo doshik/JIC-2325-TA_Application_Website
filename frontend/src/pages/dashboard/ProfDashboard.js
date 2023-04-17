@@ -3,7 +3,7 @@ import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getCoursesAction } from "../../redux/actions/courseActions";
+import { getProfCoursesAction } from "../../redux/actions/courseActions";
 import { useEffect } from "react";
 
 const ProfDashboard = () => {
@@ -12,70 +12,90 @@ const ProfDashboard = () => {
   const courses = useSelector((state) => state.course.courses);
 
   useEffect(() => {
-    dispatch(getCoursesAction());
+    dispatch(getProfCoursesAction());
   }, [dispatch]);
 
-  const inProgressCourses = courses.filter((course) => course.active === true);
-  const submittedCourses = courses.filter((course) => course.active === false);
+  const activeCourses = courses.filter((course) => course.active === true);
+  const inactiveCourses = courses.filter((course) => course.active === false);
 
   return (
     <Container fluid className="mx-0">
       <Row>
         <Col>
           <h5>Active</h5>
-          {inProgressCourses.map((course, index) => (
-            <Card key={index} className="mb-2">
+          {activeCourses.length > 0 ? (
+            <>
+              {activeCourses.map((course, index) => (
+                <Card key={index} className="mb-2">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <Card.Title>{course.courseId}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">
+                          {course.courseTitle}
+                        </Card.Subtitle>
+                      </div>
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          navigate(`/applications/${course.courseId}`, {
+                            state: { course },
+                          })
+                        }
+                      >
+                        Course Info
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))}
+            </>
+          ) : (
+            <Card className="mb-2">
               <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <Card.Title>{course.courseId}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      {course.courseTitle}
-                    </Card.Subtitle>
-                  </div>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      navigate(`/applications/${course.courseId}`, {
-                        state: { course },
-                      })
-                    }
-                  >
-                    Course Info
-                  </Button>
-                </div>
+                  You have no active courses.
               </Card.Body>
             </Card>
-          ))}
+          )}
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-2">
         <Col>
           <h5>Inactive</h5>
-          {submittedCourses.map((course, index) => (
-            <Card key={index} className="mb-2">
+          {inactiveCourses.length > 0 ? (
+            <>
+              {inactiveCourses.map((course, index) => (
+                <Card key={index} className="mb-2">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <Card.Title>{course.courseId}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">
+                          {course.courseTitle}
+                        </Card.Subtitle>
+                      </div>
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          navigate(`/applications/${course.courseId}`, {
+                            state: { course },
+                          })
+                        }
+                      >
+                        Course Info
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))}
+            </>
+          ) : (
+            <Card className="mb-2">
               <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <Card.Title>{course.courseId}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                      {course.courseTitle}
-                    </Card.Subtitle>
-                  </div>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      navigate(`/applications/${course.courseId}`, {
-                        state: { course },
-                      })
-                    }
-                  >
-                    Course Info
-                  </Button>
-                </div>
+                  You have no inactive courses.
               </Card.Body>
             </Card>
-          ))}
+          )}
         </Col>
       </Row>
     </Container>

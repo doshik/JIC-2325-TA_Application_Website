@@ -7,7 +7,6 @@ exports.userAuth = (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, jwtsecret);
-    console.log("Verified: ", verified);
     req.user = verified;
     console.log("User: ", req.user, " is verified.");
     next();

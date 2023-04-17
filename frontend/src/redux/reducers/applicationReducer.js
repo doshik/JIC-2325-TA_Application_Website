@@ -1,31 +1,38 @@
 import {
-  SAVE_APPLICATION_TEMPLATES,
-  GET_APPLICATION_TEMPLATES,
-  APPLICATION_TEMPLATES_ERROR,
-} from "../actions/types";
-
-const initialState = {
-  applicationTemplates: [],
-};
-
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case SAVE_APPLICATION_TEMPLATES:
-      return {
-        ...state,
-        applicationTemplates: action.payload,
-      };
-    case GET_APPLICATION_TEMPLATES:
-      return {
-        ...state,
-        applicationTemplates: action.payload,
-      };
-    case APPLICATION_TEMPLATES_ERROR:
-      return {
-        ...state,
-        applicationTemplates: [],
-      };
-    default:
-      return state;
+    SAVE_APPLICATION,
+    GET_APPLICATIONS,
+    UPDATE_APPLICATION,
+    APPLICATION_ERROR,
+  } from "../actions/types";
+  
+  const initialState = {
+    applications: [],
+  };
+  
+  export default function reducer(state = initialState, action) {
+    switch (action.type) {
+      case SAVE_APPLICATION:
+        return {
+          ...state,
+          applications: action.payload,
+        };
+      case GET_APPLICATIONS:
+        return {
+          ...state,
+          applications: action.payload,
+        };
+      case UPDATE_APPLICATION:
+        return {
+          ...state,
+          applications: action.payload,
+        };
+      case APPLICATION_ERROR:
+        return {
+          ...state,
+          applications: [],
+        };
+      default:
+        return state;
+    }
   }
-}
+  

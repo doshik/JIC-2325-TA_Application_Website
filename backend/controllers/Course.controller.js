@@ -1,7 +1,7 @@
 const User = require("../models/User.js");
 const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
-const ApplicationTemplate = require("../models/Application.js");
+const ApplicationTemplate = require("../models/ApplicationTemplate.js");
 const express = require("express");
 const courseRoutes = express.Router();
 const mongoose = require("mongoose");
@@ -16,8 +16,9 @@ courseRoutes.route("/create").post(async function (req, res) {
       courseId: req.body.courseId,
       courseTitle: req.body.courseTitle,
       professor: "640fbf027649f186652b1b3b",
-      application: null,
+      applicationTemplate: null,
       active: req.body.active,
+      description: req.body.description
     });
 
     const finalCourse = await newCourse.save();
@@ -28,15 +29,57 @@ courseRoutes.route("/create").post(async function (req, res) {
   }
 });
 
-// @route GET api/course/get
-// @desc Get a course
+// @route GET api/course/prof/get
+// @desc Get a professors courses
 // @access Public
-courseRoutes.route("/get").get(userAuth, async function (req, res) {
+courseRoutes.route("/prof/get").get(userAuth, async function (req, res) {
   try {
-    console.log(req.user.id);
     const courses = await Course.find({ professor: req.user.id }).populate(
-      "application"
+      "applicationTemplate"
     );
+
+    if (courses) {
+      res.status(200).json({ courses: courses });
+    } else {
+      res.status(400).send("getting courses failed");
+    }
+  } catch (err) {
+    res.status(400).send("getting courses failed");
+  }
+});
+
+// @route GET api/course/student/get
+// @desc Get a students courses
+// @access Public
+courseRoutes.route("/student/get").get(userAuth, async function (req, res) {
+  try {
+    const courses = await Course.find({ active: true }).populate(
+      ["applicationTemplate", "professor"]
+    );
+
+    if (courses) {
+      res.status(200).json({ courses: courses });
+    } else {
+      res.status(400).send("getting courses failed");
+    }
+  } catch (err) {
+    res.status(400).send("getting courses failed");
+  }
+});
+
+// @route GET api/course/prof/get
+// @desc Get a professors courses
+// @access Public
+courseRoutes.route("/prof/getacourse").get(userAuth, async function (req, res) {
+  try {
+    const courses = await Course.findOne(
+      // { professor: req.user.id },
+      { courseId: req.body.courseId }
+    ).populate(
+      "applicationTemplate"
+    );
+
+    console.log(req.body);
 
     if (courses) {
       res.status(200).json({ courses: courses });
@@ -56,7 +99,8 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
       {
         $set: {
           active: req.body.active,
-          application: req.body.application ?? null,
+          applicationTemplate: req.body.applicationTemplate ?? null,
+          description: req.body.description
         },
       },
       { new: true }
@@ -67,7 +111,7 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
     }
 
     const courses = await Course.find({ professor: req.user.id }).populate(
-      "application"
+      "applicationTemplate"
     );
     res.status(200).json({ courses: courses });
   } catch (err) {

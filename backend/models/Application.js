@@ -15,39 +15,21 @@ var applicationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Course",
     },
-    template: {
-      type: Schema.Types.ObjectId,
-      ref: "ApplicationTemplate",
+    responses: {
+      type: Array,
+      default: [],
     },
-    data: {
-      type: Object,
-      default: {},
+    submitted: {
+      type: Boolean,
+      default: false,
     },
+    status: {
+      type: String
+    }
   },
 
   { timestamps: true }
 );
 
-var applicationTemplateSchema = new Schema({
-  name: {
-    type: String,
-    default: "",
-  },
-  professor: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  questions: {
-    type: Array,
-    default: [],
-  },
-});
-
 Application = mongoose.model("Application", applicationSchema);
-ApplicationTemplate = mongoose.model(
-  "ApplicationTemplate",
-  applicationTemplateSchema
-);
 module.exports = Application;
-module.exports = ApplicationTemplate;

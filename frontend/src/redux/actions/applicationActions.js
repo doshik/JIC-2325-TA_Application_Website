@@ -1,78 +1,115 @@
 import {
-  SAVE_APPLICATION_TEMPLATES,
-  GET_APPLICATION_TEMPLATES,
-  APPLICATION_TEMPLATES_ERROR,
-} from "../actions/types";
-
-import {
-  getApplicationTemplates,
-  createApplicationTemplate,
-  deleteApplicationTemplate,
-  updateApplicationTemplate,
-} from "../../api/applications";
-
-// Get all application templates
-export const getApplicationTemplatesAction = () => async (dispatch) => {
-  try {
-    const response = await getApplicationTemplates();
-    dispatch({
-      type: GET_APPLICATION_TEMPLATES,
-      payload: response.templates,
-    });
-  } catch (err) {
-    dispatch({
-      type: APPLICATION_TEMPLATES_ERROR,
-      payload: err,
-    });
-  }
-};
-
-// Create a new application template
-export const createApplicationTemplateAction =
-  (name, questions) => async (dispatch) => {
+    SAVE_APPLICATION,
+    GET_APPLICATIONS,
+    UPDATE_APPLICATION,
+    APPLICATION_ERROR,
+  } from "./types";
+  
+  import {
+    getStudentApplications,
+    getProfApplications,
+    createApplication,
+    deleteApplication,
+    updateApplication,
+    updateApplicationStatus
+  } from "../../api/applications";
+  
+  // Get all applications
+  export const getStudentApplicationsAction = () => async (dispatch) => {
     try {
-      const response = await createApplicationTemplate(name, questions);
+      const response = await getStudentApplications();
       dispatch({
-        type: SAVE_APPLICATION_TEMPLATES,
-        payload: response.templates,
+        type: GET_APPLICATIONS,
+        payload: response.submissions,
       });
     } catch (err) {
       dispatch({
-        type: APPLICATION_TEMPLATES_ERROR,
+        type: APPLICATION_ERROR,
         payload: err,
       });
     }
   };
 
-// Delete an application template
-export const deleteApplicationTemplateAction = (id) => async (dispatch) => {
-  try {
-    const response = await deleteApplicationTemplate(id);
-    dispatch({
-      type: SAVE_APPLICATION_TEMPLATES,
-      payload: response.templates,
-    });
-  } catch (err) {
-    dispatch({
-      type: APPLICATION_TEMPLATES_ERROR,
-      payload: err,
-    });
-  }
-};
-
-// Update an application template
-export const updateApplicationTemplateAction =
-  (id, name, questions) => async (dispatch) => {
+  // Get all applications for a course
+  export const getProfApplicationsAction = (course) => async (dispatch) => {
     try {
-      const response = await updateApplicationTemplate(id, name, questions);
+      const response = await getProfApplications(course);
       dispatch({
-        type: SAVE_APPLICATION_TEMPLATES,
-        payload: response.templates,
+        type: GET_APPLICATIONS,
+        payload: response.submissions,
       });
     } catch (err) {
       dispatch({
-        type: APPLICATION_TEMPLATES_ERROR,
+        type: APPLICATION_ERROR,
         payload: err,
       });
     }
   };
+  
+  // Create a new application
+  export const createApplicationAction =
+    (responses) => async (dispatch) => {
+      try {
+        const response = await createApplication(responses);
+        dispatch({
+          type: SAVE_APPLICATION,
+          payload: response.submissions,
+        });
+      } catch (err) {
+        dispatch({
+          type: APPLICATION_ERROR,
+          payload: err,
+        });
+      }
+    };
+  
+  // Delete an application
+  export const deleteApplicationAction = (id) => async (dispatch) => {
+    try {
+      const response = await deleteApplication(id);
+      dispatch({
+        type: SAVE_APPLICATION,
+        payload: response.submissions,
+      });
+    } catch (err) {
+      dispatch({
+        type: APPLICATION_ERROR,
+        payload: err,
+      });
+    }
+  };
+
+  // Update an application status
+  export const updateApplicationStatusAction =
+    (id, status) => async (dispatch) => {
+      try {
+        const response = await updateApplicationStatus(id, status);
+        dispatch({
+          type: UPDATE_APPLICATION,
+          payload: response.submissions,
+        });
+      } catch (err) {
+        dispatch({
+          type: APPLICATION_ERROR,
+          payload: err,
+        });
+      }
+    };
+  
+  // Update an application
+  export const updateApplicationAction =
+    (id, responses) => async (dispatch) => {
+      try {
+        const response = await updateApplication(id, responses);
+        dispatch({
+          type: UPDATE_APPLICATION,
+          payload: response.submissions,
+        });
+      } catch (err) {
+        dispatch({
+          type: APPLICATION_ERROR,
+          payload: err,
+        });
+      }
+    };
+  

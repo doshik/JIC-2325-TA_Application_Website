@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   createApplicationTemplateAction,
   updateApplicationTemplateAction,
-} from "../../../redux/actions/applicationActions";
+} from "../../../redux/actions/applicationTemplateActions";
 
 function CustomForm({ template }) {
   const [name, setName] = useState(template?.name ?? "");

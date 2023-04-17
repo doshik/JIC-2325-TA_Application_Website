@@ -1,147 +1,139 @@
 const User = require("../models/User.js");
 const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
-const ApplicationTemplate = require("../models/Application.js");
+const ApplicationTemplate = require("../models/ApplicationTemplate.js");
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
 const { userAuth } = require("../middleware/auth");
 
-// @route POST api/application/student/submit
-// @desc Submit a student's TA application
-// @access Public
-
-applicationRoutes
-  .route("/student/submit")
-  .post(userAuth, async function (req, res) {
-    const course = await Course.findOne({ courseId: req.body.courseId });
-    if (!course) {
-      res.status(400).send("Course not found");
-    }
-
-    const newApplication = new Application({
-      student: req.user.id,
-      professor: null,
-      course: course._id,
-      data: req.body.data,
-    });
-
-    newApplication
-      .save()
-      .then(() => {
-        res.status(200).json({ submissionStatus: "SUCCESS" });
-      })
-      .catch((err) => {
-        res.status(400).send("adding new application failed");
-      });
-  });
-
-// @route POST api/application/professor/submit
-// @desc Professor creates a TA application for a course
+// @route POST api/application/save-submission
+// @desc Student saves a TA application submission
 // @access Public
 applicationRoutes
-  .route("/professor/submit")
-  .post(userAuth, async function (req, res) {
-    const course = await Course.findOne({ courseId: req.body.courseId });
-    if (!course) {
-      res.status(400).send("Course not found");
-    }
-
-    const newApplication = new Application({
-      student: null,
-      professor: req.user.id,
-      course: course._id,
-      data: req.body.data,
-    });
-  });
-
-// @route POST api/application/prof/save-template
-// @desc Professor saves a TA application template
-// @access Public
-applicationRoutes
-  .route("/prof/save-template")
+  .route("/save-submission")
   .post(userAuth, async function (req, res) {
     try {
-      console.log(req.body);
-      const newTemplate = new ApplicationTemplate({
-        name: req.body.name,
-        professor: req.user.id,
-        questions: req.body.questions,
+      const newSubmission = new Application({
+        student: req.user.id,
+        responses: req.body.responses,
       });
 
-      const savedTemplate = await newTemplate.save();
+      const savedSubmission = await newSubmission.save();
 
-      const templates = await ApplicationTemplate.find({
-        professor: req.user.id,
+      const submissions = await Application.find({
+        student: req.user.id,
       });
-      res.status(200).send({ templates: templates });
+      res.status(200).send({ submissions: submissions });
     } catch (err) {
       console.log(err);
       res.status(400).send("adding new application failed");
     }
   });
 
-// @route GET api/application/prof/get-templates
-// @desc Professor gets all own TA application templates
+// @route GET api/application/student/get-submissions
+// @desc Student gets all own TA application submissions
 // @access Public
 applicationRoutes
-  .route("/prof/get-templates")
+  .route("/student/get-submissions")
   .get(userAuth, async function (req, res) {
     try {
-      const templates = await ApplicationTemplate.find({
-        professor: req.user.id,
-      });
+      const submissions = await Application.find({
+        student: req.user.id,
+      }).populate(["student", "professor", "course"]);
 
-      res.status(200).send({ templates: templates });
+      res.status(200).send({ submissions: submissions });
     } catch (err) {
-      res.status(400).send("getting application templates failed");
+      res.status(400).send("getting applications failed");
     }
   });
 
-// delete a template
+// @route GET api/application/prof/get-submissions
+// @desc Prof gets all TA application submissions for a course
+// @access Public
 applicationRoutes
-  .route("/prof/delete-template")
+  .route("/prof/get-submissions")
+  .get(userAuth, async function (req, res) {
+    try {
+      const submissions = await Application.find({
+        professor: req.user.id,
+        course: req.query.course,
+        submitted: true
+      }).populate(["student", "professor", "course"]);
+
+      res.status(200).send({ submissions: submissions });
+    } catch (err) {
+      res.status(400).send("getting applications failed");
+    }
+  });
+
+// delete a submission
+applicationRoutes
+  .route("/delete-submission")
   .post(userAuth, async function (req, res) {
     try {
-      const template = await ApplicationTemplate.findOneAndDelete({
+      const submission = await Application.findOneAndDelete({
         _id: req.body.id,
       });
-      if (!template) {
-        res.status(400).send("Template not found");
+      if (!submission) {
+        res.status(400).send("Application not found");
         return;
       }
 
-      const templates = await ApplicationTemplate.find({
-        professor: req.user.id,
+      const submissions = await Application.find({
+        student: req.user.id,
       });
-      console.log(templates);
-      res.status(200).send({ templates: templates });
+      res.status(200).send({ submissions: submissions });
     } catch (err) {
-      res.status(400).send("deleting application template failed");
+      res.status(400).send("deleting application failed");
     }
   });
 
-// update a template
+// update a submission
 applicationRoutes
-  .route("/prof/update-template")
+  .route("/update-submission")
   .post(userAuth, async function (req, res) {
     try {
-      const template = await ApplicationTemplate.findOneAndUpdate(
+      const submission = await Application.findOneAndUpdate(
         { _id: req.body.id },
-        { $set: { questions: req.body.questions, name: req.body.name } }
+        { $set: { responses: req.body.responses } }
       );
 
-      if (!template) {
-        res.status(400).send("Template not found");
+      if (!submission) {
+        res.status(400).send("Application not found");
         return;
       }
 
-      const templates = await ApplicationTemplate.find({
-        professor: req.user.id,
+      const submissions = await Application.find({
+        student: req.user.id,
       });
-      res.status(200).send({ templates: templates });
+      res.status(200).send({ submissions: submissions });
     } catch (err) {
-      res.status(400).send("updating application template failed");
+      res.status(400).send("updating application failed");
+    }
+  });
+
+// update a submission's status
+applicationRoutes
+  .route("/update-status")
+  .post(userAuth, async function (req, res) {
+    try {
+      const submission = await Application.findOneAndUpdate(
+        { _id: req.body.id },
+        { $set: { status: req.body.status } }
+      );
+
+      if (!submission) {
+        res.status(400).send("Application not found");
+        return;
+      }
+
+      const submissions = await Application.find({
+        student: req.user.id,
+      });
+      res.status(200).send({ submissions: submissions });
+    } catch (err) {
+      res.status(400).send("updating application status failed");
     }
   });
 

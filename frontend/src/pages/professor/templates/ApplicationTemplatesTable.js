@@ -7,17 +7,15 @@ import { useNavigate } from "react-router-dom";
 import {
   getApplicationTemplatesAction,
   deleteApplicationTemplateAction,
-} from "../../../redux/actions/applicationActions";
+} from "../../../redux/actions/applicationTemplateActions";
 
 const ApplicationTemplatesTable = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const applicationTemplates = useSelector(
-    (state) => state.application.applicationTemplates
+    (state) => state.application_templates.applicationTemplates
   );
-
-  console.log(applicationTemplates);
-
+  
   useEffect(() => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
@@ -28,16 +26,12 @@ const ApplicationTemplatesTable = () => {
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Last Modified</th>
-            <th scope="col">Assigned to Course?</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Default</th>
-            <td>N/A</td>
-            <td>No</td>
+            <td scope="row">Default</td>
             <td>
               <Button
                 variant="primary"
@@ -48,12 +42,9 @@ const ApplicationTemplatesTable = () => {
               </Button>
             </td>
           </tr>
-          {applicationTemplates &&
-            applicationTemplates.map((template) => (
+          {applicationTemplates && applicationTemplates.map((template) => (
               <tr key={template.id}>
-                <th scope="row">{template.name}</th>
-                <td> {template.modified} </td>
-                <td>{template.assigned}</td>
+                <td scope="row">{template.name}</td>
                 <td>
                   <Button
                     variant="primary"

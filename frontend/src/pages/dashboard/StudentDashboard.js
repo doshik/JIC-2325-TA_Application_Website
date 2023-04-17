@@ -1,53 +1,79 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
+import { useEffect } from "react";
 
 const StudentDashboard = () => {
-  const Courses = [
-    { courseName: 'CS 1332', progress: "In Progress", professor: "Olufisayo Omojokun" },
-    { courseName: 'CS 2340', progress: "In Progress", professor: "Aibek Musaev" },
-    { courseName: 'CS 4641', progress: "Submitted", professor: "Mahdi Roozbahani" },
-    { courseName: 'CS 2110', progress: "Submitted", professor: "Caleb Southern"}
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const applications = useSelector((state) => state.application.applications);
 
-  const inProgressCourses = Courses.filter(course => course.progress === "In Progress");
-  const submittedCourses = Courses.filter(course => course.progress === "Submitted");
+  useEffect(() => {
+    dispatch(getStudentApplicationsAction());
+  }, [dispatch]);
+
+  const inProgressApplications = applications.filter(application => !application.submitted);
+  const submittedApplications = applications.filter(application => application.submitted);
 
   return (
     <Container fluid className="mx-0">
       <Row>
         <Col>
           <h5>In Progress</h5>
-          {inProgressCourses.map((course, index) => (
-            <Card key={index} className="mb-2">
-              <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <Card.Title>{course.courseName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{course.professor}</Card.Subtitle>
+          {inProgressApplications.length > 0 ? (
+            <>
+            {inProgressApplications.map((application, index) => (
+              <Card key={index} className="mb-2">
+                <Card.Body>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <Card.Title>{application.course.courseTitle}</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
+                    </div>
+                    <Button variant="primary" href={`submit/${application.course.courseTitle}`}>View/Edit</Button>
                   </div>
-                  <Button variant="primary" href={`submit/${course.courseName}`}>View/Edit</Button>
-                </div>
+                </Card.Body>
+              </Card>
+            ))}
+            </>
+          ) : (
+            <Card className="mb-2">
+              <Card.Body>
+                  You have no in-progress applications.
               </Card.Body>
             </Card>
-          ))}
+          )}
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-2">
         <Col>
           <h5>Submitted</h5>
-          {submittedCourses.map((course, index) => (
-            <Card key={index} className="mb-2">
+          {submittedApplications.length > 0 ? (
+            <>
+              {submittedApplications.map((application, index) => (
+                <Card key={index} className="mb-2">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <Card.Title>{application.course.courseTitle}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
+                      </div>
+                      <Button variant="primary" href={`status/${application.course.courseTitle}`}>View Submission</Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))}
+            </>
+          ) : (
+            <Card className="mb-2">
               <Card.Body>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <Card.Title>{course.courseName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{course.professor}</Card.Subtitle>
-                  </div>
-                  <Button variant="primary" href={`status/${course.courseName}`}>View Submission</Button>
-                </div>
+                  You have no submitted applications.
               </Card.Body>
             </Card>
-          ))}
+          )}
         </Col>
       </Row>
     </Container>

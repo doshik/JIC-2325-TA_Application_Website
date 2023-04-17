@@ -1,10 +1,42 @@
 import { GET_COURSES, COURSES_ERROR } from "../actions/types";
-import { getCourses, updateCourse } from "../../api/course";
+import { getProfCourses, getStudentCourses, getCourse, updateCourse } from "../../api/course";
 
 // Get all courses for a professor
-export const getCoursesAction = () => async (dispatch) => {
+export const getProfCoursesAction = () => async (dispatch) => {
   try {
-    const response = await getCourses();
+    const response = await getProfCourses();
+    dispatch({
+      type: GET_COURSES,
+      payload: response.courses,
+    });
+  } catch (err) {
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err,
+    });
+  }
+};
+
+// Get all courses for a student
+export const getStudentCoursesAction = () => async (dispatch) => {
+  try {
+    const response = await getStudentCourses();
+    dispatch({
+      type: GET_COURSES,
+      payload: response.courses,
+    });
+  } catch (err) {
+    dispatch({
+      type: COURSES_ERROR,
+      payload: err,
+    });
+  }
+};
+
+// Get a specific course for a professor
+export const getCourseAction = (courseId) => async (dispatch) => {
+  try {
+    const response = await getCourse(courseId);
     dispatch({
       type: GET_COURSES,
       payload: response.courses,
@@ -19,9 +51,9 @@ export const getCoursesAction = () => async (dispatch) => {
 
 // update a course
 export const updateCourseAction =
-  (id, application, active) => async (dispatch) => {
+  (id, applicationTemplate, active, description) => async (dispatch) => {
     try {
-      const response = await updateCourse(id, application, active);
+      const response = await updateCourse(id, applicationTemplate, active, description);
       dispatch({
         type: GET_COURSES,
         payload: response.courses,

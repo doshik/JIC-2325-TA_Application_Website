@@ -22,7 +22,7 @@ const ApplicationStatus = () => {
   const [isHiring, setIsHiring] = React.useState(false);
   const [semester, setSemester] = React.useState("");
   const [template, setTemplate] = React.useState("");
-  const status = "Submitted" 
+  const status = "submitted" 
 
   const handleSemesterChange = (eventKey) => {
     setSemester(eventKey);
@@ -58,34 +58,34 @@ const ApplicationStatus = () => {
             <Card.Header>Status</Card.Header>
             <Card.Body>
                 <ProgressBar>
-                <ProgressBar
-                    striped
-                    variant={status === 'Submitted' ? 'primary' : 'dark'}
-                    now={25}
-                    key={1}
-                    label="Submitted"
-                />
-                <ProgressBar
-                    striped
-                    variant={status === 'Interview' ? 'primary' : 'dark'}
-                    now={25}
-                    key={2}
-                    label="Interview"
-                />
-                <ProgressBar
-                    striped
-                    variant={status === 'Hired' ? 'primary' : 'dark'}
-                    now={25}
-                    key={3}
-                    label="Hired"
-                />
-                <ProgressBar
-                    striped
-                    variant={status === 'Denied' ? 'primary' : 'dark'}
-                    now={25}
-                    key={4}
-                    label="Denied"
-                />
+                  <ProgressBar
+                      striped
+                      variant={status === 'Submitted' ? 'primary' : 'dark'}
+                      now={25}
+                      key={1}
+                      label="Submitted"
+                  />
+                  <ProgressBar
+                      striped
+                      variant={status === 'Interview' ? 'warning' : 'dark'}
+                      now={25}
+                      key={2}
+                      label="Interview"
+                  />
+                  <ProgressBar
+                      striped
+                      variant={status === 'Hired' ? 'success' : 'dark'}
+                      now={25}
+                      key={3}
+                      label="Hired"
+                  />
+                  <ProgressBar
+                      striped
+                      variant={status === 'Denied' ? 'danger' : 'dark'}
+                      now={25}
+                      key={4}
+                      label="Denied"
+                  />
                 </ProgressBar>
             </Card.Body>
         </Card>

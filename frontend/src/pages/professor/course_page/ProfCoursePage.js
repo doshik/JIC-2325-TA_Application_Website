@@ -65,10 +65,10 @@ const ProfCoursePage = () => {
   return (
     <div>
       <Row className="mb-3 w-25 align-items-center">
-        <Col md={3}>
+        <Col md={4}>
           <h5>{courseId}</h5>
         </Col>
-        <Col md={9}>
+        <Col md={8}>
           <Form.Group controlId="formSemester">
             <DropdownButton
               variant="dark"

@@ -47,12 +47,12 @@ const ApplicationTable = (props) => {
     <Table hover className="text-center">
       <thead>
         <tr>
+          <th>Application</th>
           <th>Name</th>
           <th>Email</th>
           <th>Year</th>
           <th>Program</th>
           <th>Status</th>
-          <th>Application</th>
           <th>Change Status</th>
           <th></th>
         </tr>
@@ -60,14 +60,12 @@ const ApplicationTable = (props) => {
       <tbody>
         {applications && applications.map((application, idx) => (
           <tr>
+            <td><Button variant="primary">View</Button></td>
             <td>{application.student.name}</td>
             <td>{application.student.email}</td>
             <td>{application.student.userInfo.year}</td>
             <td>{application.student.userInfo.program}</td>
             <td>{application.status}</td>
-            <td>
-              <a href="">View</a>
-            </td>
             <td>
               <Form.Group controlId="updateStatus">
                 <DropdownButton

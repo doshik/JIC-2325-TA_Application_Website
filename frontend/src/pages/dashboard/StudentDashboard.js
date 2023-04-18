@@ -15,8 +15,12 @@ const StudentDashboard = () => {
     dispatch(getStudentApplicationsAction());
   }, [dispatch]);
 
-  const inProgressApplications = applications.filter(application => !application.submitted);
-  const submittedApplications = applications.filter(application => application.submitted);
+  const inProgressApplications = applications.filter(
+    (application) => !application.submitted
+  );
+  const submittedApplications = applications.filter(
+    (application) => application.submitted
+  );
 
   return (
     <Container fluid className="mx-0">
@@ -25,25 +29,32 @@ const StudentDashboard = () => {
           <h5>In Progress</h5>
           {inProgressApplications.length > 0 ? (
             <>
-            {inProgressApplications.map((application, index) => (
-              <Card key={index} className="mb-2">
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <Card.Title>{application.course.courseTitle}</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
+              {inProgressApplications.map((application, index) => (
+                <Card key={index} className="mb-2">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <Card.Title>
+                          {application.course.courseTitle}
+                        </Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">
+                          {application.professor.name}
+                        </Card.Subtitle>
+                      </div>
+                      <Button
+                        variant="primary"
+                        href={`submit/${application.course.courseTitle}`}
+                      >
+                        View/Edit
+                      </Button>
                     </div>
-                    <Button variant="primary" href={`submit/${application.course.courseTitle}`}>View/Edit</Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            ))}
+                  </Card.Body>
+                </Card>
+              ))}
             </>
           ) : (
             <Card className="mb-2">
-              <Card.Body>
-                  You have no in-progress applications.
-              </Card.Body>
+              <Card.Body>You have no in-progress applications.</Card.Body>
             </Card>
           )}
         </Col>
@@ -58,10 +69,19 @@ const StudentDashboard = () => {
                   <Card.Body>
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
-                        <Card.Title>{application.course.courseTitle}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{application.professor.name}</Card.Subtitle>
+                        <Card.Title>
+                          {application.course.courseTitle}
+                        </Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">
+                          {application.professor.name}
+                        </Card.Subtitle>
                       </div>
-                      <Button variant="primary" href={`status/${application.course.courseTitle}`}>View Submission</Button>
+                      <Button
+                        variant="primary"
+                        href={`status/${application.course.courseTitle}`}
+                      >
+                        View Submission
+                      </Button>
                     </div>
                   </Card.Body>
                 </Card>
@@ -69,9 +89,7 @@ const StudentDashboard = () => {
             </>
           ) : (
             <Card className="mb-2">
-              <Card.Body>
-                  You have no submitted applications.
-              </Card.Body>
+              <Card.Body>You have no submitted applications.</Card.Body>
             </Card>
           )}
         </Col>

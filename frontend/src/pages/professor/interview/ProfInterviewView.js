@@ -28,6 +28,7 @@ const ProfInterviewView = () => {
                     <tr>
                       <th scope="col">Student Name</th>
                       <th scope="col">Course Name</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -35,8 +36,20 @@ const ProfInterviewView = () => {
                       if (request?.acceptedTime === "") {
                         return (
                           <tr>
-                            <td>John</td>
-                            <td>CS 1332</td>
+                            <td>{request.student.name}</td>
+                            <td>{request.course.courseId}</td>
+                            <td>
+                              <Button 
+                                variant="danger" 
+                                className="btn-sm w-auto" 
+                                onClick={() =>
+                                  deleteInterviewRequest(request._id).then(() => {
+                                    setTempRefresh(tempRefresh + 1);
+                                  })
+                                }>
+                                Cancel
+                              </Button>
+                            </td>
                           </tr>
                         );
                       } else {
@@ -58,7 +71,6 @@ const ProfInterviewView = () => {
                     <tr>
                     <th scope="col">Student Name</th>
                       <th scope="col">Course Name</th>
-                      <th scope="col">Semester</th>
                       <th scope="col">Interview Time</th>
                       <th scope="col"></th>
                     </tr>
@@ -68,9 +80,8 @@ const ProfInterviewView = () => {
                       if (request?.acceptedTime !== "") {
                         return (
                           <tr>
-                            <td>John</td>
-                            <td>CS 1332</td>
-                            <td>Spring 2023</td>
+                            <td>{request.student.name}</td>
+                            <td>{request.course.courseId}</td>
                             <td>
                               {moment(request.acceptedTime).format(
                                 "MMMM Do YYYY, h:mm a"

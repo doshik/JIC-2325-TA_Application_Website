@@ -3,7 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import moment from "moment";
 import { submitInterviewRequest } from "../../../api/interview";
 
-const ProfSchedulerModal = ({ show, onHide }) => {
+const ProfSchedulerModal = ({ application, show, onHide }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [times, setTimes] = useState([moment()]);
@@ -15,7 +15,7 @@ const ProfSchedulerModal = ({ show, onHide }) => {
   };
 
   const submitRequest = () => {
-    submitInterviewRequest("900000000", times);
+    submitInterviewRequest(application.student._id, application.course._id, times);
   };
 
   const handleSelectDateAndTime = (selectedDate) => {

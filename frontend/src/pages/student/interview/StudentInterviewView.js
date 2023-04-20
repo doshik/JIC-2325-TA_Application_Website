@@ -40,7 +40,7 @@ const StudentInterviewView = () => {
                       if (request?.acceptedTime === "") {
                         return (
                           <tr>
-                            <td>CS 1332</td>
+                            <td>{request.course.courseId}</td>
                             <td>{request.professor.name}</td>
                             <td>
                               <StudentSchedulerWrapper
@@ -78,7 +78,7 @@ const StudentInterviewView = () => {
                       if (request?.acceptedTime !== "") {
                         return (
                           <tr>
-                            <td>CS 1332</td>
+                            <td>{request.course.courseId}</td>
                             <td>{request.professor.name}</td>
                             <td>
                               {moment(request.acceptedTime).format(

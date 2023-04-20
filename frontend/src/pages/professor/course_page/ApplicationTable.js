@@ -83,7 +83,7 @@ const ApplicationTable = (props) => {
               </Form.Group>
             </td>
             <td>
-              <ProfSchedulerWrapper />
+              <ProfSchedulerWrapper application={application}/>
             </td>
           </tr>
         ))}

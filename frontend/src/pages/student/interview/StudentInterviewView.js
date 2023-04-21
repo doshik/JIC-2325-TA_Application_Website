@@ -70,6 +70,7 @@ const StudentInterviewView = () => {
                       <th scope="col">Course Name</th>
                       <th scope="col">Professor Name</th>
                       <th scope="col">Interview Time</th>
+                      <th scope="col">Meeting Link</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -85,6 +86,7 @@ const StudentInterviewView = () => {
                                 "MMMM Do YYYY, h:mm a"
                               )}
                             </td>
+                            <td><a href="http://teams.microsoft.com">Teams Link</a></td>
                             <td>
                               <Button 
                                 variant="danger" 

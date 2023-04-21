@@ -91,7 +91,7 @@ function Home() {
               </li>
               <li>
                 Applicants will receive notification of their application status
-                by June 1st, 2023.
+                by June 1st, 2023. Please check your status of your application in your portal. 
               </li>
             </ul>
           </Card.Body>

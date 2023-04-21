@@ -35,7 +35,7 @@ const StudentDashboard = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <Card.Title>
-                          {application.course.courseId} - {application.course.courseTitle}
+                          {application.course.courseTitle}
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">
                           {application.professor.name}
@@ -70,7 +70,7 @@ const StudentDashboard = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <Card.Title>
-                          {application.course.courseId} - {application.course.courseTitle}
+                          {application.course.courseTitle}
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">
                           {application.professor.name}

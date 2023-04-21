@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import ProfSchedulerModal from "./ProfSchedulerModal";
 import { Button } from "react-bootstrap";
 
-const ProfSchedulerWrapper = (props) => {
+const ProfSchedulerWrapper = () => {
   const [showModal, setShowModal] = useState(false);
-  const { application } = props;
 
   return (
     <>
       <Button onClick={() => setShowModal(true)} variant="secondary">
         Schedule Interview
       </Button>
-      <ProfSchedulerModal application={application} show={showModal} onHide={() => setShowModal(false)} />
+      <ProfSchedulerModal show={showModal} onHide={() => setShowModal(false)} />
     </>
   );
 };

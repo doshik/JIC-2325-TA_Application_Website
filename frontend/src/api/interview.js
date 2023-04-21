@@ -1,10 +1,9 @@
 import { get, post, del } from "./main";
 
 // function to submit interview request
-export const submitInterviewRequest = async (student, course, possibleTimes) => {
+export const submitInterviewRequest = async (student, possibleTimes) => {
   const response = await post("/interview/prof/create", {
     student: student,
-    course: course,
     possibleTimes: possibleTimes,
   }).catch((err) => {
     throw err;

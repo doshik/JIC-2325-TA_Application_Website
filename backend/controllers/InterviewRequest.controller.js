@@ -14,10 +14,11 @@ applicationRoutes
   .post(userAuth, async function (req, res) {
     try {
       console.log(req.body);
+      const student = await User.findOne({ gtID: req.body.student });
       const newInterviewRequest = new InterviewRequest({
-        student: req.body.student,
+        student: student,
         professor: req.user.id,
-        course: req.body.course,
+        // application: 1,
         possibleTimes: req.body.possibleTimes,
         acceptedTime: "",
         meetingLink: "",
@@ -44,7 +45,7 @@ applicationRoutes
   .route("/student/get")
   .get(userAuth, async function (req, res) {
     try {
-      const interviewRequests = await InterviewRequest.find({student: req.user.id,}).populate(["student", "professor", "course"]);
+      const interviewRequests = await InterviewRequest.find({student: req.user.id,}).populate(["student", "professor"]);
 
       if (interviewRequests) {
         res.status(200).json({ interviewRequests: interviewRequests });
@@ -63,7 +64,7 @@ applicationRoutes
 .route("/prof/get")
 .get(userAuth, async function (req, res) {
   try {
-    const interviewRequests = await InterviewRequest.find({professor: req.user.id,}).populate(["student", "professor", "course"]);
+    const interviewRequests = await InterviewRequest.find({professor: req.user.id,}).populate(["student", "professor"]);
 
     if (interviewRequests) {
       res.status(200).json({ interviewRequests: interviewRequests });

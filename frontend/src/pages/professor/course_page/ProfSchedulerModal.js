@@ -108,6 +108,10 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
               Add Time Slot
             </Button>
           </Form.Group>
+          <Form.Group style={styles.timeSlot}>
+            <Form.Label>Meeting Link</Form.Label>
+            <Form.Control placeholder="Enter Meeting Link" />
+          </Form.Group>
           <Button
             variant="primary"
             disabled={!times}

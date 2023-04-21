@@ -56,7 +56,7 @@ function Home() {
             <Card.Text style={styles.leftCardContent}>
               The TA Application Hub is a website that provides students and
               professors access to everything they need for the TA application
-              and hiring process at Georgia Tech.
+              and hiring process at Georgia Tech in order to make the process as simple and efficient as possible.
             </Card.Text>
           </Card.Body>
         </Card>

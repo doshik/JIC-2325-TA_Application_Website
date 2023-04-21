@@ -48,7 +48,7 @@ const ProfCoursePage = () => {
   }
 
   const handleSave = () => {
-    const appTemplate = templates?.filter((item) => item.name === template)[0]._id;
+    const appTemplate = templates?.filter((item) => item.name === template)[0]._id || "Default";
     dispatch(updateCourseAction(course._id, appTemplate, isHiring, description));
     navigate("/dashboard");
   };

@@ -30,40 +30,38 @@ const ApplicationTemplatesTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td scope="row">Default</td>
-            <td>
-              <Button
-                variant="primary"
-                style={styles.button}
-                onClick={() => navigate("/templates/default")}
-              >
-                View
-              </Button>
-            </td>
-          </tr>
-          {applicationTemplates && applicationTemplates.map((template) => (
-              <tr key={template.id}>
+          {Array.isArray(applicationTemplates) && applicationTemplates.map((template) => (
+              <tr key={template._id}>
                 <td scope="row">{template.name}</td>
                 <td>
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      navigate("/templates/edit", { state: { template } })
-                    }
-                    style={styles.button}
-                  >
-                    View/Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    style={styles.button}
-                    onClick={() =>
-                      dispatch(deleteApplicationTemplateAction(template._id))
-                    }
-                  >
-                    Delete
-                  </Button>
+                  {template.name === "Default" ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => navigate("/templates/default", { state: { template } })}
+                    >
+                      View
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          navigate("/templates/edit", { state: { template } })
+                        }
+                        className="me-2"
+                      >
+                        View/Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          dispatch(deleteApplicationTemplateAction(template._id))
+                        }
+                      >
+                        Delete
+                      </Button>
+                  </>
+                )}
                 </td>
               </tr>
             ))}
@@ -74,9 +72,3 @@ const ApplicationTemplatesTable = () => {
 };
 
 export default ApplicationTemplatesTable;
-
-const styles = {
-  button: {
-    marginRight: "10px",
-  },
-};

@@ -1,47 +1,34 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { useState } from "react";
-import DefaultPage1 from "./DefaultPage1";
-import DefaultPage2 from "./DefaultPage2";
+import { Form, Container, Row, Card } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 function DefaultForm() {
-  const [step, setstep] = useState(1);
+    const location = useLocation();
+    const template = location.state.template;;
 
-  const nextStep = () => {
-    setstep(step + 1);
-  };
-
-  const prevStep = () => {
-    setstep(step - 1);
-  };
-
-  switch (step) {
-    case 1:
-      return (
-        <div>
-          <Container fluid>
-            <Row>
-            <Col>
-                <DefaultPage1 nextStep={nextStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
-    case 2:
-      return (
-        <div>
-          <Container fluid>
-            <Row>
-              <Col>
-                <DefaultPage2 prevStep={prevStep} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
-    default:
-      return <div></div>;
-  }
+    return (
+        <Container fluid>
+            <Card className="text-center">
+                <Card.Body>
+                    {template && template.questions.map((questionObj, idx) => {
+                        return (
+                            <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                <Form.Label>
+                                    Question {idx + 1}: {questionObj.question}
+                                </Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    className="w-75"
+                                    rows="1"
+                                    disabled
+                                    readOnly
+                                />
+                            </Form.Group>
+                        );
+                    })}
+                </Card.Body>
+            </Card>
+        </Container>
+    );
 }
-
 export default DefaultForm;

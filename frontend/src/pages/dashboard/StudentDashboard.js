@@ -15,12 +15,12 @@ const StudentDashboard = () => {
     dispatch(getStudentApplicationsAction());
   }, [dispatch]);
 
-  const inProgressApplications = applications.filter(
+  const inProgressApplications = applications?.filter(
     (application) => !application.submitted
-  );
-  const submittedApplications = applications.filter(
+  ) || [];
+  const submittedApplications = applications?.filter(
     (application) => application.submitted
-  );
+  ) || [];
 
   return (
     <Container fluid className="mx-0">

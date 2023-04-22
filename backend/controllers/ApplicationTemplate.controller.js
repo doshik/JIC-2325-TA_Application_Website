@@ -40,7 +40,7 @@ applicationTemplateRoutes
   .get(userAuth, async function (req, res) {
     try {
       const templates = await ApplicationTemplate.find({
-        professor: req.user.id,
+        $or: [{ professor: req.user.id }, { professor: { $exists: false } }],
       });
 
       res.status(200).send({ templates: templates });

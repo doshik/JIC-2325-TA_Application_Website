@@ -5,11 +5,14 @@ export const login = async (role) => {
   console.log("login called");
   const response = await post(`/user/login`, {
     role: role,
+  }, {
+    withCredentials: true
   }).catch((err) => {
     throw err;
   });
   return response.data;
 };
+
 
 // a function to check if the user is logged in using the api const above
 export const isLoggedIn = async () => {

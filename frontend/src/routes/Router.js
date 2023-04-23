@@ -36,6 +36,7 @@ const Router = createBrowserRouter(
     <>
       {/* unprotected routes */}
       <Route exact path="/" element={<Root />}>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="*" element={<Error />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/faqs" element={<FAQs />} />

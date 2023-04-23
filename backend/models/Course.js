@@ -20,6 +20,10 @@ const courseSchema = new Schema({
   description: {
     type: String,
   },
+  semester: {
+    type: String,
+    default: "Spring 2023",
+  },
   active: {
     type: Boolean,
     default: false,

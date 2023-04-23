@@ -75,7 +75,7 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
 
           <Form.Group controlId="date">
             {times.map((e, index) => (
-              <div style={styles.timeSlot}>
+              <div key={index} style={styles.timeSlot}>
                 <div>
                   <h3 key={index}>Time Slot {index + 1}</h3>
                   <label>Date: </label>

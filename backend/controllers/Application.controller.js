@@ -16,14 +16,19 @@ applicationRoutes
     try {
       const newSubmission = new Application({
         student: req.user.id,
+        professor: req.body.course.professor,
+        course: req.body.course,
+        applicationTemplate: req.body.course.applicationTemplate,
         responses: req.body.responses,
+        submitted: req.body.submitted,
+        status: req.body.submitted ? "Submitted" : ""
       });
 
       const savedSubmission = await newSubmission.save();
 
       const submissions = await Application.find({
         student: req.user.id,
-      });
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
       res.status(200).send({ submissions: submissions });
     } catch (err) {
       console.log(err);
@@ -40,7 +45,7 @@ applicationRoutes
     try {
       const submissions = await Application.find({
         student: req.user.id,
-      }).populate(["student", "professor", "course"]);
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
 
       res.status(200).send({ submissions: submissions });
     } catch (err) {
@@ -59,7 +64,7 @@ applicationRoutes
         professor: req.user.id,
         course: req.query.course,
         submitted: true
-      }).populate(["student", "professor", "course"]);
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
 
       res.status(200).send({ submissions: submissions });
     } catch (err) {
@@ -82,7 +87,7 @@ applicationRoutes
 
       const submissions = await Application.find({
         student: req.user.id,
-      });
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
       res.status(200).send({ submissions: submissions });
     } catch (err) {
       res.status(400).send("deleting application failed");
@@ -96,7 +101,7 @@ applicationRoutes
     try {
       const submission = await Application.findOneAndUpdate(
         { _id: req.body.id },
-        { $set: { responses: req.body.responses } }
+        { $set: { responses: req.body.responses, submitted: req.body.submitted, status: req.body.submitted ? "Submitted" : "" } }
       );
 
       if (!submission) {
@@ -106,7 +111,7 @@ applicationRoutes
 
       const submissions = await Application.find({
         student: req.user.id,
-      });
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
       res.status(200).send({ submissions: submissions });
     } catch (err) {
       res.status(400).send("updating application failed");
@@ -130,7 +135,7 @@ applicationRoutes
 
       const submissions = await Application.find({
         student: req.user.id,
-      });
+      }).populate(["student", "professor", "course", "applicationTemplate"]);
       res.status(200).send({ submissions: submissions });
     } catch (err) {
       res.status(400).send("updating application status failed");

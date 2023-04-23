@@ -12,10 +12,10 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
-import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getApplicationTemplatesAction } from "../../../redux/actions/applicationTemplateActions";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useEffect } from "react";
 import { updateCourseAction } from "../../../redux/actions/courseActions";
 
 const ProfCoursePage = () => {
@@ -26,6 +26,10 @@ const ProfCoursePage = () => {
   );
   const location = useLocation();
   const { course } = location.state;
+
+  useEffect(() => {
+    dispatch(getApplicationTemplatesAction());
+  }, [dispatch]);
 
   const courseId = course.courseId;
   const [isHiring, setIsHiring] = React.useState(course?.active);
@@ -97,7 +101,7 @@ const ProfCoursePage = () => {
                     onSelect={handleTemplateChange}
                   >
                     {templates.map((template) => (
-                      <Dropdown.Item eventKey={template.name}>
+                      <Dropdown.Item key={template._id} eventKey={template.name}>
                         {template.name}
                       </Dropdown.Item>
                     ))}

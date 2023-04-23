@@ -19,14 +19,15 @@ import Error from "../pages/error/Error";
 // Professor View
 import ProfCoursePage from "../pages/professor/course_page/ProfCoursePage";
 import ApplicationTemplateView from "../pages/professor/templates/ApplicationTemplateView";
-import DefaultFormView from "../pages/professor/application_forms/DefaultFormView";
-import CustomFormView from "../pages/professor/application_forms/CustomFormView";
-import EditApplicationFormView from "../pages/professor/application_forms/EditApplicationFormView";
+import DefaultFormView from "../pages/professor/applicationTemplate_forms/DefaultFormView";
+import CustomFormView from "../pages/professor/applicationTemplate_forms/CustomFormView";
+import EditApplicationFormView from "../pages/professor/applicationTemplate_forms/EditApplicationFormView";
 import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
 
 // Student View
 import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
 import StudentInterviewView from "../pages/student/interview/StudentInterviewView";
+import EditApplicationView from "../pages/student/submit_application/EditApplicationView";
 import SubmitApplicationView from "../pages/student/submit_application/SubmitApplicationView";
 import ApplicationStatus from "../pages/student/application_status/ApplicationStatus"
 
@@ -49,26 +50,23 @@ const Router = createBrowserRouter(
         <Route element={<ProtectedRoute roles={["student"]} />}>
           <Route exact path="/apply" element={<StudentApplicationsView />} />
 
-          <Route
-            exact
-            path="/submit/:courseId"
-            loader={({ params }) => params.courseId}
-            element={<SubmitApplicationView />}
-          />
-
           <Route exact path="/interviews" element={<StudentInterviewView />} />
 
           <Route
             exact
-            path="/submit/:courseId"
-            loader={({ params }) => params.courseId}
+            path="/submitapplication"
             element={<SubmitApplicationView />}
+          />
+
+          <Route
+            exact
+            path="/editapplication"
+            element={<EditApplicationView />}
           />
 
           <Route 
             exact 
-            path="/status/:courseId" 
-            loader={({ params }) => params.courseId} 
+            path="/applicationstatus" 
             element={<ApplicationStatus />} 
           />
 

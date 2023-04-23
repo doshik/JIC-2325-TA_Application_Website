@@ -1,15 +1,13 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createApplicationAction } from "../../../redux/actions/applicationActions";
+import { updateApplicationAction } from "../../../redux/actions/applicationActions";
 import { useNavigate } from "react-router-dom";
 
-const ApplicationForm = (props) => {
-    const { course } = props;
-    const questions = course?.applicationTemplate?.questions;
-    const [responses, setResponses] = useState(questions?.map(() => ""));
-
-    // console.log(course);
+const EditApplicationForm = (props) => {
+    const { application } = props;
+    const questions = application?.applicationTemplate?.questions;
+    const [responses, setResponses] = useState(application.responses || questions?.map(() => ""));
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,12 +19,12 @@ const ApplicationForm = (props) => {
     }
 
     function handleSave() {
-        dispatch(createApplicationAction(responses, course, false));
+        dispatch(updateApplicationAction(application._id, responses, false));
         navigate("/dashboard");
     }
 
     function handleSubmit() {
-        dispatch(createApplicationAction(responses, course, true));
+        dispatch(updateApplicationAction(application._id, responses, true));
         navigate("/dashboard");
     }
 
@@ -67,4 +65,4 @@ const ApplicationForm = (props) => {
         </Container>
     );
 }
-export default ApplicationForm;
+export default EditApplicationForm;

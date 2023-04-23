@@ -3,11 +3,13 @@ import { Table, Button, Container, Card } from "react-bootstrap";
 import { getStudentCoursesAction } from "../../../redux/actions/courseActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const StudentApplicationTable = () => {
     const dispatch = useDispatch();
     const courses = useSelector((state) => state.course.courses);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getStudentCoursesAction());
@@ -29,12 +31,18 @@ const StudentApplicationTable = () => {
                     <tbody>
                         {courses.map((course) => {
                             return (
-                                <tr>
+                                <tr key={course._id}>
                                     <td>{course.courseId}</td>
                                     <td>{course.courseTitle}</td>
                                     <td>{course.professor.name}</td>
                                     <td>{course.CRN}</td>
-                                    <td><Button>View</Button></td>
+                                    <td><Button
+                                            variant="primary"
+                                            onClick={() => navigate("/submitapplication", { state: { course } })}
+                                            >
+                                                View
+                                            </Button>
+                                    </td>
                                 </tr>
                             );
                         })}

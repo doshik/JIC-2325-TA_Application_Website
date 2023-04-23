@@ -60,7 +60,7 @@ const ApplicationTable = (props) => {
       </thead>
       <tbody>
         {applications && applications.map((application, idx) => (
-          <tr>
+          <tr key={application._id}>
             <td><Button variant="primary">View</Button></td>
             <td>{application.student.name}</td>
             <td>{application.student.email}</td>

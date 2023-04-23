@@ -16,7 +16,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start",
-    height: "100vh",
+    justifyContent: "flex-start"
   },
 };

@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
 import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -15,13 +14,15 @@ const StudentDashboard = () => {
     dispatch(getStudentApplicationsAction());
   }, [dispatch]);
 
+  console.log(applications);
+
   const inProgressApplications = applications?.filter(
     (application) => !application.submitted
   ) || [];
   const submittedApplications = applications?.filter(
     (application) => application.submitted
   ) || [];
-
+  
   return (
     <Container fluid className="mx-0">
       <Row>
@@ -43,7 +44,7 @@ const StudentDashboard = () => {
                       </div>
                       <Button
                         variant="primary"
-                        href={`submit/${application.course.courseTitle}`}
+                        onClick={() => navigate("/editapplication", { state: { application } })}
                       >
                         View/Edit
                       </Button>
@@ -59,7 +60,7 @@ const StudentDashboard = () => {
           )}
         </Col>
       </Row>
-      <Row className="mt-2">
+      <Row className="my-2">
         <Col>
           <h5>Submitted</h5>
           {submittedApplications.length > 0 ? (
@@ -78,7 +79,7 @@ const StudentDashboard = () => {
                       </div>
                       <Button
                         variant="primary"
-                        href={`status/${application.course.courseTitle}`}
+                        onClick={() => navigate("/applicationstatus", { state: { application } })}
                       >
                         View Submission
                       </Button>

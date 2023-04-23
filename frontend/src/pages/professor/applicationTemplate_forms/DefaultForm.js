@@ -1,10 +1,9 @@
 import { Form, Container, Row, Card } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 function DefaultForm() {
     const location = useLocation();
-    const template = location.state.template;;
+    const template = location.state.template;
 
     return (
         <Container fluid>

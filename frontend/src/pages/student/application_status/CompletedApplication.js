@@ -1,39 +1,30 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createApplicationTemplateAction } from "../../../redux/actions/applicationTemplateActions";
 import { useNavigate } from "react-router-dom";
 
-function ApplicationForm() {
-    const questions = [
-        "Why do you want to be a TA?",
-        "Do you have any additional information you would like to provide? If yes, write below."
-    ];
+function ApplicationForm(props) {
+    const { application } = props;
 
-    const responses = [
-        "I want to be a TA because I have a passion for teaching and helping others.",
-        "No"
-    ];
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const questions = application?.applicationTemplate?.questions;
+    const responses = application?.responses;
 
     return (
         <Container fluid className="px-0">
-            <Card className="text-center">
+            <Card className="text-center mb-2">
                 <Card.Body>
-                    {questions.map((question, idx) => {
+                    {questions && questions.map((questionObj, idx) => {
                         return (
                             <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
                                 <Form.Label>
-                                    Question {idx + 1}: {question}
+                                    Question {idx + 1}: {questionObj.question}
                                 </Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    as="textarea"
                                     className="w-75"
-                                    value={responses[idx]}
+                                    value={responses[idx] || ""}
                                     rows="1"
                                     readOnly
+                                    disabled
                                 />
                             </Form.Group>
                         );

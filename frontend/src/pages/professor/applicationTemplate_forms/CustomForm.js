@@ -70,7 +70,7 @@ function CustomForm({ template }) {
               </Col>
             </Form.Group>
           </div>
-          {questions.map((field, idx) => {
+          {questions && questions.map((field, idx) => {
             return (
               <Form.Group key={idx} as={Row} className="my-2">
                 <Form.Label column xs={2}>

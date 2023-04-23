@@ -22,6 +22,7 @@ const StudentApplicationTable = () => {
                             <th scope="col">Course ID</th>
                             <th scope="col">Course Title</th>
                             <th scope="col">Professor Name</th>
+                            <th scope="col">CRN</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -32,6 +33,7 @@ const StudentApplicationTable = () => {
                                     <td>{course.courseId}</td>
                                     <td>{course.courseTitle}</td>
                                     <td>{course.professor.name}</td>
+                                    <td>{course.CRN}</td>
                                     <td><Button>View</Button></td>
                                 </tr>
                             );

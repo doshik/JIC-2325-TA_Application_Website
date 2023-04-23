@@ -48,9 +48,9 @@ import {
   
   // Create a new application
   export const createApplicationAction =
-    (responses) => async (dispatch) => {
+    (responses, course, submitted) => async (dispatch) => {
       try {
-        const response = await createApplication(responses);
+        const response = await createApplication(responses, course, submitted);
         dispatch({
           type: SAVE_APPLICATION,
           payload: response.submissions,
@@ -98,9 +98,9 @@ import {
   
   // Update an application
   export const updateApplicationAction =
-    (id, responses) => async (dispatch) => {
+    (id, responses, submitted) => async (dispatch) => {
       try {
-        const response = await updateApplication(id, responses);
+        const response = await updateApplication(id, responses, submitted);
         dispatch({
           type: UPDATE_APPLICATION,
           payload: response.submissions,

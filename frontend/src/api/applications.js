@@ -17,9 +17,9 @@ export const getProfApplications = async (course) => {
 };
 
 // a function to create an application for a student
-export const createApplication = async (responses) => {
+export const createApplication = async (responses, course, submitted) => {
   const response = await post(`/application/save-submission`, {
-    responses,
+    responses, course, submitted
   }).catch((err) => {
     throw err;
   });
@@ -37,10 +37,11 @@ export const deleteApplication = async (id) => {
 };
 
 // a function to update an application for a student
-export const updateApplication = async (id, responses) => {
+export const updateApplication = async (id, responses, submitted) => {
   const response = await post(`/application/update-submission`, {
     id,
     responses,
+    submitted
   }).catch((err) => {
     throw err;
   });

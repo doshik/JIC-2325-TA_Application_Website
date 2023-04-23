@@ -1,14 +1,15 @@
 import * as React from "react";
 import ApplicationForm from "./ApplicationForm.js";
-import { useLoaderData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const SubmitApplicationView = () => {
-    const courseId = useLoaderData();
+    const location = useLocation();
+    const course = location.state.course;
 
     return (
         <div>
-            <h5 className="px-3">Complete the {courseId} Application</h5>
-            <ApplicationForm />
+            <h5 className="px-3">Complete the {course?.courseId} Application</h5>
+            <ApplicationForm course={course} />
         </div>
     );
 };

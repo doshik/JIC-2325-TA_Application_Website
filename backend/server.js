@@ -34,6 +34,7 @@ var options = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
+  exposedHeaders: ["set-cookie"],
 };
 app.use(cors(options));
 

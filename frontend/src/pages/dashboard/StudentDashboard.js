@@ -79,7 +79,7 @@ const StudentDashboard = () => {
                       </div>
                       <Button
                         variant="primary"
-                        href={`status/${application.course.courseTitle}`}
+                        onClick={() => navigate("/applicationstatus", { state: { application }})}
                       >
                         View Submission
                       </Button>

@@ -7,7 +7,11 @@ require("dotenv").config();
 var app = express();
 app.use(cookies());
 
-var allowedOrigins = ["http://localhost:3000", "http://localhost:3006"];
+var allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3006",
+];
 
 if (process.env.CLIENT_URL) {
   allowedOrigins.push(process.env.CLIENT_URL);

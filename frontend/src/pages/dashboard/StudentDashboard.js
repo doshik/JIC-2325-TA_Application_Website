@@ -2,7 +2,6 @@ import * as React from "react";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
 import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
 import { useEffect } from "react";
 
@@ -21,6 +20,8 @@ const StudentDashboard = () => {
   const submittedApplications = applications?.filter(
     (application) => application.submitted
   ) || [];
+
+  console.log(inProgressApplications, submittedApplications);
 
   return (
     <Container fluid className="mx-0">
@@ -43,7 +44,7 @@ const StudentDashboard = () => {
                       </div>
                       <Button
                         variant="primary"
-                        href={`submit/${application.course.courseTitle}`}
+                        onClick={() => navigate("/editapplication", { state: { application }})}
                       >
                         View/Edit
                       </Button>
@@ -53,7 +54,7 @@ const StudentDashboard = () => {
               ))}
             </>
           ) : (
-            <Card className="mb-2">
+            <Card className="my-2">
               <Card.Body>You have no in-progress applications.</Card.Body>
             </Card>
           )}

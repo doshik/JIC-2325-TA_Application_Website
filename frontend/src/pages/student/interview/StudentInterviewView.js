@@ -86,7 +86,7 @@ const StudentInterviewView = () => {
                                 "MMMM Do YYYY, h:mm a"
                               )}
                             </td>
-                            <td><a href="http://teams.microsoft.com">Teams Link</a></td>
+                            <td><a href={request.meetingLink}>{request.meetingLink}</a></td>
                             <td>
                               <Button 
                                 variant="danger" 

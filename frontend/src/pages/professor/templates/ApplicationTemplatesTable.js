@@ -20,6 +20,11 @@ const ApplicationTemplatesTable = () => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
 
+  const sortedTemplates = applicationTemplates ? [
+    applicationTemplates.find((template) => template.name === "Default"),
+    ...applicationTemplates.filter((template) => template.name !== "Default")
+  ] : [];
+
   return (
     <Container>
       <Table hover size="sm">
@@ -31,7 +36,7 @@ const ApplicationTemplatesTable = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(applicationTemplates) && applicationTemplates.map((template) => (
+          {Array.isArray(sortedTemplates) && sortedTemplates.map((template) => (
               <tr key={template._id}>
                 <td scope="row">{template.name}</td>
                 <td scope="row">{template.assignedToCourse ? "Yes" : "No"}</td>

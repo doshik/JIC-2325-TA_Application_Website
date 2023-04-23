@@ -5,7 +5,6 @@ import {
   SET_LOGOUT,
 } from "./types";
 import { login, logout } from "../../api/users";
-import Cookies from 'js-cookie';
 
 // Login - authorize and authenticate user; get a JWT token from the server
 export const loginUser = (role) => {
@@ -14,10 +13,6 @@ export const loginUser = (role) => {
       const response = await login(role);
       if (response.loggedIn) {
         dispatch({ type: SET_CURRENT_USER, payload: response.user });
-        // Save the JWT access token in a cookie
-        const accessToken = Cookies.get('jwt.accessToken');
-        document.cookie = `jwt=${accessToken}; path=/;`;
-
       } else {
         throw new Error("loginUser failed");
       }

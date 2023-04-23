@@ -34,11 +34,11 @@ var options = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
-  exposedHeaders: ["set-cookie"],
+  exposedHeaders: ["Set-Cookie"],
 };
 app.use(cors(options));
 
-// app.use(cors());
+// app.use(cors()); 
 // app.options("*", cors());
 
 // Bodyparser middlewar

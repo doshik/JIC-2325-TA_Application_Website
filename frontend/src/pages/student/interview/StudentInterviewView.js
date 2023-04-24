@@ -24,6 +24,15 @@ const StudentInterviewView = () => {
     });
   }, [tempRefresh]);
 
+  function isUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   return (
     <div>
       {(pendingRequests?.length > 0 || acceptedRequests?.length > 0 || completedRequests?.length > 0) ? (
@@ -86,7 +95,13 @@ const StudentInterviewView = () => {
                               "MMMM Do YYYY, h:mm a"
                             )}
                           </td>
-                          <td><a href="http://teams.microsoft.com">Teams Link</a></td>
+                          <td>
+                            {request.meetingLink && isUrl(request.meetingLink) ? (
+                                <a href={request.meetingLink}>{request.meetingLink}</a>
+                            ) : (
+                                request.meetingLink
+                            )}
+                            </td>
                           <td>
                             <Button 
                               variant="danger" 
@@ -133,7 +148,13 @@ const StudentInterviewView = () => {
                               "MMMM Do YYYY, h:mm a"
                             )}
                           </td>
-                          <td><a href="http://teams.microsoft.com">Teams Link</a></td>
+                          <td>
+                            {request.meetingLink && isUrl(request.meetingLink) ? (
+                                <a href={request.meetingLink}>{request.meetingLink}</a>
+                            ) : (
+                                request.meetingLink
+                            )}
+                          </td>
                           <td>
                             <Button 
                               variant="danger" 

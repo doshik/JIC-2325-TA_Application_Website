@@ -30,9 +30,8 @@ const ProfDashboard = () => {
 
   return (
     <Container fluid className="mx-0">
-      <Row style={styles.dropdown}>
+      {/* <Row style={styles.dropdown}>
         <Col>
-          {/* add a dropdown menu to filter by semester */}
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               {semester ? "Filter: " + semester : "Filter by Semester"}
@@ -56,7 +55,7 @@ const ProfDashboard = () => {
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col>
           <h5>Active</h5>

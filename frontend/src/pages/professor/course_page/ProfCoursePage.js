@@ -12,7 +12,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import ApplicationTable from "./ApplicationTable";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom";
 import { getApplicationTemplatesAction } from "../../../redux/actions/applicationTemplateActions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +35,9 @@ const ProfCoursePage = () => {
   const courseId = course.courseId;
   const [isHiring, setIsHiring] = React.useState(course?.active);
   const [semester, setSemester] = React.useState("Spring 2023");
-  const [description, setDescription] = React.useState(course?.description || "");
+  const [description, setDescription] = React.useState(
+    course?.description || ""
+  );
   const [template, setTemplate] = React.useState(
     course?.applicationTemplate?.name ?? ""
   );
@@ -53,8 +55,11 @@ const ProfCoursePage = () => {
   }
 
   const handleSave = () => {
-    const appTemplate = templates?.filter((item) => item.name === template)[0]._id || "Default";
-    dispatch(updateCourseAction(course._id, appTemplate, isHiring, description));
+    const appTemplate =
+      templates?.filter((item) => item.name === template)[0]._id || "Default";
+    dispatch(
+      updateCourseAction(course._id, appTemplate, isHiring, description)
+    );
     navigate("/dashboard");
   };
 
@@ -102,7 +107,10 @@ const ProfCoursePage = () => {
                     onSelect={handleTemplateChange}
                   >
                     {templates.map((template) => (
-                      <Dropdown.Item key={template._id} eventKey={template.name}>
+                      <Dropdown.Item
+                        key={template._id}
+                        eventKey={template.name}
+                      >
                         {template.name}
                       </Dropdown.Item>
                     ))}
@@ -149,16 +157,14 @@ const ProfCoursePage = () => {
         <Container fluid>
           <Row className="mt-3">
             <Col className="px-0">
-              <ApplicationTable course={course}/>
+              <ApplicationTable course={course} semester={semester} />
             </Col>
           </Row>
         </Container>
       ) : (
         <Card className="mt-3 text-center">
           <Card.Body>
-            <Card.Text>
-              This course is not active.
-            </Card.Text>
+            <Card.Text>This course is not active.</Card.Text>
           </Card.Body>
         </Card>
       )}

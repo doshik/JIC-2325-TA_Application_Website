@@ -23,6 +23,7 @@ import DefaultFormView from "../pages/professor/application_template_forms/Defau
 import CustomFormView from "../pages/professor/application_template_forms/CustomFormView";
 import EditApplicationFormView from "../pages/professor/application_template_forms/EditApplicationFormView";
 import ProfInterviewView from "../pages/professor/interview/ProfInterviewView";
+import ViewApplication from "../pages/professor/view_application/ApplicationStatus"
 
 // Student View
 import StudentApplicationsView from "../pages/student/viewing_open_applications/StudentApplicationsView";
@@ -79,6 +80,11 @@ const Router = createBrowserRouter(
             path="/applications/:courseId"
             loader={({ params }) => params.courseId}
             element={<ProfCoursePage />}
+          />
+          <Route 
+            exact 
+            path="/viewapplication" 
+            element={<ViewApplication />} 
           />
           <Route
             exact

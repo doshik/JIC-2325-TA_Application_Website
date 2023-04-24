@@ -10,7 +10,9 @@ export const login = async (role) => {
     throw err;
   });
   if (response.data.loggedIn) {
-    Cookies.set('jwt', response.data.token);
+    console.log(response.data.token)
+    const jsonString = JSON.stringify(response.data.token);
+    Cookies.set('jwt-test', jsonString);
   };
   return response.data;
 };

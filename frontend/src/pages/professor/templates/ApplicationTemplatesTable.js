@@ -60,12 +60,13 @@ const ApplicationTemplatesTable = () => {
                         View/Edit
                       </Button>
                       <Button
-                        variant="danger"
+                        variant={template.assignedToCourse ? "dark" : "danger"}
                         onClick={() =>
                           dispatch(deleteApplicationTemplateAction(template._id))
                         }
+                        disabled={template.assignedToCourse}
                       >
-                        Delete
+                        {template.assignedToCourse ? "Unable To Delete" : "Delete"}
                       </Button>
                   </>
                 )}

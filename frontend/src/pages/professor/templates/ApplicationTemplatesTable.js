@@ -31,7 +31,6 @@ const ApplicationTemplatesTable = () => {
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Assigned To Course?</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -39,7 +38,6 @@ const ApplicationTemplatesTable = () => {
           {Array.isArray(sortedTemplates) && sortedTemplates.map((template) => (
               <tr key={template._id}>
                 <td scope="row">{template.name}</td>
-                <td scope="row">{template.assignedToCourse ? "Yes" : "No"}</td>
                 <td>
                   {template.name === "Default" ? (
                     <Button

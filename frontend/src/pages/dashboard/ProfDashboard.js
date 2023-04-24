@@ -5,21 +5,57 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getProfCoursesAction } from "../../redux/actions/courseActions";
 import { useEffect } from "react";
+import { Dropdown } from "react-bootstrap";
 
 const ProfDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const courses = useSelector((state) => state.course.courses);
+  const [semester, setSemester] = React.useState("All");
 
   useEffect(() => {
     dispatch(getProfCoursesAction());
   }, [dispatch]);
 
-  const activeCourses = courses.filter((course) => course.active === true);
-  const inactiveCourses = courses.filter((course) => course.active === false);
+  const filteredBySem = courses.filter(
+    (course) =>
+      course.semester === semester || semester === "" || semester === "All"
+  );
+  const activeCourses = filteredBySem.filter(
+    (course) => course.active === true
+  );
+  const inactiveCourses = filteredBySem.filter(
+    (course) => course.active === false
+  );
 
   return (
     <Container fluid className="mx-0">
+      {/* <Row style={styles.dropdown}>
+        <Col>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {semester ? "Filter: " + semester : "Filter by Semester"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setSemester("All")}>
+                All
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setSemester("Spring 2023")}>
+                Spring 2023
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setSemester("Fall 2023")}>
+                Fall 2023
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setSemester("Spring 2024")}>
+                Spring 2024
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setSemester("Fall 2024")}>
+                Fall 2024
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row> */}
       <Row>
         <Col>
           <h5>Active</h5>
@@ -52,9 +88,7 @@ const ProfDashboard = () => {
             </>
           ) : (
             <Card className="mb-2">
-              <Card.Body>
-                  You have no active courses.
-              </Card.Body>
+              <Card.Body>You have no active courses.</Card.Body>
             </Card>
           )}
         </Col>
@@ -91,9 +125,7 @@ const ProfDashboard = () => {
             </>
           ) : (
             <Card className="mb-2">
-              <Card.Body>
-                  You have no inactive courses.
-              </Card.Body>
+              <Card.Body>You have no inactive courses.</Card.Body>
             </Card>
           )}
         </Col>
@@ -103,3 +135,9 @@ const ProfDashboard = () => {
 };
 
 export default ProfDashboard;
+
+const styles = {
+  dropdown: {
+    marginBottom: "10px",
+  },
+};

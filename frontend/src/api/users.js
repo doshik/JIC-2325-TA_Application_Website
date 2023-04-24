@@ -1,4 +1,5 @@
 import { get, post } from "./main";
+import Cookies from "js-cookie";
 
 // a function to log the user in using the api const above
 export const login = async (role) => {
@@ -8,6 +9,11 @@ export const login = async (role) => {
   }).catch((err) => {
     throw err;
   });
+  if (response.data.loggedIn) {
+    console.log(response.data.token)
+    const jsonString = JSON.stringify(response.data.token);
+    Cookies.set('jwt', jsonString);
+  };
   return response.data;
 };
 

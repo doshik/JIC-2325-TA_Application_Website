@@ -3,12 +3,24 @@ import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const applications = useSelector((state) => state.application.applications);
+  const [refresh, setRefresh] = useState(false);
+
+
+  
+  useEffect(() => {
+    // Reload the page only when the refresh state is true
+    if (refresh) {
+      window.location.reload();
+      setRefresh(false);
+    }
+  }, [refresh]);
 
   useEffect(() => {
     dispatch(getStudentApplicationsAction());

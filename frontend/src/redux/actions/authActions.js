@@ -41,10 +41,10 @@ export const logoutUser = () => {
 };
 
 // Set logged in user
-export const setCurrentUser = (decoded) => {
+export const setCurrentUser = (user) => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded,
+    payload: user,
   };
 };
 

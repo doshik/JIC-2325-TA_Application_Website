@@ -20,7 +20,7 @@ applicationRoutes
         course: req.body.course,
         possibleTimes: req.body.possibleTimes,
         acceptedTime: "",
-        meetingLink: "",
+        meetingLink: req.body.meetingLink,
       });
 
       const savedRequest = await newInterviewRequest.save();

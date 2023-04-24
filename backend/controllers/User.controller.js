@@ -178,20 +178,22 @@ userRoutes.route("/login").post(async function (req, res) {
           return res.status(500).json({ error: error._message });
         } else {
           console.log("Created new user:", savedUser);
-          res.cookie("jwt", generateToken(savedUser), {
+          const token = generateToken(user);
+          res.cookie("jwt", token, {
             httpOnly: true,
             maxAge: 8640000,
           });
-          res.status(200).json({ loggedIn: true, user: savedUser });
+          res.status(200).json({ loggedIn: true, user: user, token: token});
         }
       });
     } else {
       console.log("Logging in user:", user);
-      res.cookie("jwt", generateToken(user), {
+      const token = generateToken(user);
+      res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: 8640000,
       });
-      res.status(200).json({ loggedIn: true, user: user });
+      res.status(200).json({ loggedIn: true, user: user, token: token});
     }
   });
 });

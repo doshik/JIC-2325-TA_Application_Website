@@ -15,9 +15,11 @@ import {
   updateApplicationStatusAction,
 } from "../../../redux/actions/applicationActions";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ApplicationTable = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { course } = props;
   const applications = useSelector((state) => state.application.applications);
   const [statuses, setStatuses] = React.useState([]);
@@ -75,7 +77,14 @@ const ApplicationTable = (props) => {
             applications.map((application, idx) => (
               <tr key={application._id}>
                 <td>
-                  <Button variant="primary">View</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      navigate("/viewapplication", { state: { application } })
+                    }
+                  >
+                    View
+                  </Button>
                 </td>
                 <td>{application.student.name}</td>
                 <td>{application.student.email}</td>

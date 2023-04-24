@@ -7,6 +7,7 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [times, setTimes] = useState([moment()]);
+  const [meetingLink, setMeetingLink] = useState("No Meeting Link");
 
   const timeSlots = [1, 2, 3, 4, 5];
 
@@ -15,7 +16,7 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
   };
 
   const submitRequest = () => {
-    submitInterviewRequest(application.student._id, application.course._id, times);
+    submitInterviewRequest(application.student._id, application.course._id, times, meetingLink);
   };
 
   const handleSelectDateAndTime = (selectedDate) => {
@@ -44,6 +45,10 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
     setTimes(clonedTimes);
   };
 
+  const handleMeetingLinkChange = (event) => {
+    setMeetingLink(event.target.value)
+  }
+  
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -110,7 +115,7 @@ const ProfSchedulerModal = ({ application, show, onHide }) => {
           </Form.Group>
           <Form.Group style={styles.timeSlot}>
             <Form.Label>Meeting Link</Form.Label>
-            <Form.Control placeholder="Enter Meeting Link" />
+            <Form.Control as="textarea" value={meetingLink} onChange={(e) => handleMeetingLinkChange(e)}/>
           </Form.Group>
           <Button
             variant="primary"

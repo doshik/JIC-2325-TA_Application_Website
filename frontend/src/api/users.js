@@ -12,7 +12,7 @@ export const login = async (role) => {
   if (response.data.loggedIn) {
     console.log(response.data.token)
     const jsonString = JSON.stringify(response.data.token);
-    Cookies.set('jwt-test', jsonString);
+    Cookies.set('jwt', jsonString);
   };
   return response.data;
 };

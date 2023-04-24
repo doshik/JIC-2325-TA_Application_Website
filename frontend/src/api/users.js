@@ -9,11 +9,6 @@ export const login = async (role) => {
   }).catch((err) => {
     throw err;
   });
-  if (response.data.loggedIn) {
-    console.log(response.data.token)
-    const jsonString = JSON.stringify(response.data.token);
-    Cookies.set('jwt', jsonString);
-  };
   return response.data;
 };
 

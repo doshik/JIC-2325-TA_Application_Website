@@ -19,7 +19,7 @@ Our MERN app has the following dependencies that must be installed manually:
 * Axios
 * NPM
 
-### Build Instructions
+### Build Instructions/Install of Actual Application
 To download this project, please follow these steps:
 1. Click on the "Code" button and select "Download ZIP".
 2. Extract the downloaded ZIP file to your desired directory.
@@ -35,7 +35,7 @@ npm install --production
 node app.js
 ```
 
-### Run the application:
+### Run Instructions:
 1. Navigate to the project's root directory.
 2. Navigate to the `/frontend` directory and run the following command to install the client-side dependencies:
 ```npm install```

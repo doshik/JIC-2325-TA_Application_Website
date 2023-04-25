@@ -18,7 +18,7 @@ Summary: We are designing a better TA application website with functionalities t
 
 ### Known Issues:
 - Autoreload for interview scheduling still needs to be implemented, but we are actively working on it and plan to include it in a future release.
-- Symfony integration is still remaining, but we are actively working on it and plan to include it in a future release.
+- There is still potentially need for Symfony integration. 
 
 
 ### Version 0.4.0:

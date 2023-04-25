@@ -11,7 +11,7 @@ Before beginning the installation process, please ensure that your system meets 
 * MongoDB v4.2 or later
 
 ### Dependent libraries:
-Our MERN app has the following dependencies that must be installed:
+Our MERN app has the following dependencies that must be installed manually:
 * Express.js
 * React.js
 * Node.js
@@ -19,14 +19,23 @@ Our MERN app has the following dependencies that must be installed:
 * Axios
 * NPM
 
-### Download instructions:
+### Build Instructions
 To download this project, please follow these steps:
 1. Click on the "Code" button and select "Download ZIP".
 2. Extract the downloaded ZIP file to your desired directory.
+3. Navigate to the `/frontend` directory and run the following commands to get the static files to serve. Note that you will have to set the required environment variables as documented in the next section prior to building the app.
+```
+npm install
+npm run build
+```
+4. Navigate to the `/backend` directory and run the following commands to start the app in production mode. 
+```
+export NODE_ENV=production
+npm install --production
+node app.js
+```
 
-
-#### Run the application:
-Please follow these steps to run the TA Application:
+### Run the application:
 1. Navigate to the project's root directory.
 2. Navigate to the `/frontend` directory and run the following command to install the client-side dependencies:
 ```npm install```

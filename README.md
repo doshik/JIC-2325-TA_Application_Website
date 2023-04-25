@@ -1,6 +1,64 @@
 # TA Application Website
 Summary: We are designing a better TA application website with functionalities that include resume hosting, filtering based on different criteria, and customization of the TA application form for each class that will function as the primary way that students seeking TAships communicate with instructors as opposed to emails that make it difficult for professors to keep track of potential candidates.
 
+## Installation Guide
+
+### Pre-requisites:
+Before beginning the installation process, please ensure that your system meets the following requirements:
+
+* Operating System: Windows, macOS, or Linux
+* Node.js v14 or later
+* MongoDB v4.2 or later
+
+### Dependent libraries:
+Our MERN app has the following dependencies that must be installed:
+* Express.js
+* React.js
+* Node.js
+* Mongoose
+* Axios
+* NPM
+
+### Download instructions:
+To download this project, please follow these steps:
+1. Click on the "Code" button and select "Download ZIP".
+2. Extract the downloaded ZIP file to your desired directory.
+
+
+#### Run the application:
+Please follow these steps to run the TA Application:
+1. Navigate to the project's root directory.
+2. Navigate to the `/frontend` directory and run the following command to install the client-side dependencies:
+```npm install```
+3. Create a `.env` file in the `frontend` directory and add the following environment variables:
+`REACT_APP_API_URL=http://localhost:PORT`
+Specify the PORT where the backend will run, which corresponds to what you will set in the `backend` `.env`. 
+4. Navigate to the `\backend` directory and run the following command to install the server-side dependencies:
+```npm install```
+5. Create a `.env` file in the `backend` directory and add the following environment variables:
+```mongoURI = "MONGO_URI"
+PORT=5001
+CLIENT_URL="localhost:PORT"
+ACCESS_TOKEN_SECRET="SECRET"
+```
+Set the `MONGO_URI` to point to your `MongoDB` instance. 
+6. Start the `frontend` and  `backend` by running `npm start` in the respective directories. 
+
+#### View instructions:
+1. Open your preferred web browser.
+2. Navigate to `http://localhost:3000`.
+3. The app should now be running.
+
+### Troubleshooting:
+If you encounter any issues during installation or running the software, try the following steps:
+
+* Make sure that your system meets the pre-requisites listed above.
+* Check that all the dependencies have been installed correctly by running `npm install` in the `frontend` directory and `backend` directory.
+* Make sure that your MongoDB server is configured correctly and you are entering the `mongoURI` correctly. 
+* Check the console output for any error messages.
+
+
+
 ## Release Notes
 
 ## Version 0.5.0:

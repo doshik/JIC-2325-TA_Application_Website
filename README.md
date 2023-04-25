@@ -3,6 +3,24 @@ Summary: We are designing a better TA application website with functionalities t
 
 ## Release Notes
 
+## Version 0.5.0:
+
+### New Features:
+- Frontend: Removed all hardcoded data. All data displayed on the app is now served by the backend, providing more flexibility and dynamic content.
+- Frontend: Allow professors to filter the courses to view by semester, providing a more efficient way to manage their courses.
+- Frontend: Added professor view of application submission, providing professors with easy access to the TA applications for their courses.
+- Frontend: Completed professor interview scheduling page, providing a streamlined way for professors to schedule interviews with TA candidates.
+- Frontend: Added interview cancel functionality, providing users with more options when scheduling interviews. 
+
+### Bug Fixes:
+- Frontend: "/" route now redirects to the login page, improving the security and user experience of the website.
+- Frontend: Added autoreload for the page to show a submitted application when students submit an application, ensuring that the application is displayed without the need for the page to be manually refreshed.
+
+### Known Issues:
+- Autoreload for interview scheduling still needs to be implemented, but we are actively working on it and plan to include it in a future release.
+- Symfony integration is still remaining, but we are actively working on it and plan to include it in a future release.
+
+
 ### Version 0.4.0:
 #### New Features
 * Frontend - updated Interview Scheduling UI

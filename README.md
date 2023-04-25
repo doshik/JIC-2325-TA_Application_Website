@@ -45,7 +45,8 @@ Specify the PORT where the backend will run, which corresponds to what you will 
 4. Navigate to the `\backend` directory and run the following command to install the server-side dependencies:
 ```npm install```
 5. Create a `.env` file in the `backend` directory and specify the following environment variables: 
-```mongoURI = "MONGO_URI"
+```
+mongoURI = "MONGO_URI"
 PORT="PORT"
 CLIENT_URL="localhost:PORT"
 ACCESS_TOKEN_SECRET="SECRET"

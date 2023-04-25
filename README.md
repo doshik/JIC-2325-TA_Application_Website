@@ -1,5 +1,5 @@
 # TA Application Website
-Summary: We are designing a better TA application website with functionalities that include resume hosting, filtering based on different criteria, and customization of the TA application form for each class that will function as the primary way that students seeking TAships communicate with instructors as opposed to emails that make it difficult for professors to keep track of potential candidates.
+Summary: The current TA application website at Georgia Tech has a number of shortcomings that make the process frustrating for both students and professors. Students are left in the dark regarding their application status after they submit, and professors have no way of customizing the application to fit their needs. This project aims to develop a new TA application website that streamlines the TA hiring process for professors and provides an easy-to-use platform for students to apply for TA positions. The website will offer a user-friendly interface and incorporate advanced functionality to help ensure that the most qualified applicants are selected for each position.
 
 ## Installation Guide
 

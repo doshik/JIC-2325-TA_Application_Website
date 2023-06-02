@@ -198,6 +198,38 @@ userRoutes.route("/login").post(async function (req, res) {
   });
 });
 
+// @route GET api/user/sort
+// @desc Get users sorted by GPA, year, or taken course
+// @access Public
+// When auth rolled, ensure that only profs can access this route
+userRoutes.route("/sort").get(async function (req, res) {
+  let sortBy = req.query.sortBy;
+  let direction = req.query.direction || 'asc';
+
+  if (!['gpa', 'year', 'taken_course'].includes(sortBy)) {
+      return res.status(400).send('Invalid sort parameter.');
+  }
+
+  let sortObject = {};
+  if (sortBy == 'gpa') {
+      sortObject = { 'studentInfo.gpa': direction };
+  } else if (sortBy == 'year') {
+      sortObject = { 'studentInfo.year': direction };
+  } else if (sortBy == 'taken_course') {
+      // Sorting by a course taken requires a different approach, this won't work directly
+      // You might need to build a custom sorting mechanism
+      return res.status(400).send('Sorting by taken course is not directly supported.');
+  }
+
+  try {
+      let users = await User.find().sort(sortObject);
+      res.json(users);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+  }
+});
+
 // @route POST api/user/isLoggedIn
 // @desc Check if user is logged in via JWT
 // @access Public

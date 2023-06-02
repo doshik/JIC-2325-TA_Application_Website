@@ -20,6 +20,22 @@ Our MERN app has the following dependencies that must be installed manually:
 * NPM
 
 ### Build Instructions/Install of Actual Application
+## To run with docker:
+1. Create a `.env` file in the `frontend` directory and add the following environment variables:
+`REACT_APP_API_URL=http://localhost:PORT`
+Specify the PORT where the backend will run, which corresponds to what you will set in the `backend` `.env`. 
+2. Navigate to the `\backend` directory and run the following command to install the server-side dependencies:
+```npm install```
+3. Create a `.env` file in the `backend` directory and specify the following environment variables: 
+```
+mongoURI = mongodb://test:password@mongodb:27017
+PORT="PORT"
+CLIENT_URL="localhost:PORT"
+ACCESS_TOKEN_SECRET="SECRET"
+```
+
+## To run without docker:
+
 To download this project, please follow these steps:
 1. Click on the "Code" button and select "Download ZIP".
 2. Extract the downloaded ZIP file to your desired directory.

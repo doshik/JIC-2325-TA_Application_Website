@@ -7,29 +7,8 @@ require("dotenv").config();
 var app = express();
 app.use(cookies());
 
-var allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:3006",
-];
-
-if (process.env.CLIENT_URL) {
-  allowedOrigins.push(process.env.CLIENT_URL);
-}
-
-const temp = function (origin, callback) {
-  if (!origin) return callback(null, true);
-  if (allowedOrigins.indexOf(origin) === -1) {
-    var msg =
-      "The CORS policy for this site does not " +
-      "allow access from the specified Origin.";
-    return callback(new Error(msg), false);
-  }
-  return callback(null, true);
-};
-
 var options = {
-  origin: temp,
+  origin: true,  // This line has been changed
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
@@ -38,10 +17,7 @@ var options = {
 };
 app.use(cors(options));
 
-// app.use(cors()); 
-// app.options("*", cors());
-
-// Bodyparser middlewar
+// Bodyparser middleware
 var bodyParser = require("body-parser");
 app.use(
   bodyParser.urlencoded({
@@ -74,6 +50,7 @@ app.use("/course", courseRoutes);
 // });
 
 const db = process.env.mongoURI;
+console.log(`Connecting to ${db}`);
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(db, {

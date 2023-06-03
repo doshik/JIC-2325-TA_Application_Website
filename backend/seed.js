@@ -14,16 +14,6 @@ mongoose.connect(process.env.mongoURI, {
 });
 
 async function generateData() {
-  const courseFilter = { courseId: "CS 1331" };
-  const courseUpdate = {
-    courseId: "CS 1331",
-    courseName: "Intro to Object Oriented Programming",
-    courseDescription: "This course teaches the fundamentals of object oriented programming.",
-    professorInfo: "profName01",
-    application: "appID01",
-    active: true
-  };
-
   const profFilter = { username: "profName01" };
   const profUpdate = {
     name: "Professor Name",
@@ -31,7 +21,7 @@ async function generateData() {
     accountType: "professor",
     gtID: "900000001",
     createdAt: Date(),
-    professorInfo: {
+    userInfo: {
       courses: ['CS 1331', 'CS 4641']
     },
     adminInfo: {
@@ -46,7 +36,7 @@ async function generateData() {
     accountType: "student",
     gtID: "900000000",
     createdAt: Date(),
-    studentInfo: {
+    userInfo: {
       year: "3",
       major: "CS",
       coursesTaken: ["CS 1331", "CS 1332", "CS 4641"],
@@ -55,11 +45,6 @@ async function generateData() {
     },
   };
 
-  const newCourse = await Course.findOneAndUpdate(courseFilter, courseUpdate, {
-    new: true,
-    upsert: true
-  });
-  
   const newUser_prof = await User.findOneAndUpdate(profFilter, profUpdate, {
     new: true,
     upsert: true
@@ -69,6 +54,22 @@ async function generateData() {
     new: true,
     upsert: true
   });
+
+  const courseFilter = { courseId: "CS 1331" };
+  const courseUpdate = {
+    courseId: "CS 1331",
+    courseName: "Intro to Object Oriented Programming",
+    courseDescription: "This course teaches the fundamentals of object oriented programming.",
+    professor: newUser_prof,
+    application: "appID01",
+    active: true
+  };
+
+  const newCourse = await Course.findOneAndUpdate(courseFilter, courseUpdate, {
+    new: true,
+    upsert: true
+  });
+  
 
   const application_template_filter = { professor: profFilter._id, name: "Application Template 1"};
   const application_template_update = {

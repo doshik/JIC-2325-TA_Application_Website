@@ -150,42 +150,6 @@ userRoutes.route("/login").post(async function (req, res) {
     if (error) {
       console.error("Error finding user:", error);
       return res.status(500).json({ error: error._message });
-    } else if (!user) {
-      // If no user is found, create a new user
-      const newUser = new User({
-        _id: new mongoose.Types.ObjectId(),
-        name: userData.name.toLowerCase(),
-        email: userData.email.toLowerCase(),
-        accountType: userData.accountType,
-        gtID: userData.gtID,
-        username: userData.username,
-        createdAt: Date(),
-        professorInfo:
-          userData.accountType == "professor"
-            ? userData.professorInfo
-            : undefined,
-        studentInfo:
-          userData.accountType == "student" ? userData.studentInfo : undefined,
-        adminInfo:
-          userData.accountType == "professor"
-            ? userData.professorInfo
-            : undefined,
-      });
-      // JWT SHOULD NOT BE VERY BIG, CURRENTLY HAS ALL USER INFO
-      newUser.save((error, savedUser) => {
-        if (error) {
-          console.error("Error creating user:", error);
-          return res.status(500).json({ error: error._message });
-        } else {
-          console.log("Created new user:", savedUser);
-          const token = generateToken(user);
-          res.cookie("jwt", token, {
-            httpOnly: true,
-            maxAge: 8640000,
-          });
-          res.status(200).json({ loggedIn: true, user: user, token: token});
-        }
-      });
     } else {
       console.log("Logging in user:", user);
       const token = generateToken(user);

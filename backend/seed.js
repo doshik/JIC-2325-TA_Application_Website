@@ -13,6 +13,7 @@ mongoose.connect(process.env.mongoURI, {
 });
 
 async function generateData() {
+  
   const newUser_prof = new User({
     _id: new mongoose.Types.ObjectId(),
     name: "Professor Name",

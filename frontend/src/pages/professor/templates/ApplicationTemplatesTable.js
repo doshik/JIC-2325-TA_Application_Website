@@ -20,58 +20,78 @@ const ApplicationTemplatesTable = () => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
 
-  const sortedTemplates = applicationTemplates ? [
-    applicationTemplates.find((template) => template.name === "Default"),
-    ...applicationTemplates.filter((template) => template.name !== "Default")
-  ] : [];
+  let defaultTemplate;
+  if (applicationTemplates && applicationTemplates.length > 0) {
+    defaultTemplate = applicationTemplates.find((template) => template.name === "Default");
+  }
 
+  const sortedTemplates = applicationTemplates 
+    ? defaultTemplate 
+      ? [defaultTemplate, ...applicationTemplates.filter((template) => template.name !== "Default")]
+      : [...applicationTemplates]
+    : [];
+  console.log(applicationTemplates)
+  console.log(`tmp: ${applicationTemplates && applicationTemplates[0] ? applicationTemplates[0].name : "No templates found"}`)
+  console.log(`Application templates: ${JSON.stringify(sortedTemplates)}`)
   return (
     <Container>
-      <Table hover size="sm">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(sortedTemplates) && sortedTemplates.map((template) => (
-              <tr key={template._id}>
-                <td scope="row">{template.name}</td>
-                <td>
-                  {template.name === "Default" ? (
-                    <Button
-                      variant="primary"
-                      onClick={() => navigate("/templates/default", { state: { template } })}
-                    >
-                      View
-                    </Button>
-                  ) : (
-                    <>
+      { applicationTemplates && applicationTemplates.length > 0 && applicationTemplates[0].name ?
+        <Table hover size="sm">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(sortedTemplates) && sortedTemplates.map((template) => 
+            {
+              if (!template) {
+                console.error("Undefined template!");
+                return null;
+              }
+
+              console.log(`Template: ${JSON.stringify(template)}`)
+              return (
+        
+                <tr key={template._id}>
+                  <td scope="row">{template.name}</td>
+                  <td>
+                    {template.name === "Default" ? (
                       <Button
                         variant="primary"
-                        onClick={() =>
-                          navigate("/templates/edit", { state: { template } })
-                        }
-                        className="me-2"
+                        onClick={() => navigate("/templates/default", { state: { template } })}
                       >
-                        View/Edit
+                        View
                       </Button>
-                      <Button
-                        variant="danger"
-                        onClick={() =>
-                          dispatch(deleteApplicationTemplateAction(template._id))
-                        }
-                      >
-                        Delete
-                      </Button>
-                  </>
-                )}
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+                    ) : (
+                      <>
+                        <Button
+                          variant="primary"
+                          onClick={() =>
+                            navigate("/templates/edit", { state: { template } })
+                          }
+                          className="me-2"
+                        >
+                          View/Edit
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() =>
+                            dispatch(deleteApplicationTemplateAction(template._id))
+                          }
+                        >
+                          Delete
+                        </Button>
+                    </>
+                  )}
+                  </td>
+                </tr>
+              )})}
+          </tbody>
+        </Table> :
+        <div><h1>Application Templates not found</h1></div>
+    }
     </Container>
   );
 };

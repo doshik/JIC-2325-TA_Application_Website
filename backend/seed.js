@@ -6,6 +6,7 @@ const Application = require('./models/Application');
 const ApplicationTemplate = require('./models/ApplicationTemplate');
 const { application } = require('express');
 
+
 require("dotenv").config();
 console.log('Connecting to MongoDB... ' + process.env.mongoURI);
 mongoose.connect(process.env.mongoURI, {
@@ -131,6 +132,7 @@ async function generateData() {
     student: newUser_student,
     professor: newUser_prof,
     course: newCourse,
+    submitted: true,
     applicationTemplate: newApplicationTemplate,
     responses: [
       {
@@ -149,10 +151,63 @@ async function generateData() {
     upsert: true
   });
   
+  const availableCourses = ["CS 1331", "CS 1332", "CS 4641"];
+  for (let i = 0; i < 50; i++) {
+    let username = `user${Math.floor(Math.random() * 10000)}`; // generates user followed by a random 4 digit number
+    let email = `${username}@example.com`;
+    let name = `Name ${Math.floor(Math.random() * 10000)}`; // generates Name followed by a random 4 digit number
+    let studentFilter = { username: username };
+    let studentUpdate = {
+      name: name,
+      email: email,
+      accountType: "student",
+      gtID: `id_${Math.floor(Math.random() * 100000)}`, // generates id_ followed by a random 5 digit number
+      createdAt: Date(),
+      userInfo: {
+        year: (Math.floor(Math.random() * 4) + 1).toString(), // generates a random number between 1 and 4
+        major: "CS",
+        coursesTaken: availableCourses.sort(() => .5 - Math.random()).slice(0,2), // randomly picks courses from the list
+        coursesTaking: availableCourses.sort(() => .5 - Math.random()).slice(0,2), // randomly picks courses from the list
+        gpa: (Math.random() * (4 - 2) + 2).toFixed(2), // generates a random GPA between 2 and 4
+      },
+    };
+  
+    const newUser_student = await User.findOneAndUpdate(studentFilter, studentUpdate, {
+      new: true,
+      upsert: true
+    });
+  
+    const applicationUpdate = {
+      student: newUser_student,
+      professor: newUser_prof,
+      course: newCourse,
+      submitted: true,
+      applicationTemplate: newApplicationTemplate,
+      responses: [
+        {
+          questionPrompt: "What is your GPA?",
+          response: newUser_student.userInfo.gpa,
+        },
+        {
+          questionPrompt: "Why do you want to join this course?",
+          response: `I want to learn more. ${Math.random() > 0.5 ? 'Also, I have interest in this course.' : ''}`, // random sentence generation
+        },
+      ],
+    };
+  
+    await Application.findOneAndUpdate(applicationFilter, applicationUpdate, {
+      new: true,
+      upsert: true
+    });
+  }
+  
+  
 
   console.log('Data generation completed!');
   process.exit(0);
 }
+
+//Now generate random users and add applications along with them
 
 generateData().catch((err) => {
   console.error(err);

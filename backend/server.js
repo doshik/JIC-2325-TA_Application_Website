@@ -8,6 +8,7 @@ var app = express();
 app.use(cookies());
 
 var allowedOrigins = [
+  "http://127.0.0.1:3000",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3006",
@@ -20,6 +21,7 @@ if (process.env.CLIENT_URL) {
 const temp = function (origin, callback) {
   if (!origin) return callback(null, true);
   if (allowedOrigins.indexOf(origin) === -1) {
+    console.log(`Origin: ${origin}`)
     var msg =
       "The CORS policy for this site does not " +
       "allow access from the specified Origin.";

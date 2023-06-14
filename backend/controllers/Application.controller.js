@@ -53,10 +53,7 @@ applicationRoutes
       }
     });
 
-// @route GET api/application/prof/get-submissions
-// @desc Prof gets all TA application submissions for a course
-// @access Public
-applicationRoutes
+    applicationRoutes
     .route("/prof/get-submissions")
     .get(userAuth, async function (req, res) {
       try {
@@ -77,7 +74,13 @@ applicationRoutes
           student: { $in: userIds },
         };
 
-        const applications = await Application.find(appQuery).populate(["student", "professor", "course", "applicationTemplate"]);
+        const pageSize = parseInt(req.query.limit) || 10;
+        const page = parseInt(req.query.page) || 1;
+
+        const applications = await Application.find(appQuery)
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .populate(["student", "professor", "course", "applicationTemplate"]);
 
         if (applications.length === 0) {
           return res.status(404).send("No applications found with the provided filters.");
@@ -96,12 +99,18 @@ applicationRoutes
           });
         }
 
-        res.status(200).send({ submissions: applications });
+        const totalApplications = await Application.countDocuments(appQuery);
+
+        res.status(200).send({ 
+          submissions: applications, 
+          totalPages: Math.ceil(totalApplications / pageSize),
+          currentPage: page 
+        });
       } catch (err) {
-        res.status(400).send("Getting applications failed");
+        console.log(err)
+        res.status(400).send(err);
       }
     });
-
 
 // delete a submission
 applicationRoutes

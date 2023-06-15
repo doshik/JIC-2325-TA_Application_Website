@@ -65,17 +65,22 @@ export const getStudentApplicationsAction = () => async (dispatch) => {
 
 // Get all applications for a course
 
-export const getProfApplicationsAction = (course, sort_by_gpa=false, sort_by_year=false, majors=null, coursesTaken=null, coursesTaking=null) => async (dispatch) => {
+export const getProfApplicationsAction = (course, limit, cur_page, sort_by_gpa=false, sort_by_year=false, majors=null, coursesTaken=null, coursesTaking=null) => async (dispatch) => {
 
   try {
 
-    const response = await getProfApplications(course, sort_by_gpa=sort_by_gpa, sort_by_year=sort_by_year, majors=majors, coursesTaken=coursesTaken, coursesTaking=coursesTaking);
+    const response = await getProfApplications(course, limit, cur_page, sort_by_gpa=sort_by_gpa, sort_by_year=sort_by_year, majors=majors, coursesTaken=coursesTaken, coursesTaking=coursesTaking);
 
     dispatch({
 
       type: GET_APPLICATIONS,
 
-      payload: response.submissions,
+      payload: 
+      {
+        submissions: response.submissions,
+        totalPages: response.totalPages,
+      }
+
 
     });
 

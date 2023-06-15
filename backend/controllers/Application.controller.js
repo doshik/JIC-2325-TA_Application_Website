@@ -57,50 +57,63 @@ applicationRoutes
 // @desc Prof gets all TA application submissions for a course
 // @access Public
 applicationRoutes
-    .route("/prof/get-submissions")
-    .get(userAuth, async function (req, res) {
-      try {
-        let userQuery = {};
-        if (req.query.gpa) userQuery['userInfo.gpa'] = req.query.gpa;
-        if (req.query.major) userQuery['userInfo.major'] = req.query.major;
-        if (req.query.coursesTaken) userQuery['userInfo.coursesTaken'] = { $in: req.query.coursesTaken.split(",") };
-        if (req.query.coursesTaking) userQuery['userInfo.coursesTaking'] = { $in: req.query.coursesTaking.split(",") };
-        if (req.query.year) userQuery['userInfo.year'] = req.query.year;
+.route("/prof/get-submissions")
+.get(userAuth, async function (req, res) {
+  try {
+    let userQuery = {};
+    if (req.query.gpa) userQuery['userInfo.gpa'] = req.query.gpa;
+    if (req.query.major) userQuery['userInfo.major'] = req.query.major;
+    if (req.query.coursesTaken) userQuery['userInfo.coursesTaken'] = { $in: req.query.coursesTaken.split(",") };
+    if (req.query.coursesTaking) userQuery['userInfo.coursesTaking'] = { $in: req.query.coursesTaking.split(",") };
+    if (req.query.year) userQuery['userInfo.year'] = req.query.year;
 
-        const users = await User.find(userQuery);
-        const userIds = users.map(user => user._id);
+    const users = await User.find(userQuery);
+    const userIds = users.map(user => user._id);
 
-        let appQuery = {
-          professor: req.user.id,
-          course: req.query.course,
-          submitted: true,
-          student: { $in: userIds },
-        };
+    let appQuery = {
+      professor: req.user.id,
+      course: req.query.course,
+      submitted: true,
+      student: { $in: userIds },
+    };
 
-        const applications = await Application.find(appQuery).populate(["student", "professor", "course", "applicationTemplate"]);
+    let applications = await Application.find(appQuery)
+        .populate(["student", "professor", "course", "applicationTemplate"]);
 
-        if (applications.length === 0) {
-          return res.status(404).send("No applications found with the provided filters.");
+    if (applications.length === 0) {
+      return res.status(404).send("No applications found with the provided filters.");
+    }
+
+    if (req.query.sortBy && req.query.order) {
+      applications.sort((a, b) => {
+        let fieldA = a.student.userInfo[req.query.sortBy];
+        let fieldB = b.student.userInfo[req.query.sortBy];
+
+        if (req.query.order === "desc") {
+          return ("" + fieldB).localeCompare(fieldA);
+        } else {
+          return ("" + fieldA).localeCompare(fieldB);
         }
+      });
+    }
 
-        if (req.query.sortBy && req.query.order) {
-          applications.sort((a, b) => {
-            let fieldA = a.student.userInfo[req.query.sortBy];
-            let fieldB = b.student.userInfo[req.query.sortBy];
+    const pageSize = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
 
-            if (req.query.order === "desc") {
-              return ("" + fieldB).localeCompare(fieldA);
-            } else {
-              return ("" + fieldA).localeCompare(fieldB);
-            }
-          });
-        }
+    const paginatedApplications = applications.slice((page - 1) * pageSize, page * pageSize);
 
-        res.status(200).send({ submissions: applications });
-      } catch (err) {
-        res.status(400).send("Getting applications failed");
-      }
+    const totalApplications = applications.length;
+
+    res.status(200).send({ 
+      submissions: paginatedApplications, 
+      totalPages: Math.ceil(totalApplications / pageSize),
+      currentPage: page 
     });
+  } catch (err) {
+    console.log(err)
+    res.status(400).send(err);
+  }
+});
 
 
 // delete a submission

@@ -9,7 +9,7 @@ export const getStudentApplications = async () => {
 };
 
 // a function to get all applications for a student
-export const getProfApplications = async (course, sort_by_gpa=false, sort_by_year=false, majors=[], coursesTaken=[], coursesTaking=[]) => {
+export const getProfApplications = async (course, limit, cur_page, sort_by_gpa=false, sort_by_year=false, majors=[], coursesTaken=[], coursesTaking=[]) => {
   // Determine the sorting order based on the provided flags
   let sortBy = '';
   if (sort_by_gpa) {
@@ -20,6 +20,8 @@ export const getProfApplications = async (course, sort_by_gpa=false, sort_by_yea
 
   // Construct the request URL with all provided parameters
   const requestURL = `/application/prof/get-submissions?course=${course}` +
+      (limit ? `&limit=${limit}` : '') +
+      (cur_page ? `&page=${cur_page}` : '') +
       (majors && majors.length != 0 ? `&major=${majors}` : '') +
       (coursesTaken && coursesTaken.length != 0? `&coursesTaken=${coursesTaken}` : '') +
       (coursesTaking && coursesTaking.length != 0 ? `&coursesTaking=${coursesTaking}` : '') +

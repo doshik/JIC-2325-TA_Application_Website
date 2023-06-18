@@ -1,44 +1,16 @@
-version: '3.8'
+version: '3'
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    command: bash -c "npm install && node seed.js && node server.js"
+  s3:
+    image: minio/minio
+    volumes:
+      - minio-data:/data
     ports:
-      - '5001:5001'
-    volumes:
-      - './backend:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - "9000:9000"
+      #expose
+    command: server /data
     environment:
-      - NODE_ENV=development
-      - DB_USERNAME=test
-      - DB_PASSWORD=password
-      - DB_HOST=mongodb
-    depends_on:
-      - mongodb
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    volumes:
-      - './frontend:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - backend
-    command: bash -c "while ! curl backend:5001; do sleep 1; done; npm run start"
-
-  mongodb:
-    image: mongo:5.0
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=test
-      - MONGO_INITDB_ROOT_PASSWORD=password
-    volumes:
-      - 'mongodb_data_container:/data/db'
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
 
 volumes:
-  mongodb_data_container:
+  minio-data:

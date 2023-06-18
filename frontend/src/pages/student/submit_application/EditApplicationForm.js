@@ -76,18 +76,6 @@ const EditApplicationForm = (props) => {
                             </Form.Group>
                         );
                     })}
-                    <Form.Group>
-                        <Form.File
-                            id="application-file"
-                            label="Attach a file"
-                            onChange={handleFileChange}
-                            accept=".pdf, .png"
-                            custom
-                        />
-                        <Form.Control.Feedback type="invalid" style={{display: fileError ? 'block' : 'none'}}>
-                            {fileError}
-                        </Form.Control.Feedback>
-                    </Form.Group>
                 </Card.Body>
             </Card>
             <Row className="my-4 w-25 mx-auto">

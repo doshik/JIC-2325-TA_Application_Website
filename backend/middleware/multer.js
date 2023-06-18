@@ -2,25 +2,29 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const AWS = require('aws-sdk');
 
+// Configure the S3 client
 const s3 = new AWS.S3({
-    accessKeyId: 'minio', // From docker-compose file
-    secretAccessKey: 'minio123', // From docker-compose file
-    endpoint: 'http://localhost:9000', // From docker-compose file
-    s3ForcePathStyle: true, // Required when using a local S3 server like Minio
-    signatureVersion: 'v4' // Use the same version signed URLs
+  accessKeyId: process.env.MINIO_ACCESS_KEY,
+  secretAccessKey: process.env.MINIO_SECRET_KEY,
+  endpoint: process.env.MINIO_ENDPOINT,
+  s3ForcePathStyle: true,
+  signatureVersion: 'v4',
 });
 
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'name-of-your-bucket', // Replace with your bucket name
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString())
-        }
-    })
+const bucketName = 'user-data';
+
+// Check if the bucket exists, and create it if not
+s3.headBucket({ Bucket: bucketName }, (err) => {
+  if (err && err.code === 'NotFound') {
+    s3.createBucket({ Bucket: bucketName }, (err, data) => {
+      if (err) console.log("Error creating bucket:", err);
+      else console.log("Bucket created:", data);
+    });
+  } else if (err) {
+    console.log("Error checking bucket:", err);
+  } else {
+    console.log("Bucket exists");
+  }
 });
 
-module.exports = upload;
+module.exports = s3;

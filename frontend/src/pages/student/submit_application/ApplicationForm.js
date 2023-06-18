@@ -33,13 +33,13 @@ const ApplicationForm = (props) => {
         }
     }
 
-    function handleSave() {
-        dispatch(createApplicationAction(responses, course, false));
+   async function handleSave() {
+        dispatch(createApplicationAction(responses, course, false, file));
         navigate("/dashboard");
     }
 
     function handleSubmit() {
-        dispatch(createApplicationAction(responses, course, true));
+        dispatch(createApplicationAction(responses, course, true, file));
         navigate("/dashboard");
     }
 

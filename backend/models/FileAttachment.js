@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 var fileAttachmentSchema = new Schema(
     {
-        application: {
-            type: Schema.Types.ObjectId,
-            ref: "Application",
-        },
         file_url: {
             type: String,
             required: true,

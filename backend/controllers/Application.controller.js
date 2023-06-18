@@ -2,6 +2,7 @@ const User = require("../models/User.js");
 const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
 const ApplicationTemplate = require("../models/ApplicationTemplate.js");
+const upload = require('../middleware/multer');
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
@@ -186,6 +187,27 @@ applicationRoutes
       } catch (err) {
         res.status(400).send("updating application status failed");
       }
+    });
+
+  applicationRoutes
+    .route("/upload_file")
+    .post(userAuth, upload.single('file'), async function (req, res) {
+      const newFileAttachment = new FileAttachment({
+        application: req.body.application,
+        file_url: req.file.location,
+        file_name: req.file.originalname,
+        file_type: req.file.mimetype,
+        file_size: req.file.size
+      });
+    
+      // Save the document to the database
+      newFileAttachment.save((err, fileAttachment) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(200).send(fileAttachment);
+        }
+      });
     });
 
 module.exports = applicationRoutes;

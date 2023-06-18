@@ -5,6 +5,7 @@ const ApplicationTemplate = require("../models/ApplicationTemplate.js");
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
 const { userAuth } = require("../middleware/auth");
 
 // @route POST api/application/save-submission
@@ -177,6 +178,26 @@ applicationRoutes
         if (!submission) {
           res.status(400).send("Application not found");
           return;
+        }
+
+      const transporter = nodemailer.createTransport({
+          host: 'smtp.ethereal.email',
+          port: 587,
+          auth: {
+              user: 'lacy.macgyver63@ethereal.email',
+              pass: 'NZ3QKvF1pBU3ygYmUp'
+          }
+      });
+
+        if (req.body.status === 'Hired') {
+            transporter.sendMail({
+                from: 'lacy.macgyver63@ethereal.email',
+                to: 'student@email',
+                subject: 'TA Application Update for [course]',
+                text: 'Congrats, you have been hired!'
+            }, (err) => {
+                res.status(400).send('Mail error: ' + err.message)
+            });
         }
 
         const submissions = await Application.find({

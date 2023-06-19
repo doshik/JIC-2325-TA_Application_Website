@@ -8,10 +8,21 @@ const s3 = require('../middleware/multer');
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
+require("dotenv").config();
 const { userAuth } = require("../middleware/auth");
 const Busboy = require('busboy');
 const formidable = require('formidable');
 const fs = require('fs');
+
+const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD
+    }
+});
 
 // @route POST api/application/save-submission
 // @desc Student saves a TA application submission
@@ -225,6 +236,44 @@ applicationRoutes
           res.status(400).send("Application not found");
           return;
         }
+
+        console.log(req.body)
+
+          switch (req.body.status) {
+              case 'Hired':
+                  await transporter.sendMail({
+                  from: process.env.MAIL_USERNAME,
+                  to: req.body.email,
+                  subject: 'TA Application Update for ' + req.body.course,
+                  text: 'Congrats, you have been hired! ' +
+                      '\n The professor or TA team will be in contact with you shortly to give you more information.'
+              }, (err) => {
+                  res.status(400).send('Mail error: ' + err.message)
+                  return;
+              });
+                  break;
+                  case 'Interview':
+                  await transporter.sendMail({
+                      from: process.env.MAIL_USERNAME,
+                      to: req.body.email,
+                      subject: 'TA Application Update for ' + req.body.course,
+                      html: 'You have been selected for an interview! Please <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">log in</a> as soon as possible to schedule your interview.'
+                  }, (err) => {
+                      res.status(400).send('Mail error: ' + err.message)
+                      return;
+                  });
+                  break;
+              default:
+                  await transporter.sendMail({
+                      from: process.env.MAIL_USERNAME,
+                      to: req.body.email,
+                      subject: 'TA Application Update for ' + req.body.course,
+                      html: 'There has been an update for your application, <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">click here</a> to learn more.'
+                  }, (err) => {
+                      res.status(400).send('Mail error: ' + err.message)
+                      return;
+                  });
+          }
 
         const submissions = await Application.find({
           student: req.user.id,

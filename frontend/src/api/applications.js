@@ -74,10 +74,12 @@ export const updateApplication = async (id, responses, submitted) => {
 };
 
 // a function to update an application status
-export const updateApplicationStatus = async (id, status) => {
+export const updateApplicationStatus = async (id, status, course, email) => {
   const response = await post(`/application/update-status`, {
     id,
     status,
+    course,
+    email
   }).catch((err) => {
     throw err;
   });

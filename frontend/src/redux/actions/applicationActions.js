@@ -166,11 +166,11 @@ export const deleteApplicationAction = (id) => async (dispatch) => {
 
 export const updateApplicationStatusAction =
 
-    (id, status) => async (dispatch) => {
+    (id, status, course, email) => async (dispatch) => {
 
       try {
 
-        const response = await updateApplicationStatus(id, status);
+        const response = await updateApplicationStatus(id, status, course, email);
 
         dispatch({
 

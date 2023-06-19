@@ -1,44 +1,44 @@
 import * as React from "react";
-import Select from 'react-select'
+import Select from 'react-select';
 import {
-  //Table,
-  //Row,
-  Col,
-  Button,
-  Form,
-  DropdownButton,
-  Dropdown, FormGroup, FormSelect,
+  Button, Form, DropdownButton, Dropdown, FormGroup,
 } from "react-bootstrap";
 
 import {
-  Table,
-  Header,
-  HeaderRow,
-  Body,
-  Row,
-  HeaderCell,
-  Cell,
+  Table, Header, HeaderRow, Body, Row, HeaderCell, Cell,
 } from "@table-library/react-table-library/table";
+import { usePagination } from "@table-library/react-table-library/pagination";
 
 import ProfSchedulerWrapper from "./ProfSchedulerWrapper";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getProfApplicationsAction,
-  updateApplicationStatusAction,
+  getProfApplicationsAction, updateApplicationStatusAction,
 } from "../../../redux/actions/applicationActions";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 
-const ApplicationTable = (props) => {
+const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { course } = props;
   const applications = useSelector((state) => state.application.applications);
   const [statuses, setStatuses] = React.useState([]);
   const [sortBy, setSortBy] = React.useState("");
   const [coursesTakenFilter, setCoursesTakenFilter] = React.useState([]);
   const [coursesTakingFilter, setCoursesTakingFilter] = React.useState([]);
   const [majorFilter, setMajorFilter] = React.useState([]);
+  const [pageSize, setPageSize] = React.useState(10);
+  const [curPage, setCurPage] = React.useState(1);
+
+  useEffect(() => {
+    updateData();
+  }, [curPage, sortBy, coursesTakenFilter, coursesTakingFilter, majorFilter]);
+
+  useEffect(() => {
+    if (applications?.submissions) {
+      setStatuses(applications.submissions.map((application) => application.status));
+    }
+  }, [applications]);
 
   const handleStatusChange = (id, idx, email) => async (event) => {
     try {
@@ -53,42 +53,22 @@ const ApplicationTable = (props) => {
     }
   };
 
-  const update = () => {
-    let sort_by_gpa = (sortBy === "GPA")
-    let sort_by_year = (sortBy === "Year")
+  const updateData = () => {
+    let sort_by_gpa = (sortBy === "GPA");
+    let sort_by_year = (sortBy === "Year");
 
-    dispatch(getProfApplicationsAction(course._id, sort_by_gpa=sort_by_gpa, sort_by_year=sort_by_year, majorFilter, coursesTakenFilter, coursesTakingFilter));
-
-    console.log(data)
+    dispatch(getProfApplicationsAction(course._id, pageSize, curPage, 
+        sort_by_gpa, sort_by_year, majorFilter, coursesTakenFilter, coursesTakingFilter));
   }
 
-  useEffect(() => {
-    dispatch(getProfApplicationsAction(course._id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (applications && applications.length > 0) {
-      setStatuses(applications.map((application) => application.status));
+  const data = { nodes: applications?.submissions || [] };
+  const pagination = usePagination(data, {
+    state: {
+      page: 0,
+      total: 5,
+      size: 5,
     }
-  }, [applications]);
-
-  useEffect(() => {
-    update()
-  }, [sortBy]);
-
-  useEffect(() => {
-    update()
-  }, [coursesTakingFilter]);
-
-  useEffect(() => {
-    update()
-  }, [coursesTakenFilter]);
-
-  useEffect(() => {
-    update()
-  }, [majorFilter]);
-
-  const data = { nodes: applications }
+  });
 
   return (
       <>
@@ -143,7 +123,8 @@ const ApplicationTable = (props) => {
             </Form.Group>
           </div>
         </Form>
-        <Table data={data}>{
+
+        <Table  data={data} pagination={pagination}>{
           (list) => (
               <>
                 <Header>
@@ -160,7 +141,7 @@ const ApplicationTable = (props) => {
                   </HeaderRow>
                 </Header>
                 <Body>
-                  {props?.semester === "Spring 2023" &&
+                  {course.semester === "Spring 2023" &&
                       list &&
                       list.map((application, idx) => (
                           <Row key={application._id} item={application}>
@@ -196,106 +177,29 @@ const ApplicationTable = (props) => {
           )
         }
         </Table>
+
+        <div>
+
+        <Button
+          disabled={pagination.page === 0}
+          onClick={() => setCurPage(curPage - 1)}
+        >
+          <ArrowLeft />
+        </Button>
+
+        <span style={{margin:"0px 10px"}}>
+          Page {applications?.submissions ? curPage : 0} of {applications?.submissions ? applications.totalPages : 0}
+        </span>
+
+        <Button
+          disabled={pagination.page + 1 >= Math.ceil(pagination.total / pagination.size)}
+          onClick={() => setCurPage(curPage + 1)}
+        >
+          <ArrowRight />
+        </Button>
+      </div>
       </>
   );
 };
-
-// const OldApplicationTable = (props) => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const { course } = props;
-//   const applications = useSelector((state) => state.application.applications);
-//   const [statuses, setStatuses] = React.useState([]);
-//
-//   useEffect(() => {
-//     dispatch(getProfApplicationsAction(course._id));
-//   }, [dispatch]);
-//
-//   useEffect(() => {
-//     setStatuses(applications.map((application) => application.status));
-//   }, [applications]);
-//
-//   const handleStatusChange = (id, idx) => (status) => {
-//     const newStatuses = [...statuses];
-//     newStatuses[idx] = status;
-//     setStatuses(newStatuses);
-//     dispatch(updateApplicationStatusAction(id, status));
-//     window.location.reload();
-//   };
-//
-//   const getStatusColor = (status) => {
-//     switch (status) {
-//       case "Submitted":
-//         return "primary";
-//       case "Hired":
-//         return "success";
-//       case "Interview":
-//         return "warning";
-//       case "Denied":
-//         return "danger";
-//       default:
-//         return "secondary";
-//     }
-//   };
-//
-//   return (
-//       <>
-//         <Table hover className="text-center">
-//           <thead>
-//           <tr>
-//             <th>Application</th>
-//             <th>Name</th>
-//             <th>Email</th>
-//             <th>GTID</th>
-//             <th>Year</th>
-//             <th>Program</th>
-//             <th>Status</th>
-//             <th>Change Status</th>
-//             <th></th>
-//           </tr>
-//           </thead>
-//           <tbody>
-//           {props?.semester === "Spring 2023" &&
-//               applications &&
-//               applications.map((application, idx) => (
-//                   <tr key={application._id}>
-//                     <td>
-//                       <Button
-//                           variant="primary"
-//                           onClick={() =>
-//                               navigate("/viewapplication", { state: { application } })
-//                           }>View</Button>
-//                     </td>
-//                     <td>{application.student.name}</td>
-//                     <td>{application.student.email}</td>
-//                     <td>{application.student.gtID}</td>
-//                     <td>{application.student.userInfo.year}</td>
-//                     <td>{application.student.userInfo.program}</td>
-//                     <td>{application.status}</td>
-//                     <td>
-//                       <Form.Group controlId="updateStatus">
-//                         <DropdownButton
-//                             key={application._id}
-//                             variant={getStatusColor(statuses[idx])}
-//                             title={statuses[idx] || "Select Status"}
-//                             onSelect={handleStatusChange(application._id, idx)}
-//                             default="Submitted">
-//                           <Dropdown.Item eventKey="Submitted">Submitted</Dropdown.Item>
-//                           <Dropdown.Item eventKey="Hired">Hired</Dropdown.Item>
-//                           <Dropdown.Item eventKey="Interview">Interview</Dropdown.Item>
-//                           <Dropdown.Item eventKey="Denied">Denied</Dropdown.Item>
-//                         </DropdownButton>
-//                       </Form.Group>
-//                     </td>
-//                     <td>
-//                       <ProfSchedulerWrapper application={application} />
-//                     </td>
-//                   </tr>
-//               ))}
-//           </tbody>
-//         </Table>
-//       </>
-//   );
-// };
 
 export default ApplicationTable;

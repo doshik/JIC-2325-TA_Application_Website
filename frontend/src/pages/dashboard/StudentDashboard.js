@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getStudentApplicationsAction } from "../../redux/actions/applicationActions";
 import { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
@@ -25,15 +24,23 @@ const StudentDashboard = () => {
   useEffect(() => {
     dispatch(getStudentApplicationsAction());
   }, [dispatch]);
+  console.log("Application list: ",applications) 
+  var inProgressApplications = [];
+  var submittedApplications = [];
+  if (applications) {
+    applications?.map((application) => {
+      console.log("submitted", application.submitted)
+      if (application.submitted === true) {
+        submittedApplications.push(application);
+      } else {
+        inProgressApplications.push(application);
+      }
+    })
+  }
 
-  const inProgressApplications = applications?.filter(
-    (application) => !application.submitted
-  ) || [];
-  const submittedApplications = applications?.filter(
-    (application) => application.submitted
-  ) || [];
 
-  console.log(inProgressApplications, submittedApplications);
+  
+  console.log("Apps: ", inProgressApplications, submittedApplications);
 
   return (
     <Container fluid className="mx-0">

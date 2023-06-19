@@ -40,10 +40,10 @@ const ApplicationTable = ({ course }) => {
     }
   }, [applications]);
 
-  const handleStatusChange = (id, idx) => async (event) => {
+  const handleStatusChange = (id, idx, email) => async (event) => {
     try {
       const status = event.target.value;
-      await dispatch(updateApplicationStatusAction(id, status));
+      await dispatch(updateApplicationStatusAction(id, status, course.courseId, email));
       const newStatuses = [...statuses];
       newStatuses[idx] = status;
       setStatuses(newStatuses);
@@ -160,7 +160,7 @@ const ApplicationTable = ({ course }) => {
                             <Cell>{application.student.userInfo.major}</Cell>
                             <Cell>
                               <FormGroup controlId="updateStatus">
-                                <select value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx)}>
+                                <select value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx, application.student.email)}>
                                   <option value="Submitted">Submitted</option>
                                   <option value="Hired">Hired</option>
                                   <option value="Interview">Interview</option>

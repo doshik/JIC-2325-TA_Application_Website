@@ -30,6 +30,10 @@ var applicationSchema = new Schema(
     status: {
       type: String,
       default: "",
+    },
+    attachment: {
+      type: Schema.Types.ObjectId,
+      ref: "FileAttachment",
     }
   },
 

@@ -9,7 +9,9 @@ const ApplicationForm = (props) => {
     const questions = course?.applicationTemplate?.questions;
     const [responses, setResponses] = useState(questions?.map(() => ""))
 
-   
+    // New state for managing the file
+    const [file, setFile] = useState(null);
+    const [fileError, setFileError] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -20,13 +22,24 @@ const ApplicationForm = (props) => {
         setResponses(updatedResponses);
     }
 
-    function handleSave() {
-        dispatch(createApplicationAction(responses, course, false));
+    function handleFileChange(event) {
+        const file = event.target.files[0];
+        if (file && !['application/pdf', 'image/png'].includes(file.type)) {
+            setFileError('File must be a PDF or PNG.');
+            setFile(null);
+        } else {
+            setFileError('');
+            setFile(file);
+        }
+    }
+
+   async function handleSave() {
+        dispatch(createApplicationAction(responses, course, false, file));
         navigate("/dashboard");
     }
 
     function handleSubmit() {
-        dispatch(createApplicationAction(responses, course, true));
+        dispatch(createApplicationAction(responses, course, true, file));
         navigate("/dashboard");
     }
 
@@ -50,6 +63,17 @@ const ApplicationForm = (props) => {
                             </Form.Group>
                         );
                     })}
+                    <Form.Group as={Row} className="mb-5 d-flex justify-content-center">
+                        <Form.Label>Attach a file</Form.Label>
+                        <Form.Control 
+                            type="file" 
+                            className="w-75"
+                            onChange={handleFileChange} 
+                            accept=".pdf, .png"
+                            rows="1"
+                        />
+                        {fileError && <div style={{color: 'red'}}>{fileError}</div>}
+                    </Form.Group>
                 </Card.Body>
             </Card>
             <Row className="my-4 w-25 mx-auto">

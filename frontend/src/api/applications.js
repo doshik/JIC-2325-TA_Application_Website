@@ -34,12 +34,22 @@ export const getProfApplications = async (course, limit, cur_page, sort_by_gpa=f
 };
 
 // a function to create an application for a student
-export const createApplication = async (responses, course, submitted) => {
-  const response = await post(`/application/save-submission`, {
-    responses, course, submitted
-  }).catch((err) => {
+export const createApplication = async (responses, course, submitted, file) => {
+  const formData = new FormData();
+
+  formData.append("responses", JSON.stringify(responses));
+  formData.append("course", JSON.stringify(course));
+  formData.append("submitted", submitted);
+
+  if (file) {
+    console.log("file, ", file);
+    formData.append("file", file);
+  }
+
+  const response = await post(`/application/save-submission`, formData).catch((err) => {
     throw err;
   });
+
   return response.data;
 };
 
@@ -66,10 +76,12 @@ export const updateApplication = async (id, responses, submitted) => {
 };
 
 // a function to update an application status
-export const updateApplicationStatus = async (id, status) => {
+export const updateApplicationStatus = async (id, status, course, email) => {
   const response = await post(`/application/update-status`, {
     id,
     status,
+    course,
+    email
   }).catch((err) => {
     throw err;
   });

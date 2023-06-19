@@ -2,40 +2,98 @@ const User = require("../models/User.js");
 const Course = require("../models/Course.js");
 const Application = require("../models/Application.js");
 const ApplicationTemplate = require("../models/ApplicationTemplate.js");
+const FileAttachment = require("../models/FileAttachment.js");
+
+const s3 = require('../middleware/multer');
 const express = require("express");
 const applicationRoutes = express.Router();
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
+require("dotenv").config();
 const { userAuth } = require("../middleware/auth");
+const Busboy = require('busboy');
+const formidable = require('formidable');
+const fs = require('fs');
+
+const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD
+    }
+});
 
 // @route POST api/application/save-submission
 // @desc Student saves a TA application submission
 // @access Public
 applicationRoutes
-    .route("/save-submission")
-    .post(userAuth, async function (req, res) {
+  .route("/save-submission")
+  .post(userAuth, async function (req, res) {
+    const form = new formidable({ multiples: false });
+    console.log("endpoint hit");
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) return res.status(500).send("Error parsing the request");
+    
       try {
+        const file = files.file;
+        let file_attachment_id = null;
+        if (file) {
+          const fileData = fs.readFileSync(file.path);
+          const fileKey = Date.now().toString() + "_" + file.name;
+          console.log("endpoint hit");
+          const params = {
+            Bucket: "user-data",
+            Key: fileKey,
+            Body: fileData,
+            ContentType: file.type,
+          };
+          const data = await new Promise((resolve, reject) => {
+            s3.upload(params, (err, data) => {
+              if (err) reject(err);
+              resolve(data);
+            });
+          });
+
+          const newFileAttachment = new FileAttachment({
+            file_url: data.Location,
+            file_name: file.name,
+            file_type: file.type,
+            file_size: file.size,
+          });
+
+          await newFileAttachment.save();
+          file_attachment_id = newFileAttachment._id;
+        }
+        const parsedResponses = JSON.parse(fields.responses);
+        const parsedCourse = JSON.parse(fields.course);
+        const parsedSubmitted = JSON.parse(fields.submitted);
+
         const newSubmission = new Application({
           student: req.user.id,
-          professor: req.body.course.professor,
-          course: req.body.course,
-          applicationTemplate: req.body.course.applicationTemplate,
-          responses: req.body.responses,
-          submitted: req.body.submitted,
-          status: req.body.submitted ? "Submitted" : "",
+          professor: parsedCourse.professor,
+          course: parsedCourse._id,
+          applicationTemplate: parsedCourse.applicationTemplate,
+          responses: parsedResponses,
+          submitted: parsedSubmitted,
+          status: parsedSubmitted ? "Submitted" : "",
+          attachment: file_attachment_id, // reference to the file attachment
         });
 
-        const savedSubmission = await newSubmission.save();
+        await newSubmission.save();
 
         const submissions = await Application.find({
           student: req.user.id,
         }).populate(["student", "professor", "course", "applicationTemplate"]);
+
         res.status(200).send({ submissions: submissions });
       } catch (err) {
         console.log(err);
         res.status(400).send("adding new application failed");
       }
     });
-
+  });
 // @route GET api/application/student/get-submissions
 // @desc Student gets all own TA application submissions
 // @access Public
@@ -115,7 +173,6 @@ applicationRoutes
   }
 });
 
-
 // delete a submission
 applicationRoutes
     .route("/delete-submission")
@@ -183,6 +240,44 @@ applicationRoutes
           return;
         }
 
+        console.log(req.body)
+
+          switch (req.body.status) {
+              case 'Hired':
+                  await transporter.sendMail({
+                  from: process.env.MAIL_USERNAME,
+                  to: req.body.email,
+                  subject: 'TA Application Update for ' + req.body.course,
+                  text: 'Congrats, you have been hired! ' +
+                      '\n The professor or TA team will be in contact with you shortly to give you more information.'
+              }, (err) => {
+                  res.status(400).send('Mail error: ' + err.message)
+                  return;
+              });
+                  break;
+                  case 'Interview':
+                  await transporter.sendMail({
+                      from: process.env.MAIL_USERNAME,
+                      to: req.body.email,
+                      subject: 'TA Application Update for ' + req.body.course,
+                      html: 'You have been selected for an interview! Please <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">log in</a> as soon as possible to schedule your interview.'
+                  }, (err) => {
+                      res.status(400).send('Mail error: ' + err.message)
+                      return;
+                  });
+                  break;
+              default:
+                  await transporter.sendMail({
+                      from: process.env.MAIL_USERNAME,
+                      to: req.body.email,
+                      subject: 'TA Application Update for ' + req.body.course,
+                      html: 'There has been an update for your application, <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">click here</a> to learn more.'
+                  }, (err) => {
+                      res.status(400).send('Mail error: ' + err.message)
+                      return;
+                  });
+          }
+
         const submissions = await Application.find({
           student: req.user.id,
         }).populate(["student", "professor", "course", "applicationTemplate"]);
@@ -191,7 +286,6 @@ applicationRoutes
         res.status(400).send("updating application status failed");
       }
     });
-
 module.exports = applicationRoutes;
 
 // old endpoints

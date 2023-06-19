@@ -104,11 +104,11 @@ export const getProfApplicationsAction = (course, limit, cur_page, sort_by_gpa=f
 
 export const createApplicationAction =
 
-    (responses, course, submitted) => async (dispatch) => {
+    (responses, course, submitted, file) => async (dispatch) => {
 
       try {
 
-        const response = await createApplication(responses, course, submitted);
+        const response = await createApplication(responses, course, submitted, file);
 
         dispatch({
 
@@ -171,11 +171,11 @@ export const deleteApplicationAction = (id) => async (dispatch) => {
 
 export const updateApplicationStatusAction =
 
-    (id, status) => async (dispatch) => {
+    (id, status, course, email) => async (dispatch) => {
 
       try {
 
-        const response = await updateApplicationStatus(id, status);
+        const response = await updateApplicationStatus(id, status, course, email);
 
         dispatch({
 

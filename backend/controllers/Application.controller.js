@@ -228,39 +228,6 @@ applicationRoutes
                   });
           }
 
-        // if (req.body.status === 'Hired') {
-        //     await transporter.sendMail({
-        //         from: process.env.MAIL_USERNAME,
-        //         to: req.body.email,
-        //         subject: 'TA Application Update for ' + req.body.course,
-        //         text: 'Congrats, you have been hired! ' +
-        //             '\n The professor or TA team will be in contact with you shortly to give you more information.'
-        //     }, (err) => {
-        //         res.status(400).send('Mail error: ' + err.message)
-        //         return;
-        //     });
-        // } else if (req.body.status === 'Interview') {
-        //     await transporter.sendMail({
-        //         from: process.env.MAIL_USERNAME,
-        //         to: req.body.email,
-        //         subject: 'TA Application Update for ' + req.body.course,
-        //         html: 'You have been selected for an interview! Please <a href="http://localhost:3000/dashboard">log in</a> as soon as possible to schedule your interview.'
-        //     }, (err) => {
-        //         res.status(400).send('Mail error: ' + err.message)
-        //         return;
-        //     });
-        // } else {
-        //       await transporter.sendMail({
-        //           from: process.env.MAIL_USERNAME,
-        //           to: req.body.email,
-        //           subject: 'TA Application Update for ' + req.body.course,
-        //           html: 'There has been an update for your application, <a href="http://localhost:3000/dashboard">click here</a> to learn more.'
-        //       }, (err) => {
-        //           res.status(400).send('Mail error: ' + err.message)
-        //           return;
-        //       });
-        //   }
-
         const submissions = await Application.find({
           student: req.user.id,
         }).populate(["student", "professor", "course", "applicationTemplate"]);

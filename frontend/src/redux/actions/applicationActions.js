@@ -99,11 +99,11 @@ export const getProfApplicationsAction = (course, sort_by_gpa=false, sort_by_yea
 
 export const createApplicationAction =
 
-    (responses, course, submitted) => async (dispatch) => {
+    (responses, course, submitted, file) => async (dispatch) => {
 
       try {
 
-        const response = await createApplication(responses, course, submitted);
+        const response = await createApplication(responses, course, submitted, file);
 
         dispatch({
 

@@ -27,7 +27,7 @@ const StudentDashboard = () => {
   console.log("Application list: ",applications) 
   var inProgressApplications = [];
   var submittedApplications = [];
-  if (applications) {
+  if (applications && applications.map) {
     applications?.map((application) => {
       console.log("submitted", application.submitted)
       if (application.submitted === true) {

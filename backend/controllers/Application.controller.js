@@ -61,6 +61,7 @@ applicationRoutes
             file_name: file.name,
             file_type: file.type,
             file_size: file.size,
+            key: fileKey,
           });
 
           await newFileAttachment.save();
@@ -94,6 +95,39 @@ applicationRoutes
       }
     });
   });
+
+  // @route GET api/file/download/:id
+// @desc Download a file by its FileAttachment ID
+// @access Public
+applicationRoutes
+.route("/file/download/:id")
+.get(async function (req, res) {
+  try {
+    // Fetch the file attachment from the database
+    const fileAttachment = await FileAttachment.findById(req.params.id);
+
+    if (!fileAttachment) {
+      return res.status(404).send("File not found");
+    }
+
+    console.log("Getting file with key: ", fileAttachment.Key)
+    const params = {
+      Bucket: "user-data", 
+      Key: fileAttachment.key,
+    };
+
+    // Get the file from S3 and stream it to the client
+    s3.getObject(params)
+      .createReadStream()
+      .on('error', function(err){
+        res.status(500).json({error:"Error -> " + err});
+      }).pipe(res);
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err);
+  }
+});
+
 // @route GET api/application/student/get-submissions
 // @desc Student gets all own TA application submissions
 // @access Public

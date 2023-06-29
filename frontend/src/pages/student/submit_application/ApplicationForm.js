@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 const ApplicationForm = (props) => {
     const { course } = props;
     const questions = course?.applicationTemplate?.questions;
-    const [responses, setResponses] = useState(questions?.map(() => ""))
+    console.log(course)
+    const [responses, setResponses] = useState(questions?.map(() => ""));
 
-    // New state for managing the file
-    const [file, setFile] = useState(null);
-    const [fileError, setFileError] = useState('');
+    // Update to manage files for multiple file inputs
+    const [files, setFiles] = useState({});
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,58 +22,60 @@ const ApplicationForm = (props) => {
         setResponses(updatedResponses);
     }
 
-    function handleFileChange(event) {
+    function handleFileChange(idx, event) {
         const file = event.target.files[0];
-        if (file && !['application/pdf', 'image/png'].includes(file.type)) {
-            setFileError('File must be a PDF or PNG.');
-            setFile(null);
-        } else {
-            setFileError('');
-            setFile(file);
-        }
+        setFiles(prevFiles => ({ ...prevFiles, [idx]: file }));
     }
 
-   async function handleSave() {
-        dispatch(createApplicationAction(responses, course, false, file));
+    async function handleSave() {
+        // TODO: adjust the `createApplicationAction` to handle multiple files as well
+        dispatch(createApplicationAction(responses, course, false, files));
         navigate("/dashboard");
     }
 
     function handleSubmit() {
-        dispatch(createApplicationAction(responses, course, true, file));
+        // TODO: adjust the `createApplicationAction` to handle multiple files as well
+        dispatch(createApplicationAction(responses, course, true, files));
         navigate("/dashboard");
     }
-
+    
     return (
         <Container fluid>
             <Card className="text-center">
                 <Card.Body>
                     {questions && questions.map((questionObj, idx) => {
-                        return (
-                            <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
-                                <Form.Label>
-                                    Question {idx + 1}: {questionObj.question}
-                                </Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    className="w-75"
-                                    value={responses[idx] || ""}
-                                    onChange={(e) => handleResponseChange(idx, e)}
-                                    rows="1"
-                                />
-                            </Form.Group>
-                        );
+                        console.log(questionObj.questionType)
+                        if (questionObj.questionType === 'Short Answer') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        className="w-75"
+                                        value={responses[idx] || ""}
+                                        onChange={(e) => handleResponseChange(idx, e)}
+                                        rows="1"
+                                    />
+                                </Form.Group>
+                            );
+                        } else if (questionObj.questionType === 'File Attachment') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        className="w-75"
+                                        onChange={(e) => handleFileChange(idx, e)}
+                                    />
+                                </Form.Group>
+                            );
+                        }
+                        return null;
                     })}
-                    <Form.Group as={Row} className="mb-5 d-flex justify-content-center">
-                        <Form.Label>Attach a file</Form.Label>
-                        <Form.Control 
-                            type="file" 
-                            className="w-75"
-                            onChange={handleFileChange} 
-                            accept=".pdf, .png"
-                            rows="1"
-                        />
-                        {fileError && <div style={{color: 'red'}}>{fileError}</div>}
-                    </Form.Group>
                 </Card.Body>
             </Card>
             <Row className="my-4 w-25 mx-auto">

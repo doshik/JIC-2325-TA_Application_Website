@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ApplicationTemplateQuestionSchema = require("./ApplicationTemplateQuestion");
 
 var applicationTemplateSchema = new Schema({
   name: {
@@ -12,7 +13,7 @@ var applicationTemplateSchema = new Schema({
     required: true,
   },
   questions: {
-    type: Array,
+    type: [ApplicationTemplateQuestionSchema],
     default: [],
   },
   assignedToCourse: {

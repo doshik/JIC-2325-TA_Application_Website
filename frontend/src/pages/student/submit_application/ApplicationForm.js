@@ -68,6 +68,7 @@ const ApplicationForm = (props) => {
                                     </Form.Label>
                                     <Form.Control
                                         type="file"
+                                        className="w-75"
                                         onChange={(e) => handleFileChange(idx, e)}
                                     />
                                 </Form.Group>

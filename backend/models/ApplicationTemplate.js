@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-import {ApplicationTemplateQuestionSchema} from "./ApplicationTemplateQuestion";
+const ApplicationTemplateQuestionSchema = require("./ApplicationTemplateQuestion");
+
 var applicationTemplateSchema = new Schema({
   name: {
     type: String,

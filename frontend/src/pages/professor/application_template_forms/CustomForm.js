@@ -40,7 +40,7 @@ function CustomForm({ template }) {
 
   function handleTypeChange(i, event) {
     const fields = [...questions];
-    fields[i].QuestionType = event.target.value; // renamed to QuestionType
+    fields[i].questionType = event.target.value; // renamed to questionType
     setQuestions(fields);
   }
 
@@ -81,7 +81,7 @@ function CustomForm({ template }) {
                 <Col xs={7}>
                   <Form.Control
                     as="textarea"
-                    value={field.question || ""}
+                    value={field.questionText || ""}  // Fixed here
                     onChange={(e) => handleQuestionChange(idx, e)}
                     rows="1"
                   />
@@ -89,7 +89,7 @@ function CustomForm({ template }) {
                 <Col xs={2}>
                   <Form.Control
                     as="select"
-                    value={field.type}
+                    value={field.questionType}  // Fixed here
                     onChange={(e) => handleTypeChange(idx, e)}
                   >
                     <option>Short Answer</option>

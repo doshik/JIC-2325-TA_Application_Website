@@ -1,6 +1,6 @@
 const ApplicationTemplateQuestionSchema = new mongoose.Schema({
     // the type of the question (multiselect, single answer, file attachment, etc.)
-    QuestionType: {
+    questionType: {
         enum: ['multiselect', 'single answer', 'file attachment']
     },
 

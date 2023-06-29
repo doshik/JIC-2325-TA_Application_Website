@@ -10,18 +10,15 @@ import {
 function CustomForm({ template }) {
   const [name, setName] = useState(template?.name ?? "");
   const [questions, setQuestions] = useState(
-    template?.questions ?? [{ question: null }]
+    template?.questions ?? [{ questionText: null, questionType: 'Short Answer', options: [] }]  // fields renamed and options added
   );
   
-  // To Do: Replace this form with MS Forms or add page number selection
-  // const [pageNumbers, setPageNumbers] = useState([{ value: null }]);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleAddField() {
     const fields = [...questions];
-    fields.push({ question: null });
+    fields.push({ questionText: null, questionType: 'Short Answer', options: [] }); // fields renamed and options added
     setQuestions(fields);
   }
 
@@ -35,14 +32,19 @@ function CustomForm({ template }) {
     setName(event.target.value);
   }
 
-  function handleChange(i, event) {
+  function handleQuestionChange(i, event) {
     const fields = [...questions];
-    fields[i].question = event.target.value;
+    fields[i].questionText = event.target.value; // renamed to questionText
+    setQuestions(fields);
+  }
+
+  function handleTypeChange(i, event) {
+    const fields = [...questions];
+    fields[i].QuestionType = event.target.value; // renamed to QuestionType
     setQuestions(fields);
   }
 
   function handleSubmit(event) {
-    console.log(questions);
     if (template) {
       dispatch(updateApplicationTemplateAction(template._id, name, questions));
     } else {
@@ -76,13 +78,24 @@ function CustomForm({ template }) {
                 <Form.Label column xs={2}>
                   Question {idx + 1}:
                 </Form.Label>
-                <Col xs={9}>
+                <Col xs={7}>
                   <Form.Control
                     as="textarea"
                     value={field.question || ""}
-                    onChange={(e) => handleChange(idx, e)}
+                    onChange={(e) => handleQuestionChange(idx, e)}
                     rows="1"
                   />
+                </Col>
+                <Col xs={2}>
+                  <Form.Control
+                    as="select"
+                    value={field.type}
+                    onChange={(e) => handleTypeChange(idx, e)}
+                  >
+                    <option>Short Answer</option>
+                    <option>File Attachment</option>
+                    <option>MultiSelect</option>
+                  </Form.Control>
                 </Col>
                 <Col xs={1} className="d-flex align-items-center">
                   {questions.length > 1 && (

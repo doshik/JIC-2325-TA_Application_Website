@@ -8,8 +8,7 @@ const EditApplicationForm = (props) => {
     const { application } = props;
     const questions = application?.applicationTemplate?.questions;
     const [responses, setResponses] = useState(application.responses || questions?.map(() => ""));
-    const [file, setFile] = useState(null);
-    const [fileError, setFileError] = useState('');
+    const [files, setFiles] = useState({});
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -20,31 +19,27 @@ const EditApplicationForm = (props) => {
         setResponses(updatedResponses);
     }
 
-    function handleFileChange(event) {
+    function handleFileChange(idx, event) {
         const file = event.target.files[0];
-        if (file && !['application/pdf', 'image/png'].includes(file.type)) {
-            setFileError('File must be a PDF or PNG.');
-            setFile(null);
-        } else {
-            setFileError('');
-            setFile(file);
-        }
+        setFiles(prevFiles => ({ ...prevFiles, [idx]: file }));
     }
 
     async function handleSave() {
         dispatch(updateApplicationAction(application._id, responses, false));
 
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+        for (const [idx, file] of Object.entries(files)) {
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
 
-            const response = await fetch('/upload', {
-                method: 'POST',
-                body: formData,
-            });
+                const response = await fetch(`/upload/${idx}`, {
+                    method: 'POST',
+                    body: formData,
+                });
 
-            if (!response.ok) {
-                // Handle error
+                if (!response.ok) {
+                    // Handle error
+                }
             }
         }
 
@@ -61,21 +56,39 @@ const EditApplicationForm = (props) => {
             <Card className="text-center">
                 <Card.Body>
                     {questions && questions.map((questionObj, idx) => {
-                        return (
-                            <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
-                                <Form.Label>
-                                    Question {idx + 1}: {questionObj.question}
-                                </Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    className="w-75"
-                                    value={responses[idx] || ""}
-                                    onChange={(e) => handleResponseChange(idx, e)}
-                                    rows="1"
-                                />
-                            </Form.Group>
-                        );
+                        if (questionObj.questionType === 'Short Answer') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        className="w-75"
+                                        value={responses[idx] || ""}
+                                        onChange={(e) => handleResponseChange(idx, e)}
+                                        rows="1"
+                                    />
+                                </Form.Group>
+                            );
+                        } else if (questionObj.questionType === 'File Attachment') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    <Form.Control
+                                        type="file"
+                                        onChange={(e) => handleFileChange(idx, e)}
+                                    />
+                                </Form.Group>
+                            );
+                        }
+                        return null;
                     })}
+
+                   // Todo: implement multiselect
+
                 </Card.Body>
             </Card>
             <Row className="my-4 w-25 mx-auto">

@@ -107,6 +107,7 @@ const EditApplicationForm = (props) => {
                                                         type="checkbox"
                                                         className="w-75"
                                                         id={idx + "Option" + i}
+                                                        rows="1"
                                                         defaultChecked={responses[idx][i]}
                                                         onChange={(e) => handleCheckboxChange(idx, i, e)}
                                                     />

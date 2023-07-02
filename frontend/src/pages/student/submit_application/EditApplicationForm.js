@@ -19,6 +19,15 @@ const EditApplicationForm = (props) => {
         setResponses(updatedResponses);
     }
 
+    function handleCheckboxChange(idx, i, event) {
+        const updatedResponses = [...responses];
+        if (updatedResponses[idx] === "") {
+            updatedResponses[idx] = [];
+        }
+        updatedResponses[idx][i] = event.target.checked;
+        setResponses(updatedResponses);
+    }
+
     function handleFileChange(idx, event) {
         const file = event.target.files[0];
         setFiles(prevFiles => ({ ...prevFiles, [idx]: file }));
@@ -84,12 +93,38 @@ const EditApplicationForm = (props) => {
                                     />
                                 </Form.Group>
                             );
+                        } else if (questionObj.questionType === 'MultiSelect') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="my-2">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    {questionObj.options.map((option, i) => {
+                                        return (
+                                            <Form.Group key={i} as={Row} className="mb-2 justify-content-center">
+                                                <Col xs={1}>
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        className="w-75"
+                                                        id={idx + "Option" + i}
+                                                        rows="1"
+                                                        defaultChecked={responses[idx][i]}
+                                                        onChange={(e) => handleCheckboxChange(idx, i, e)}
+                                                    />
+                                                </Col>
+                                                <Col xs={4} className="text-start">
+                                                    <Form.Label htmlFor={idx + "Option" + i}>
+                                                        {option}
+                                                    </Form.Label>
+                                                </Col>
+                                            </Form.Group>
+                                        )
+                                    })}
+                                </Form.Group>
+                            )
                         }
                         return null;
                     })}
-
-                   // Todo: implement multiselect
-
                 </Card.Body>
             </Card>
             <Row className="my-4 w-25 mx-auto">

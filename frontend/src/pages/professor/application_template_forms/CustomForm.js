@@ -122,7 +122,7 @@ function CustomForm({ template }) {
                                     value={option || ""}
                                     onChange={(e) => handleMultiSelectOptionChange(idx, i, e)}
                                     rows="1"
-                                ></Form.Control>
+                                />
                               </Col>
                               <Col xs={1} className="d-flex align-items-center">
                                 {field.options.length > 1 && (

@@ -39,8 +39,6 @@ const StudentDashboard = () => {
   }
 
 
-  
-  console.log("Apps: ", inProgressApplications, submittedApplications);
 
   return (
     <Container fluid className="mx-0">

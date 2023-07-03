@@ -24,6 +24,54 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// @route POST api/application/upload-file
+// @desc Student uploads a file for TA application submission
+// @access Public
+applicationRoutes
+  .route("/upload-file")
+  .post(userAuth, async function (req, res) {
+    const form = new formidable({ multiples: false });
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) return res.status(500).send("Error parsing the request");
+
+      try {
+        const file = files.file;
+        if (!file) return res.status(400).send("No file found");
+
+        const fileData = fs.readFileSync(file.path);
+        const fileKey = Date.now().toString() + "_" + file.name;
+        const params = {
+          Bucket: "user-data",
+          Key: fileKey,
+          Body: fileData,
+          ContentType: file.type,
+        };
+        const data = await new Promise((resolve, reject) => {
+          s3.upload(params, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+          });
+        });
+
+        const newFileAttachment = new FileAttachment({
+          file_url: data.Location,
+          file_name: file.name,
+          file_type: file.type,
+          file_size: file.size,
+          key: fileKey,
+        });
+
+        await newFileAttachment.save();
+        
+        res.status(200).send({ fileAttachment: newFileAttachment });
+      } catch (err) {
+        console.log(err);
+        res.status(400).send("file upload failed");
+      }
+    });
+  });
+
 // @route POST api/application/save-submission
 // @desc Student saves a TA application submission
 // @access Public

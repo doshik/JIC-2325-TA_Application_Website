@@ -34,18 +34,30 @@ export const getProfApplications = async (course, limit, cur_page, sort_by_gpa=f
 };
 
 // a function to create an application for a student
-export const createApplication = async (responses, course, submitted, file) => {
+export const createApplication = async (responses, course, submitted, files) => {
+
   const formData = new FormData();
+
+  console.log("GOT FILES: ",files)
+  if (files) {
+ 
+    for (let id in files) {
+      let file = files[id];
+      console.log(file)
+      let fileFormData = new FormData();
+      fileFormData.append("file", file);
+    
+      const fileResponse = await post(`/application/upload-file`, fileFormData).catch((err) => {
+        throw err;
+      });
+
+      responses[id].value = fileResponse.data.fileAttachment._id;
+    }
+  }
 
   formData.append("responses", JSON.stringify(responses));
   formData.append("course", JSON.stringify(course));
   formData.append("submitted", submitted);
-
-  if (file) {
-    console.log("file, ", file);
-    formData.append("file", file);
-  }
-
   const response = await post(`/application/save-submission`, formData).catch((err) => {
     throw err;
   });

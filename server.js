@@ -4,11 +4,11 @@ const cookies = require("cookie-parser");
 const cors = require("cors");
 const path = require('path');
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT;
 const logger = require('./logger');
 
 require("dotenv").config();
-logger.info("Server is starting ");
+logger.info("Server is running on port " + PORT);
 var app = express();
 app.use(cookies());
 

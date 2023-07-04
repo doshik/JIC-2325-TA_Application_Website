@@ -5,9 +5,10 @@ const cors = require("cors");
 const path = require('path');
 
 const PORT = process.env.PORT || 80;
+const logger = require('./logger');
 
 require("dotenv").config();
-
+logger.info("Server is starting ");
 var app = express();
 app.use(cookies());
 
@@ -27,7 +28,7 @@ if (process.env.CLIENT_URL) {
 const temp = function (origin, callback) {
   if (!origin) return callback(null, true);
   if (allowedOrigins.indexOf(origin) === -1) {
-    console.log(`Origin: ${origin}`)
+    logger.info(`Origin: ${origin}`)
     var msg =
       "The CORS policy for this site does not " +
       "allow access from the specified Origin.";
@@ -99,9 +100,9 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    logger.info(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     process.exit(1);
   }
 };
@@ -109,6 +110,6 @@ const connectDB = async () => {
 //Connect to the database before listening
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server is running on port: " + PORT);
+    logger.info("Server is running on port: " + PORT);
   });
 });

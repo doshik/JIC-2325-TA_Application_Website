@@ -4,7 +4,7 @@ const cookies = require("cookie-parser");
 const cors = require("cors");
 const path = require('path');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 80;
 const logger = require('./logger');
 
 require("dotenv").config();

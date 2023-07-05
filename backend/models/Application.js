@@ -31,10 +31,10 @@ var applicationSchema = new Schema(
       type: String,
       default: "",
     },
-    attachment: {
+    attachments: [{  // Changed to support multiple attachments
       type: Schema.Types.ObjectId,
       ref: "FileAttachment",
-    }
+    }]
   },
 
   { timestamps: true }

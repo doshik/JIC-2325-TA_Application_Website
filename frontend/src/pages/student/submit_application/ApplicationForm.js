@@ -1,5 +1,5 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createApplicationAction } from "../../../redux/actions/applicationActions";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +18,29 @@ const ApplicationForm = (props) => {
 
     function handleResponseChange(idx, event) {
         const updatedResponses = [...responses];
-        updatedResponses[idx] = event.target.value;
+        updatedResponses[idx] = {
+            "value": event.target.value,
+            "questionText": questions[idx].questionText,
+            "questionType": questions[idx].questionType,
+            "options": questions[idx].options
+        };
+       
         setResponses(updatedResponses);
     }
 
     function handleFileChange(idx, event) {
         const file = event.target.files[0];
+        const updatedResponses = [...responses];
+        updatedResponses[idx] = {
+            "questionText": questions[idx].questionText,
+            "questionType": questions[idx].questionType,
+            "options": questions[idx].options,
+            "filename": file.name
+        };
         setFiles(prevFiles => ({ ...prevFiles, [idx]: file }));
+        setResponses(updatedResponses);
+
+        console.log(updatedResponses)
     }
 
     function handleCheckboxChange(idx, i, event) {
@@ -47,7 +63,22 @@ const ApplicationForm = (props) => {
         dispatch(createApplicationAction(responses, course, true, files));
         navigate("/dashboard");
     }
-    
+    console.log("A")
+    useEffect(() => {
+        const updatedResponses = []
+        let i = 0;
+        for(let question in questions) {
+            updatedResponses[i] = {
+                "questionText": questions[question].questionText,
+                "questionType": questions[question].questionType,
+                "options": questions[question].options,
+                "value": ""
+            };
+            i ++;
+        }
+        setResponses(updatedResponses);
+
+    }, [questions])
     return (
         <Container fluid>
             <Card className="text-center">
@@ -63,7 +94,7 @@ const ApplicationForm = (props) => {
                                     <Form.Control
                                         as="textarea"
                                         className="w-75"
-                                        value={responses[idx] || ""}
+                                        value={responses[idx].value || ""}
                                         onChange={(e) => handleResponseChange(idx, e)}
                                         rows="1"
                                     />

@@ -7,7 +7,12 @@ import { useNavigate } from "react-router-dom";
 const EditApplicationForm = (props) => {
     const { application } = props;
     const questions = application?.applicationTemplate?.questions;
-    const [responses, setResponses] = useState(application.responses || questions?.map(() => ""));
+    const [responses, setResponses] = useState(questions?.map((q, idx) => ({
+        "questionText": q.questionText,
+        "questionType": q.questionType,
+        "options": q.options,
+        "value": application.responses[idx] || ""
+    })));
     const [files, setFiles] = useState({});
 
     const dispatch = useDispatch();
@@ -15,7 +20,12 @@ const EditApplicationForm = (props) => {
 
     function handleResponseChange(idx, event) {
         const updatedResponses = [...responses];
-        updatedResponses[idx] = event.target.value;
+        updatedResponses[idx] = {
+            "value": event.target.value,
+            "questionText": questions[idx].questionText,
+            "questionType": questions[idx].questionType,
+            "options": questions[idx].options
+        };
         setResponses(updatedResponses);
     }
 
@@ -30,41 +40,36 @@ const EditApplicationForm = (props) => {
 
     function handleFileChange(idx, event) {
         const file = event.target.files[0];
+        const updatedResponses = [...responses];
+        updatedResponses[idx] = {
+            "questionText": questions[idx].questionText,
+            "questionType": questions[idx].questionType,
+            "filename": file.name,
+            "options": questions[idx].options
+        };
         setFiles(prevFiles => ({ ...prevFiles, [idx]: file }));
+        setResponses(updatedResponses);
     }
 
     async function handleSave() {
-        dispatch(updateApplicationAction(application._id, responses, false));
-
-        for (const [idx, file] of Object.entries(files)) {
-            if (file) {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const response = await fetch(`/upload/${idx}`, {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (!response.ok) {
-                    // Handle error
-                }
-            }
-        }
-
+        dispatch(updateApplicationAction(application._id, responses, false, files));
         navigate("/dashboard");
     }
 
     function handleSubmit() {
-        dispatch(updateApplicationAction(application._id, responses, true));
+        dispatch(updateApplicationAction(application._id, responses, true, files));
         navigate("/dashboard");
     }
+
+    useEffect(() => {
+        setResponses(application.responses);
+    }, [application])
 
     return (
         <Container fluid>
             <Card className="text-center">
                 <Card.Body>
-                    {questions && questions.map((questionObj, idx) => {
+                    {responses && responses.map((questionObj, idx) => {
                         if (questionObj.questionType === 'Short Answer') {
                             return (
                                 <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
@@ -74,7 +79,7 @@ const EditApplicationForm = (props) => {
                                     <Form.Control
                                         as="textarea"
                                         className="w-75"
-                                        value={responses[idx] || ""}
+                                        value={responses[idx].value || ""}
                                         onChange={(e) => handleResponseChange(idx, e)}
                                         rows="1"
                                     />
@@ -86,6 +91,7 @@ const EditApplicationForm = (props) => {
                                     <Form.Label>
                                         Question {idx + 1}: {questionObj.questionText}
                                     </Form.Label>
+                                    {questionObj.value ? <p><b>Attached file: </b> <a href={`http://127.0.0.1:5001/application/file/download/${questionObj.value}`}>Download File</a></p> : ""}
                                     <Form.Control
                                         type="file"
                                         className="w-75"

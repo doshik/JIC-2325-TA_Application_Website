@@ -5,8 +5,10 @@ const Application = require("../models/Application.js");
 const express = require("express");
 const userRoutes = express.Router();
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const { userAuth, generateToken } = require("../middleware/auth");
+const formidable = require('formidable');
+const fs = require('fs');
+const s3 = require('../middleware/multer');
 
 // @route POST api/user/signup
 // @desc Signup a new user
@@ -212,5 +214,63 @@ userRoutes.route("/logout").get((req, res) => {
   res.clearCookie("jwt");
   res.status(200).json({ loggedIn: false });
 });
+
+// @route POST api/application/upload-file
+// @desc Student uploads a profile picture
+// @access Public
+userRoutes
+  .route("/upload-file")
+  .post(userAuth, async function (req, res) {
+    const form = new formidable({ multiples: false });
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) return res.status(500).send("Error parsing the request");
+
+      try {
+        const file = files.file;
+        if (!file) return res.status(400).send("No file found");
+
+        const fileData = fs.readFileSync(file.path);
+        const fileKey = Date.now().toString() + "_" + file.name;
+        const params = {
+          Bucket: "user-data",
+          Key: fileKey,
+          Body: fileData,
+          ContentType: file.type,
+        };
+
+        const data = await new Promise((resolve, reject) => {
+          s3.upload(params, (err, data) => {
+            if (err) reject(err);
+            resolve(data);
+          });
+        });
+
+        const newFileAttachment = new FileAttachment({
+          file_url: data.Location,
+          file_name: file.name,
+          file_type: file.type,
+          file_size: file.size,
+          key: fileKey,
+        });
+
+        await newFileAttachment.save();
+
+        // Find the user and update their profile picture key
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).send("User not found");
+
+        user.profile_picture_key = newFileAttachment._id; // set user profile_picture_key as the FileAttachment id
+
+        await user.save();
+        
+        console.log("User profile picture updated", user);
+        res.status(200).send({ user: user, fileAttachment: newFileAttachment });
+      } catch (err) {
+        console.log(err);
+        res.status(400).send("Image upload failed");
+      }
+    });
+  });
 
 module.exports = userRoutes;

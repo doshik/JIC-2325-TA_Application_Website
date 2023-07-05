@@ -2,123 +2,106 @@ import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+
 import "./LeftNavBar.css";
 
 function LeftNavBar() {
   const location = useLocation();
   const role = useSelector((state) => state.auth.user.accountType);
+  const initialProfilePicture = useSelector((state) => `/application/file/download/${state.auth.user.profile_picture_key}`);
+  const [profilePicture, setProfilePicture] = React.useState(initialProfilePicture);
+  const imageInputRef = React.useRef();
+  const token = useSelector((state) => state.auth.token);
+
+  const handleImageClick = () => {
+    imageInputRef.current.click();
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await axios.post('/user/upload-file', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        // Immediately set the new profile picture
+        setProfilePicture(URL.createObjectURL(file));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  // A helper function to reduce repeated code
+  const renderNavItem = (href, text) => (
+    <Nav.Item>
+      <Nav.Link
+        className="leftNavLink"
+        href={href}
+        active={location.pathname === href}
+      >
+        {text}
+      </Nav.Link>
+    </Nav.Item>
+  );
 
   return (
     <Nav className="leftNavBar d-none d-md-block col-md-3 col-lg-2">
+      {role === "student" && (
+        <div style={{ textAlign: 'center', marginBottom: '1em' }}>
+          <input
+            type="file"
+            ref={imageInputRef}
+            style={{ display: 'none' }}
+            onChange={handleImageUpload}
+          />
+          {profilePicture ?
+            <img
+              src={profilePicture}
+              alt="Profile"
+              style={{ width: '64px', height: '64px', cursor: 'pointer', borderRadius: '50%' }}
+              onClick={handleImageClick}
+            /> :
+            <FontAwesomeIcon
+              icon={faUserCircle}
+              size='3x'
+              style={{ cursor: 'pointer' }}
+              onClick={handleImageClick}
+            />
+          }
+        </div>
+      )}
       {role !== "student" && role !== "professor" && (
         <div>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/login"
-              active={location.pathname === "/login"}
-            >
-              Welcome
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/FAQs"
-              active={location.pathname === "/FAQs"}
-            >
-              FAQs
-            </Nav.Link>
-          </Nav.Item>
+          {renderNavItem("/login", "Welcome")}
+          {renderNavItem("/FAQs", "FAQs")}
         </div>
       )}
       {role === "student" && (
         <div>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/home"
-              active={location.pathname === "/home"}
-            >
-              Home
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/dashboard"
-              active={location.pathname === "/dashboard"}
-            >
-              Dashboard
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/apply"
-              active={location.pathname === "/apply"}
-            >
-              Open Applications
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/interviews"
-              active={location.pathname === "/interviews"}
-            >
-              Interview Scheduling
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/FAQs"
-              active={location.pathname === "/FAQs"}
-            >
-              FAQs
-            </Nav.Link>
-          </Nav.Item>
+          {renderNavItem("/home", "Home")}
+          {renderNavItem("/dashboard", "Dashboard")}
+          {renderNavItem("/apply", "Open Applications")}
+          {renderNavItem("/interviews", "Interview Scheduling")}
+          {renderNavItem("/FAQs", "FAQs")}
         </div>
       )}
       {role === "professor" && (
         <div>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/home"
-              active={location.pathname === "/home"}
-            >
-              Home
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/dashboard"
-              active={location.pathname === "/dashboard"}
-            >
-              Dashboard
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/templates"
-              active={location.pathname === "/templates"}
-            >
-              Application Templates
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              className="leftNavLink"
-              href="/interviewscheduling"
-              active={location.pathname === "/interviewscheduling"}
-            >
-              Interview Scheduling
-            </Nav.Link>
-          </Nav.Item>
+          {renderNavItem("/home", "Home")}
+          {renderNavItem("/dashboard", "Dashboard")}
+          {renderNavItem("/templates", "Application Templates")}
+          {renderNavItem("/interviewscheduling", "Interview Scheduling")}
         </div>
       )}
     </Nav>

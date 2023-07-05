@@ -1,5 +1,7 @@
 import * as React from "react";
 import Select from 'react-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   Button, Form, DropdownButton, Dropdown, FormGroup,
 } from "react-bootstrap";
@@ -129,6 +131,7 @@ const ApplicationTable = ({ course }) => {
               <>
                 <Header>
                   <HeaderRow>
+                    <HeaderCell></HeaderCell >
                     <HeaderCell>Application</HeaderCell >
                     <HeaderCell>Name</HeaderCell >
                     <HeaderCell >Email</HeaderCell >
@@ -145,6 +148,20 @@ const ApplicationTable = ({ course }) => {
                       list &&
                       list.map((application, idx) => (
                           <Row key={application._id} item={application}>
+                            <Cell style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {
+                              application.student.profile_picture_key ? 
+                                <img 
+                                  src={`/application/file/download/${application.student.profile_picture_key}`} 
+                                  alt="Profile"
+                                  style={{ width: '50px', height: '50px', cursor: 'pointer', borderRadius: '50%'  }} // change these values as needed 
+                                /> : 
+                                <FontAwesomeIcon 
+                                  icon={faUserCircle} 
+                                  size='2x' // change this value as needed 
+                                />
+                            }
+                            </Cell>
                             <Cell>
                               <Button
                                   variant="primary"

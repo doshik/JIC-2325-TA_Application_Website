@@ -26,6 +26,11 @@ const userSchema = new Schema({
     type: Object,
     default: {},
   },
+
+  profile_picture_key: {
+    type: String,
+    default: null
+  }
 });
 
 const User = mongoose.model("User", userSchema);

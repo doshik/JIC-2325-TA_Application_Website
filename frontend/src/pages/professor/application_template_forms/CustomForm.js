@@ -41,7 +41,7 @@ function CustomForm({ template }) {
   function handleTypeChange(i, event) {
     const fields = [...questions];
     fields[i].questionType = event.target.value; // renamed to questionType
-    if (event.target.value === "MultiSelect") {
+    if (event.target.value === "MultiSelect" || event.target.value === "Select") {
     } else {
       fields[i].options = [];
     }
@@ -107,10 +107,10 @@ function CustomForm({ template }) {
                     onChange={(e) => handleQuestionChange(idx, e)}
                     rows="1"
                   />
-                  {field.questionType === "MultiSelect" &&
+                  {(field.questionType === "MultiSelect" || field.questionType === "Select") &&
                   <Form.Group as={Row} className="mb-2 justify-content-center">
                     {field.options.map((option, i) => {
-                        if (field.questionType === "MultiSelect") {
+                        if (field.questionType === "MultiSelect" || field.questionType === "Select") {
                         return (
                             <Form.Group key={i} as={Row} className="my-2">
                               <Form.Label column xs={3}>
@@ -158,6 +158,7 @@ function CustomForm({ template }) {
                     <option>Short Answer</option>
                     <option>File Attachment</option>
                     <option>MultiSelect</option>
+                    <option>Select</option>
                   </Form.Control>
                 </Col>
                 <Col xs={1} className="align-items-top">

@@ -16,6 +16,17 @@ const ApplicationForm = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    function handleSelectChange(idx, event) {
+        const updatedResponses = [...responses];
+        updatedResponses[idx] = {
+          "value": event.target.value,
+          "questionText": questions[idx].questionText,
+          "questionType": questions[idx].questionType,
+          "options": questions[idx].options
+        };
+        setResponses(updatedResponses);
+      }
+
     function handleResponseChange(idx, event) {
         const updatedResponses = [...responses];
         updatedResponses[idx] = {
@@ -115,7 +126,7 @@ const ApplicationForm = (props) => {
                             );
                         } else if (questionObj.questionType === 'MultiSelect') {
                             return (
-                                <Form.Group key={idx} as={Row} className="my-2">
+                                <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
                                     <Form.Label>
                                         Question {idx + 1}: {questionObj.questionText}
                                     </Form.Label>
@@ -142,7 +153,23 @@ const ApplicationForm = (props) => {
                                     })}
                                 </Form.Group>
                             )
-                        }
+                        } else if (questionObj.questionType === 'Select') {
+                            return (
+                              <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                <Form.Label>
+                                  Question {idx + 1}: {questionObj.questionText}
+                                </Form.Label>
+                                <Form.Control as="select" className="w-75" value={responses[idx]?.value || ""} onChange={(e) => handleSelectChange(idx, e)}>
+                                  <option value="">-- Please Select --</option>
+                                  {questionObj.options.map((option, i) => (
+                                    <option key={i} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </Form.Control>
+                              </Form.Group>
+                            );
+                          }
                         return null;
                     })}
                 </Card.Body>

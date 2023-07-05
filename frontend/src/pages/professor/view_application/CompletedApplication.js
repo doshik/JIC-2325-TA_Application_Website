@@ -84,6 +84,26 @@ function CompletedApplication(props) {
                     </Form.Group>
 
                 );
+              } else if (questionObj.questionType === "Select") {
+                return (
+                  <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-cente">
+                    <Form.Label>
+                      Question {idx + 1}: {questionObj.questionText}
+                    </Form.Label>
+                    <Col className="d-flex justify-content-center">
+                      <Form.Control
+                        as="select"
+                        className="w-75"
+                        value={responses[idx].value}
+                        disabled
+                      >
+                        {questionObj.options.map((option, i) => (
+                          <option key={i} value={option}>{option}</option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                  </Form.Group>
+                );
               }
             })}
         </Card.Body>

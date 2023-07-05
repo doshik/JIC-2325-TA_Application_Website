@@ -43,6 +43,15 @@ const ApplicationForm = (props) => {
         console.log(updatedResponses)
     }
 
+    function handleCheckboxChange(idx, i, event) {
+        const updatedResponses = [...responses];
+        if (updatedResponses[idx] === "") {
+            updatedResponses[idx] = [];
+        }
+        updatedResponses[idx][i] = event.target.checked;
+        setResponses(updatedResponses);
+    }
+
     async function handleSave() {
         // TODO: adjust the `createApplicationAction` to handle multiple files as well
         dispatch(createApplicationAction(responses, course, false, files));
@@ -104,6 +113,35 @@ const ApplicationForm = (props) => {
                                     />
                                 </Form.Group>
                             );
+                        } else if (questionObj.questionType === 'MultiSelect') {
+                            return (
+                                <Form.Group key={idx} as={Row} className="my-2">
+                                    <Form.Label>
+                                        Question {idx + 1}: {questionObj.questionText}
+                                    </Form.Label>
+                                    {questionObj.options.map((option, i) => {
+                                        return (
+                                            <Form.Group key={i} as={Row} className="mb-2 justify-content-center">
+                                                <Col xs={1}>
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        className="w-75"
+                                                        id={idx + "Option" + i}
+                                                        rows="1"
+                                                        defaultChecked={false}
+                                                        onChange={(e) => handleCheckboxChange(idx, i, e)}
+                                                    />
+                                                </Col>
+                                                <Col xs={4} className="text-start">
+                                                    <Form.Label htmlFor={idx + "Option" + i}>
+                                                        {option}
+                                                    </Form.Label>
+                                                </Col>
+                                            </Form.Group>
+                                        )
+                                    })}
+                                </Form.Group>
+                            )
                         }
                         return null;
                     })}

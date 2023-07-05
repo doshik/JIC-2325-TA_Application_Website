@@ -5,13 +5,15 @@ const cors = require("cors");
 const path = require('path');
 
 const PORT = process.env.PORT || 80;
+const logger = require('./logger');
 
 require("dotenv").config();
-
+logger.info("Server is running on port " + PORT);
 var app = express();
 app.use(cookies());
 
 var allowedOrigins = [
+  "apply2ta.cc.gatech.edu",
   "http://127.0.0.1",
   "http://127.0.0.1:3000",
   "http://localhost:3000",
@@ -26,7 +28,7 @@ if (process.env.CLIENT_URL) {
 const temp = function (origin, callback) {
   if (!origin) return callback(null, true);
   if (allowedOrigins.indexOf(origin) === -1) {
-    console.log(`Origin: ${origin}`)
+    logger.info(`Origin: ${origin}`)
     var msg =
       "The CORS policy for this site does not " +
       "allow access from the specified Origin.";
@@ -58,28 +60,28 @@ app.use(
 );
 app.use(bodyParser.json({ limit: "500mb" }));
 
-applicationRoutes = require("./controllers/Application.controller");
+applicationRoutes = require("./backend/controllers/Application.controller");
 app.use("/application", applicationRoutes);
 
-applicationTemplateRoutes = require("./controllers/ApplicationTemplate.controller");
+applicationTemplateRoutes = require("./backend/controllers/ApplicationTemplate.controller");
 app.use("/application_templates", applicationTemplateRoutes);
 
-userRoutes = require("./controllers/User.controller");
+userRoutes = require("./backend/controllers/User.controller");
 app.use("/user", userRoutes);
 
-interviewRoutes = require("./controllers/InterviewRequest.controller");
+interviewRoutes = require("./backend/controllers/InterviewRequest.controller");
 app.use("/interview", interviewRoutes);
 
-courseRoutes = require("./controllers/Course.controller");
+courseRoutes = require("./backend/controllers/Course.controller");
 app.use("/course", courseRoutes);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, './frontend/build')));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  res.sendFile(path.join(__dirname, './frontend/build/index.html'));
 });
 
 
@@ -98,9 +100,9 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    logger.info(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     process.exit(1);
   }
 };
@@ -108,6 +110,6 @@ const connectDB = async () => {
 //Connect to the database before listening
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server is running on port: " + PORT);
+    logger.info("Server is running on port: " + PORT);
   });
 });

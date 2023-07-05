@@ -10,35 +10,73 @@ function CompletedApplication(props) {
             <Card className="text-center mb-2">
                 <Card.Body>
                     {responses && responses.map((questionObj, idx) => {
-                      console.log(questionObj)
-                        return (
-                            <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
-                                <Form.Label>
+                        if (questionObj.questionType === "Short Answer") {
+                              return (
+                                  <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
+                                      <Form.Label>
+                                          Question {idx + 1}: {questionObj.questionText}
+                                      </Form.Label>
+                                          <Form.Control
+                                              as="textarea"
+                                              className="w-75"
+                                              value={responses[idx]?.value || ""}
+                                              rows="1"
+                                              readOnly
+                                              disabled
+                                          />
+                                  </Form.Group>
+                              );
+                              } else if (questionObj.questionType === "File Attachment") {
+                                return (
+                                  <Form.Group key={idx} as={Row} className="mb-5 d-flex justify-content-center">
                                     Question {idx + 1}: {questionObj.questionText}
-                                </Form.Label>
-                                {questionObj.questionType === 'Short Answer' ?
-                                    <Form.Control
-                                        as="textarea"
-                                        className="w-75"
-                                        value={responses[idx]?.value || ""}
-                                        rows="1"
-                                        readOnly
-                                        disabled
-                                    />
-                                    :
-                                    questionObj.value ? 
+                                  <Form.Label>
+                                  </Form.Label>
+                                    {
+                                      questionObj.value ? 
                                       <p>
                                         <a href={`http://127.0.0.1:5001/application/file/download/${questionObj.value}`}>Download File</a>
                                       </p>
                                       :
                                       <p>No file submitted</p>
-                                }
-                            </Form.Group>
-                        );
+                                    }
+                                  </Form.Group>
+                                )
+                              } else if (questionObj.questionType === "MultiSelect") {
+                                return (
+                                  <Form.Group key={idx} as={Row} className="my-2">
+                                      <Form.Label>
+                                          Question {idx + 1}: {questionObj.questionText}
+                                      </Form.Label>
+                                      {questionObj.options.map((option, i) => {
+                                          return (
+                                              <Form.Group key={i} as={Row} className="mb-2 justify-content-center">
+                                                  <Col xs={1}>
+                                                      <Form.Check
+                                                          type="checkbox"
+                                                          className="w-75"
+                                                          defaultChecked={responses[idx][i]}
+                                                          rows="1"
+                                                          readOnly
+                                                          disabled
+                                                      />
+                                                  </Col>
+                                                  <Col xs={4} className="text-start">
+                                                      <Form.Label>
+                                                          {option}
+                                                      </Form.Label>
+                                                  </Col>
+                                              </Form.Group>
+                                          );
+                                      })}
+                                  </Form.Group>
+                              );
+                            }
                     })}
                 </Card.Body>
             </Card>
         </Container>
     );
+
 }
 export default CompletedApplication;

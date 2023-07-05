@@ -2,6 +2,7 @@ import * as React from "react";
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
   Button, Form, DropdownButton, Dropdown, FormGroup,
 } from "react-bootstrap";
@@ -134,8 +135,6 @@ const ApplicationTable = ({ course }) => {
                     <HeaderCell></HeaderCell >
                     <HeaderCell>Application</HeaderCell >
                     <HeaderCell>Name</HeaderCell >
-                    <HeaderCell >Email</HeaderCell >
-                    <HeaderCell >GTID</HeaderCell >
                     <HeaderCell>Year</HeaderCell>
                     <HeaderCell>GPA</HeaderCell>
                     <HeaderCell>Major</HeaderCell>
@@ -149,18 +148,29 @@ const ApplicationTable = ({ course }) => {
                       list.map((application, idx) => (
                           <Row key={application._id} item={application}>
                             <Cell style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            {
-                              application.student.profile_picture_key ? 
-                                <img 
-                                  src={`/application/file/download/${application.student.profile_picture_key}`} 
-                                  alt="Profile"
-                                  style={{ width: '50px', height: '50px', cursor: 'pointer', borderRadius: '50%'  }} // change these values as needed 
-                                /> : 
-                                <FontAwesomeIcon 
-                                  icon={faUserCircle} 
-                                  size='2x' // change this value as needed 
-                                />
-                            }
+                            <OverlayTrigger
+                              placement="top"
+                              overlay={
+                                <Tooltip id={`tooltip-${application._id}`}>
+                                  {application.student.name}<br />
+                                  {application.student.email}<br />
+                                  <strong>GTID:</strong> {application.student.gtID}<br />
+                                </Tooltip>
+                              }
+                            >
+                              {
+                                application.student.profile_picture_key ? 
+                                  <img 
+                                    src={`/application/file/download/${application.student.profile_picture_key}`} 
+                                    alt="Profile"
+                                    style={{ width: '50px', height: '50px', cursor: 'pointer', borderRadius: '50%'  }} // change these values as needed 
+                                  /> : 
+                                  <FontAwesomeIcon 
+                                    icon={faUserCircle} 
+                                    size='2x' // change this value as needed 
+                                  />
+                              }
+                            </OverlayTrigger>
                             </Cell>
                             <Cell>
                               <Button
@@ -170,8 +180,6 @@ const ApplicationTable = ({ course }) => {
                                   }>View</Button>
                             </Cell>
                             <Cell>{application.student.name}</Cell>
-                            <Cell>{application.student.email}</Cell>
-                            <Cell>{application.student.gtID}</Cell>
                             <Cell>{application.student.userInfo.year}</Cell>
                             <Cell>{application.student.userInfo.gpa}</Cell>
                             <Cell>{application.student.userInfo.major}</Cell>

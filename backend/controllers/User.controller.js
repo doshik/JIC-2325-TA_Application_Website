@@ -138,14 +138,15 @@ userRoutes.route("/login").post(async function (req, res) {
         email: user.email,
         gtID: user.gtID,
         accountType: user.accountType,
-        profile_picture_key: user.profile_picture_key,
+        profile_picture_key: user.profile_picture_key
+        
       };
-      const { accessToken } = generateToken(user);
-      return res.json({ 
-        user: payload,
-        loggedIn: true,
-        token: "Bearer " + accessToken 
+      const token = generateToken(user);
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        maxAge: 8640000,
       });
+      res.status(200).json({ loggedIn: true, user: user, token: token});
     }
   });
 });

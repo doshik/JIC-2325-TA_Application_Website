@@ -20,7 +20,10 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-
+import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from 'react-bootstrap';
+import { useState } from 'react';
+import axios from "axios";
 const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +35,51 @@ const ApplicationTable = ({ course }) => {
   const [majorFilter, setMajorFilter] = React.useState([]);
   const [pageSize, setPageSize] = React.useState(10);
   const [curPage, setCurPage] = React.useState(1);
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [currentApplicationId, setCurrentApplicationId] = useState(null);
+
+  const handleChatIconClick = async (applicationId) => {
+    console.log("chat icon clicked: ", applicationId)
+
+    try {
+        const response = await axios.get(`http://127.0.0.1/note/getByApplication/${applicationId}`);
+        const fetchedMessages = response.data.notes; // Adjust according to your specific JSON structure
+        console.log('fetched: ', fetchedMessages);
+        console.log('fetched: ', fetchedMessages[0])
+        setCurrentApplicationId(applicationId);
+        setChatMessages(fetchedMessages);
+        setChatModalOpen(true);
+    } catch(error) {
+        console.error(`Error occurred while fetching messages for applicationId: ${applicationId}`, error);
+    }
+};
+
+  const handleClose = () => setChatModalOpen(false);
+
+  const handleSendMessage = async (appId) => {
+    
+    // Send newMessage to your API
+    // Then, add newMessage to chatMessages and clear newMessage
+
+    const newMessageObject = {
+      message: newMessage,
+      username: "currentUser", 
+      timestamp: new Date().toISOString(),
+      applicationId: currentApplicationId, 
+    };
+    try {
+      const response = await axios.post('http://127.0.0.1/note/add', newMessageObject);
+      console.log(response.data);  // Response from the server
+
+      setChatMessages([...chatMessages, newMessageObject]);
+      setNewMessage("");
+
+  } catch (error) {
+      console.error('Error sending new message:', error);
+  }
+  };
 
   useEffect(() => {
     updateData();
@@ -133,7 +181,8 @@ const ApplicationTable = ({ course }) => {
                 <Header>
                   <HeaderRow>
                     <HeaderCell></HeaderCell >
-                    <HeaderCell>Application</HeaderCell >
+                    <HeaderCell></HeaderCell >
+                    <HeaderCell></HeaderCell >
                     <HeaderCell>Name</HeaderCell >
                     <HeaderCell>Year</HeaderCell>
                     <HeaderCell>GPA</HeaderCell>
@@ -173,6 +222,13 @@ const ApplicationTable = ({ course }) => {
                             </OverlayTrigger>
                             </Cell>
                             <Cell>
+                              <FontAwesomeIcon 
+                                icon={faComments} 
+                                onClick={() => handleChatIconClick(application._id)}
+                                style={{cursor: "pointer"}}
+                              />
+                            </Cell>
+                            <Cell>
                               <Button
                                   variant="primary"
                                   onClick={() =>
@@ -195,6 +251,40 @@ const ApplicationTable = ({ course }) => {
                             <Cell>
                               <ProfSchedulerWrapper application={application} />
                             </Cell>
+                            <Modal show={chatModalOpen} onHide={handleClose}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Notes</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body style={{overflowY: "auto", maxHeight: "60vh"}}> {/* This will limit the height of the body and make it scrollable */}
+                                {chatMessages.map((msg, idx) => (
+                                  <div key={idx} style={{marginBottom: '1em'}}>
+                                    <p>{msg.message}</p>
+                                    <div style={{borderTop: '1px solid #ddd', paddingBottom: '0.5em'}}>
+                                      <div style={{display: 'inline-block', marginRight: '10px', fontSize: '.8em', color: 'gray'}}>
+                                        <strong>{msg.username}</strong>
+                                      </div>
+                                      <div style={{display: 'inline-block', fontSize: '0.8em', color: '#888'}}>
+                                        {
+                                          `${new Date(msg.timestamp).getDate()}/${new Date(msg.timestamp).getMonth()+1} 
+                                          ${new Date(msg.timestamp).getHours()}:${new Date(msg.timestamp).getMinutes()<10?'0':''}${new Date(msg.timestamp).getMinutes()}`
+                                        }
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Form.Control
+                                  type="text"
+                                  value={newMessage}
+                                  onChange={
+                                    (e) => setNewMessage(e.target.value)
+                                  }
+                                  placeholder="Enter your message"
+                                />
+                                <Button onClick={() => {handleSendMessage(application._id)}}>Send</Button>
+                              </Modal.Footer>
+                            </Modal>
                           </Row>
                       ))}
                 </Body>

@@ -14,9 +14,11 @@ app.use(cookies());
 var allowedOrigins = [
   "http://127.0.0.1",
   "http://127.0.0.1:3000",
+  "http://localhost",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3006",
+
 ];
 
 if (process.env.CLIENT_URL) {
@@ -48,7 +50,7 @@ app.use(cors(options));
 // app.use(cors()); 
 // app.options("*", cors());
 
-// Bodyparser middlewar
+// Bodyparser middleware
 var bodyParser = require("body-parser");
 app.use(
   bodyParser.urlencoded({
@@ -72,6 +74,9 @@ app.use("/interview", interviewRoutes);
 
 courseRoutes = require("./controllers/Course.controller");
 app.use("/course", courseRoutes);
+
+noteRoutes = require("./controllers/Note.controller");
+app.use("/note", noteRoutes);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));

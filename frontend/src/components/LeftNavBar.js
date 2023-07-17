@@ -10,7 +10,7 @@ import "./LeftNavBar.css";
 
 function LeftNavBar() {
   const location = useLocation();
-  const role = useSelector((state) => state.auth.user.accountType);
+  const role = useSelector((state) => state.auth.user ? state.auth.user.accountType : "");
   const initialProfilePicture = useSelector((state) => `/application/file/download/${state.auth.user.profile_picture_key}`);
   const [profilePicture, setProfilePicture] = React.useState(initialProfilePicture);
   const imageInputRef = React.useRef();

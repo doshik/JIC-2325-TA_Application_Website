@@ -114,92 +114,37 @@ userRoutes.route("/signup").post(function (req, res) {
 // @desc Login user and return JWT token
 // @access Public
 userRoutes.route("/login").post(async function (req, res) {
-  /*
-    CAS LOGIC HERE
-    */
-  // also add function to turn casData into userData
-  const studentData = {
-    name: "Student Name",
-    email: "studentName@gatech.edu",
-    accountType: "student",
-    username: "studentName01",
-    gtID: "900000000",
-    studentInfo: {
-      year: "3",
-      major: "CS",
-      coursesTaken: ["CS 1331", "CS 1332", "CS 4641"],
-      coursesTaking: ["CS 2340", "CS 2110", "CS 3510"],
-      gpa: "3.5",
-    },
-  };
+  let username = req.body.username;
+  let password = req.body.password;
 
-  const professorData = {
-    name: "Professor Name",
-    email: "professorname@gatech.edu",
-    username: "profName01",
-    accountType: "professor",
-    gtID: "900000001",
-    professorInfo: {
-      courses: ['CS 1331', 'CS 4641']
-    },
-  };
-
-
-  req.body.role == 'student' ? userData = studentData : userData = professorData;
-
-  
-  User.findOne({ gtID: userData.gtID }, (error, user) => {
+  // Find a user with a matching username
+  User.findOne({ username: username }, (error, user) => {
     if (error) {
       console.error("Error finding user:", error);
       return res.status(500).json({ error: error._message });
     } else if (!user) {
-      // If no user is found, create a new user
-      const newUser = new User({
-        _id: new mongoose.Types.ObjectId(),
-        name: userData.name.toLowerCase(),
-        email: userData.email.toLowerCase(),
-        accountType: userData.accountType,
-        gtID: userData.gtID,
-        username: userData.username,
-        createdAt: Date(),
-        professorInfo:
-          userData.accountType == "professor"
-            ? userData.professorInfo
-            : undefined,
-        studentInfo:
-          userData.accountType == "student" ? userData.studentInfo : undefined,
-        adminInfo:
-          userData.accountType == "professor"
-            ? userData.professorInfo
-            : undefined,
-      });
-      // JWT SHOULD NOT BE VERY BIG, CURRENTLY HAS ALL USER INFO
-      newUser.save((error, savedUser) => {
-        if (error) {
-          console.error("Error creating user:", error);
-          return res.status(500).json({ error: error._message });
-        } else {
-          console.log("Created new user:", savedUser);
-          const token = generateToken(user);
-          res.cookie("jwt", token, {
-            httpOnly: true,
-            maxAge: 8640000,
-          });
-          res.status(200).json({ loggedIn: true, user: user, token: token});
-        }
-      });
+      // If no user is found, return an error
+      return res.status(404).json({ error: "User not found" });
+    } else if (user.password !== password) {
+      // If password does not match, return an error
+      return res.status(400).json({ error: "Password is incorrect" });
     } else {
-      console.log("Logging in user:", user);
-      const token = generateToken(user);
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        maxAge: 8640000,
-      });
-      res.status(200).json({ loggedIn: true, user: user, token: token});
+      // If username is found and password matches, return the user
+      console.log("User logged in:", user);
+      const payload = {
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        gtID: user.gtID,
+        accountType: user.accountType,
+        profile_picture_key: user.profile_picture_key,
+      };
+      const { accessToken } = generateToken(user);
+      return res.json({ token: "Bearer " + accessToken });
     }
   });
 });
-
 // @route POST api/user/isLoggedIn
 // @desc Check if user is logged in via JWT
 // @access Public

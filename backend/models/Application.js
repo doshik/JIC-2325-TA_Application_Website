@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
 var applicationSchema = new Schema(
   {
     student: {
@@ -30,6 +29,10 @@ var applicationSchema = new Schema(
     status: {
       type: String,
       default: "",
+    },
+    chats: {
+      type: Array,
+      default: [],
     },
     attachments: [{  // Changed to support multiple attachments
       type: Schema.Types.ObjectId,

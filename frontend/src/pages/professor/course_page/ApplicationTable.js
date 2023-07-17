@@ -20,6 +20,9 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from 'react-bootstrap';
+import { useState } from 'react';
 
 const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
@@ -32,6 +35,38 @@ const ApplicationTable = ({ course }) => {
   const [majorFilter, setMajorFilter] = React.useState([]);
   const [pageSize, setPageSize] = React.useState(10);
   const [curPage, setCurPage] = React.useState(1);
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleChatIconClick = (applicationId) => {
+    // Fetch chat messages for this application from your API
+    // This is just a mock example. Replace with your actual code.
+    const fetchedMessages = [
+      {
+        message: "This is a test message",
+        timeStamp: "2023-07-17T15:00:00Z",
+        username: "testUser",
+      },
+    ];
+
+    setChatMessages(fetchedMessages);
+    setChatModalOpen(true);
+  };
+
+  const handleClose = () => setChatModalOpen(false);
+
+  const handleSendMessage = () => {
+    // Send newMessage to your API
+    // Then, add newMessage to chatMessages and clear newMessage
+    const newMessageObject = {
+      message: newMessage,
+      timeStamp: new Date().toISOString(),
+      username: "currentUser", // Replace with actual username
+    };
+    setChatMessages([...chatMessages, newMessageObject]);
+    setNewMessage("");
+  };
 
   useEffect(() => {
     updateData();
@@ -133,7 +168,8 @@ const ApplicationTable = ({ course }) => {
                 <Header>
                   <HeaderRow>
                     <HeaderCell></HeaderCell >
-                    <HeaderCell>Application</HeaderCell >
+                    <HeaderCell></HeaderCell >
+                    <HeaderCell></HeaderCell >
                     <HeaderCell>Name</HeaderCell >
                     <HeaderCell>Year</HeaderCell>
                     <HeaderCell>GPA</HeaderCell>
@@ -173,6 +209,13 @@ const ApplicationTable = ({ course }) => {
                             </OverlayTrigger>
                             </Cell>
                             <Cell>
+                              <FontAwesomeIcon 
+                                icon={faComments} 
+                                onClick={() => handleChatIconClick(application._id)}
+                                style={{cursor: "pointer"}}
+                              />
+                            </Cell>
+                            <Cell>
                               <Button
                                   variant="primary"
                                   onClick={() =>
@@ -195,6 +238,38 @@ const ApplicationTable = ({ course }) => {
                             <Cell>
                               <ProfSchedulerWrapper application={application} />
                             </Cell>
+                            <Modal show={chatModalOpen} onHide={handleClose}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Notes</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body style={{overflowY: "auto", maxHeight: "60vh"}}> {/* This will limit the height of the body and make it scrollable */}
+                                {chatMessages.map((msg, idx) => (
+                                  <div key={idx} style={{marginBottom: '1em'}}>
+                                    <p>{msg.message}</p>
+                                    <div style={{borderTop: '1px solid #ddd', paddingBottom: '0.5em'}}>
+                                      <div style={{display: 'inline-block', marginRight: '10px', fontSize: '.8em', color: 'gray'}}>
+                                        <strong>{msg.username}</strong>
+                                      </div>
+                                      <div style={{display: 'inline-block', fontSize: '0.8em', color: '#888'}}>
+                                        {
+                                          `${new Date(msg.timeStamp).getDate()}/${new Date(msg.timeStamp).getMonth()+1} 
+                                          ${new Date(msg.timeStamp).getHours()}:${new Date(msg.timeStamp).getMinutes()<10?'0':''}${new Date(msg.timeStamp).getMinutes()}`
+                                        }
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Form.Control
+                                  type="text"
+                                  value={newMessage}
+                                  onChange={(e) => setNewMessage(e.target.value)}
+                                  placeholder="Enter your message"
+                                />
+                                <Button onClick={handleSendMessage}>Send</Button>
+                              </Modal.Footer>
+                            </Modal>
                           </Row>
                       ))}
                 </Body>

@@ -185,7 +185,7 @@ const ApplicationTable = ({ course }) => {
                             <Cell>{application.student.userInfo.major}</Cell>
                             <Cell>
                               <FormGroup controlId="updateStatus">
-                                <select value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx, application.student.email)}>
+                                <select class="btn btn-light" value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx, application.student.email)}>
                                   <option value="Submitted">Submitted</option>
                                   <option value="Hired">Hired</option>
                                   <option value="Interview">Interview</option>

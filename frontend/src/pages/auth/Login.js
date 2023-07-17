@@ -1,20 +1,29 @@
 import * as React from "react";
-import { Row, Col, Card, Form, Button, Stack } from "react-bootstrap";
+import { Row, Col, Card, Form, Button, Stack, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
 import "../../assets/css/main.css";
 
 function Login() {
+  const [show, setShow] = React.useState(false);
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const role = useSelector((state) => state.auth.user.accountType);
 
-  const login = (role) => {
-    if (role === "student") {
-      dispatch(loginUser("student"));
-    } else if (role === "professor") {
-      dispatch(loginUser("professor"));
+  const login = async () => {
+    // Assuming loginUser returns a Promise that resolves to true on successful login
+    const successfulLogin = await dispatch(loginUser( username, password ));
+    if (successfulLogin) {
+        console.log("successful login")
+    } else {
+        console.log("failed login")
     }
   };
 
@@ -35,29 +44,60 @@ function Login() {
           </Card.Header>
           <Card.Body>
             <Form>
-              <Stack
-                direction="horizontal"
-                gap={5}
-                className="d-flex align-items-center justify-content-center"
+              <Button 
+                type="button" 
+                onClick={handleShow}
+                className="btn btn-rectangular-transparent-blue"
               >
-                <Button
-                  type="button"
-                  onClick={() => login("student")}
-                  className="btn btn-rectangular-transparent-blue"
-                >
-                  Login Student
-                </Button>
-                <Button
-                  className="btn btn-rectangular-transparent-blue"
-                  onClick={() => login("professor")}
-                >
-                  Login Professor
-                </Button>
-              </Stack>
+                Login
+              </Button>
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Login</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control 
+                        type="text" 
+                        placeholder="Enter username" 
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button 
+                    variant="primary" 
+                    onClick={() => {
+                      login();
+                      handleClose();
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </Form>
           </Card.Body>
         </Card>
-        
+
         <Card className="mb-3 rounded-0">
           <Card.Header as="h5" style={styles.leftCardHeader}>
             About the TA Application Hub

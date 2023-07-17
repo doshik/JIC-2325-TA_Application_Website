@@ -7,10 +7,10 @@ import {
 import { login, logout } from "../../api/users";
 
 // Login - authorize and authenticate user; get a JWT token from the server
-export const loginUser = (role) => {
+export const loginUser = (username, password) => {
   return async (dispatch) => {
     try {
-      const response = await login(role);
+      const response = await login(username, password);
       if (response.loggedIn) {
         dispatch({ type: SET_CURRENT_USER, payload: response.user });
       } else {

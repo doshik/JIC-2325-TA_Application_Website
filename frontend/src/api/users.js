@@ -2,10 +2,12 @@ import { get, post } from "./main";
 import Cookies from "js-cookie";
 
 // a function to log the user in using the api const above
-export const login = async (role) => {
+export const login = async (username, password) => {
+  console.log("login called with username: " + username + " and password: " + password)
   console.log("login called");
   const response = await post(`/user/login`, {
-    role: role,
+    username: username,
+    password: password,
   }).catch((err) => {
     throw err;
   });

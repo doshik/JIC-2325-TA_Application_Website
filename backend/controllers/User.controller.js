@@ -141,7 +141,11 @@ userRoutes.route("/login").post(async function (req, res) {
         profile_picture_key: user.profile_picture_key,
       };
       const { accessToken } = generateToken(user);
-      return res.json({ token: "Bearer " + accessToken });
+      return res.json({ 
+        user: payload,
+        loggedIn: true,
+        token: "Bearer " + accessToken 
+      });
     }
   });
 });

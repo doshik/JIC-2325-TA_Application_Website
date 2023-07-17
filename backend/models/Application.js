@@ -6,34 +6,37 @@ var applicationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
     professor: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
     course: {
       type: Schema.Types.ObjectId,
       ref: "Course",
     },
+
     applicationTemplate: {
       type: Schema.Types.ObjectId,
       ref: "ApplicationTemplate",
     },
+
     responses: {
       type: Array,
       default: [],
     },
+
     submitted: {
       type: Boolean,
       default: false,
     },
+
     status: {
       type: String,
       default: "",
     },
-    chats: {
-      type: Array,
-      default: [],
-    },
+
     attachments: [{  // Changed to support multiple attachments
       type: Schema.Types.ObjectId,
       ref: "FileAttachment",

@@ -23,7 +23,7 @@ import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
-
+import axios from "axios";
 const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,34 +38,47 @@ const ApplicationTable = ({ course }) => {
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [currentApplicationId, setCurrentApplicationId] = useState(null);
 
-  const handleChatIconClick = (applicationId) => {
-    // Fetch chat messages for this application from your API
-    // This is just a mock example. Replace with your actual code.
-    const fetchedMessages = [
-      {
-        message: "This is a test message",
-        timeStamp: "2023-07-17T15:00:00Z",
-        username: "testUser",
-      },
-    ];
+  const handleChatIconClick = async (applicationId) => {
+    console.log("chat icon clicked: ", applicationId)
 
-    setChatMessages(fetchedMessages);
-    setChatModalOpen(true);
-  };
+    try {
+        const response = await axios.get(`http://127.0.0.1/note/getByApplication/${applicationId}`);
+        const fetchedMessages = response.data.notes; // Adjust according to your specific JSON structure
+        console.log('fetched: ', fetchedMessages);
+        console.log('fetched: ', fetchedMessages[0])
+        setCurrentApplicationId(applicationId);
+        setChatMessages(fetchedMessages);
+        setChatModalOpen(true);
+    } catch(error) {
+        console.error(`Error occurred while fetching messages for applicationId: ${applicationId}`, error);
+    }
+};
 
   const handleClose = () => setChatModalOpen(false);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async (appId) => {
+    
     // Send newMessage to your API
     // Then, add newMessage to chatMessages and clear newMessage
+
     const newMessageObject = {
       message: newMessage,
-      timeStamp: new Date().toISOString(),
-      username: "currentUser", // Replace with actual username
+      username: "currentUser", 
+      timestamp: new Date().toISOString(),
+      applicationId: currentApplicationId, 
     };
-    setChatMessages([...chatMessages, newMessageObject]);
-    setNewMessage("");
+    try {
+      const response = await axios.post('http://127.0.0.1/note/add', newMessageObject);
+      console.log(response.data);  // Response from the server
+
+      setChatMessages([...chatMessages, newMessageObject]);
+      setNewMessage("");
+
+  } catch (error) {
+      console.error('Error sending new message:', error);
+  }
   };
 
   useEffect(() => {
@@ -252,8 +265,8 @@ const ApplicationTable = ({ course }) => {
                                       </div>
                                       <div style={{display: 'inline-block', fontSize: '0.8em', color: '#888'}}>
                                         {
-                                          `${new Date(msg.timeStamp).getDate()}/${new Date(msg.timeStamp).getMonth()+1} 
-                                          ${new Date(msg.timeStamp).getHours()}:${new Date(msg.timeStamp).getMinutes()<10?'0':''}${new Date(msg.timeStamp).getMinutes()}`
+                                          `${new Date(msg.timestamp).getDate()}/${new Date(msg.timestamp).getMonth()+1} 
+                                          ${new Date(msg.timestamp).getHours()}:${new Date(msg.timestamp).getMinutes()<10?'0':''}${new Date(msg.timestamp).getMinutes()}`
                                         }
                                       </div>
                                     </div>
@@ -264,10 +277,12 @@ const ApplicationTable = ({ course }) => {
                                 <Form.Control
                                   type="text"
                                   value={newMessage}
-                                  onChange={(e) => setNewMessage(e.target.value)}
+                                  onChange={
+                                    (e) => setNewMessage(e.target.value)
+                                  }
                                   placeholder="Enter your message"
                                 />
-                                <Button onClick={handleSendMessage}>Send</Button>
+                                <Button onClick={() => {handleSendMessage(application._id)}}>Send</Button>
                               </Modal.Footer>
                             </Modal>
                           </Row>

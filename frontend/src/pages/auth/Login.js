@@ -1,16 +1,20 @@
 import * as React from "react";
-import { Row, Col, Card, Form, Button, Stack, Modal } from "react-bootstrap";
+import { Row, Col, Card, Form, Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../redux/actions/authActions";
 import { useSelector, useDispatch, connect } from "react-redux";
+import { loginUser } from "../../redux/actions/authActions"; // Import the loginUser action
 import "../../assets/css/main.css";
 
 function Login() {
   const [show, setShow] = React.useState(false);
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState(null);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setError(null);
+  };
   const handleShow = () => setShow(true);
 
   const dispatch = useDispatch();
@@ -18,12 +22,14 @@ function Login() {
   const role = useSelector((state) => state.auth.user.accountType);
 
   const login = async () => {
-    // Assuming loginUser returns a Promise that resolves to true on successful login
-    const successfulLogin = await dispatch(loginUser( username, password ));
+    const successfulLogin = await dispatch(loginUser(username, password)); // Use the loginUser action
     if (successfulLogin) {
-        console.log("successful login")
+      console.log("successful login");
+      setError(null); // Reset error on successful login
+      handleClose(); // Close the modal on successful login
     } else {
-        console.log("failed login")
+      console.log("failed login");
+      setError("Login failed. Please check your username and password."); // Update error state on failed login
     }
   };
 
@@ -58,6 +64,11 @@ function Login() {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
+                    {error && (
+                      <div className="alert alert-danger" role="alert">
+                        {error}
+                      </div>
+                    )}
                     <Form.Group className="mb-3">
                       <Form.Label>Username</Form.Label>
                       <Form.Control 
@@ -85,10 +96,7 @@ function Login() {
                   </Button>
                   <Button 
                     variant="primary" 
-                    onClick={() => {
-                      login();
-                      handleClose();
-                    }}
+                    onClick={login}
                   >
                     Login
                   </Button>
@@ -97,6 +105,7 @@ function Login() {
             </Form>
           </Card.Body>
         </Card>
+
 
         <Card className="mb-3 rounded-0">
           <Card.Header as="h5" style={styles.leftCardHeader}>

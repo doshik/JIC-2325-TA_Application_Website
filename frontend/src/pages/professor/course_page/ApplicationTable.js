@@ -203,10 +203,9 @@ const ApplicationTable = ({ course }) => {
         }
         </Table>
 
-        <div>
-
+        <div class="mb-3">
         <Button
-          disabled={pagination.page === 0}
+          disabled={curPage === 1}
           onClick={() => setCurPage(curPage - 1)}
         >
           <ArrowLeft />
@@ -217,7 +216,7 @@ const ApplicationTable = ({ course }) => {
         </span>
 
         <Button
-          disabled={pagination.page + 1 >= Math.ceil(pagination.total / pagination.size)}
+          disabled={curPage >= applications.totalPages}
           onClick={() => setCurPage(curPage + 1)}
         >
           <ArrowRight />

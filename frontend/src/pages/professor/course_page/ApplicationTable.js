@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 
-const ApplicationTable = ({ course }, {semester}) => {
+const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const applications = useSelector((state) => state.application.applications);

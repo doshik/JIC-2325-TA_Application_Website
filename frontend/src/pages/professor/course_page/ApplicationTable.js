@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 
-const ApplicationTable = ({ course }) => {
+const ApplicationTable = ({ course }, {semester}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const applications = useSelector((state) => state.application.applications);
@@ -35,7 +35,7 @@ const ApplicationTable = ({ course }) => {
 
   useEffect(() => {
     updateData();
-  }, [curPage, sortBy, coursesTakenFilter, coursesTakingFilter, majorFilter]);
+  }, [course, curPage, sortBy, coursesTakenFilter, coursesTakingFilter, majorFilter]);
 
   useEffect(() => {
     if (applications?.submissions) {
@@ -143,9 +143,9 @@ const ApplicationTable = ({ course }) => {
                   </HeaderRow>
                 </Header>
                 <Body>
-                  {course.semester === "Spring 2023" &&
-                      list &&
+                  {list &&
                       list.map((application, idx) => (
+                          application.course.courseId === course.courseId &&
                           <Row key={application._id} item={application}>
                             <Cell style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <OverlayTrigger
@@ -185,7 +185,7 @@ const ApplicationTable = ({ course }) => {
                             <Cell>{application.student.userInfo.major}</Cell>
                             <Cell>
                               <FormGroup controlId="updateStatus">
-                                <select class="btn btn-light" value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx, application.student.email)}>
+                                <select className="btn btn-light" value={statuses[idx] || ''} onChange={handleStatusChange(application._id, idx, application.student.email)}>
                                   <option value="Submitted">Submitted</option>
                                   <option value="Hired">Hired</option>
                                   <option value="Interview">Interview</option>
@@ -203,7 +203,7 @@ const ApplicationTable = ({ course }) => {
         }
         </Table>
 
-        <div class="mb-3">
+        <div className="mb-3">
         <Button
           disabled={curPage === 1}
           onClick={() => setCurPage(curPage - 1)}

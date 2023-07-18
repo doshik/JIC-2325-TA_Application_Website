@@ -17,7 +17,7 @@ import { getApplicationTemplatesAction } from "../../../redux/actions/applicatio
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateCourseAction } from "../../../redux/actions/courseActions";
+import {getProfCoursesAction, updateCourseAction} from "../../../redux/actions/courseActions";
 
 const ProfCoursePage = () => {
   const dispatch = useDispatch();
@@ -25,16 +25,30 @@ const ProfCoursePage = () => {
   const templates = useSelector(
     (state) => state.application_templates.applicationTemplates
   );
+
   const location = useLocation();
-  const { course } = location.state;
+  const { semester } = location.state;
+
+  const courses = useSelector((state) => state.course.courses).filter(course => course.semester === semester);
+  useEffect(() => {
+    dispatch(getProfCoursesAction());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
 
-  const courseId = course.courseId;
+  const [course, setCourse] = React.useState( () => {
+    const item = localStorage.getItem("course")
+    const parsedItem = JSON.parse(item);
+    if (parsedItem.semester === semester) {
+      return parsedItem || courses[0] || "";
+    }
+    return courses[0] || "";
+  });
+  const [courseId, setCourseID] = React.useState(courses[0].courseId || "");
+
   const [isHiring, setIsHiring] = React.useState(course?.active);
-  const [semester, setSemester] = React.useState("Spring 2023");
   const [description, setDescription] = React.useState(
     course?.description || ""
   );
@@ -42,8 +56,11 @@ const ProfCoursePage = () => {
     course?.applicationTemplate?.name ?? ""
   );
 
-  const handleSemesterChange = (eventKey) => {
-    setSemester(eventKey);
+  const handleCourseChange = (eventKey) => {
+    localStorage.setItem("course",JSON.stringify(courses[eventKey]))
+    localStorage.setItem("courseId",JSON.stringify(courses[eventKey].courseId))
+    setCourse(courses[eventKey]);
+    setCourseID(courses[eventKey].courseId);
   };
 
   const handleTemplateChange = (eventKey) => {
@@ -76,20 +93,18 @@ const ProfCoursePage = () => {
     <div>
       <Row className="mb-3 w-25 align-items-center">
         <Col md={5}>
-          <h5>{courseId}</h5>
+          <h5>{semester}</h5>
         </Col>
         <Col md={7}>
           <Form.Group controlId="formSemester">
             <DropdownButton
               variant="dark"
-              title={semester || "Select Semester"}
-              onSelect={handleSemesterChange}
-              default="Spring 2023"
+              title={course.courseId || "Select Course"}
+              onSelect={handleCourseChange}
+              default="CS 1331"
             >
-              <Dropdown.Item eventKey="Fall 2021">Fall 2021</Dropdown.Item>
-              <Dropdown.Item eventKey="Spring 2022">Spring 2022</Dropdown.Item>
-              <Dropdown.Item eventKey="Fall 2022">Fall 2022</Dropdown.Item>
-              <Dropdown.Item eventKey="Spring 2023">Spring 2023</Dropdown.Item>
+              {courses.map((course, idx) => {
+                return <Dropdown.Item eventKey={idx}>{course.courseId}</Dropdown.Item>})}
             </DropdownButton>
           </Form.Group>
         </Col>

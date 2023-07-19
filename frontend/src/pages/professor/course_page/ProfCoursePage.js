@@ -24,12 +24,12 @@ const ProfCoursePage = () => {
   const navigate = useNavigate();
   const templates = useSelector(
     (state) => state.application_templates.applicationTemplates
-  );
+  ) || [];
 
   const location = useLocation();
-  const { semester } = location.state;
+  const { semester } = location.state || {};
 
-  const courses = useSelector((state) => state.course.courses).filter(course => course.semester === semester);
+  const courses = useSelector((state) => state.course.courses)?.filter(course => course.semester === semester) || [];
   useEffect(() => {
     dispatch(getProfCoursesAction());
   }, [dispatch]);
@@ -39,14 +39,14 @@ const ProfCoursePage = () => {
   }, [dispatch]);
 
   const [course, setCourse] = React.useState( () => {
-    const item = localStorage.getItem("course")
+    const item = localStorage.getItem("course");
     const parsedItem = JSON.parse(item);
-    if (parsedItem.semester === semester) {
+    if (parsedItem?.semester === semester) {
       return parsedItem || courses[0] || "";
     }
     return courses[0] || "";
   });
-  const [courseId, setCourseID] = React.useState(courses[0].courseId || "");
+  const [courseId, setCourseID] = React.useState(courses[0]?.courseId || "");
 
   const [isHiring, setIsHiring] = React.useState(course?.active);
   const [description, setDescription] = React.useState(
@@ -57,8 +57,8 @@ const ProfCoursePage = () => {
   );
 
   const handleCourseChange = (eventKey) => {
-    localStorage.setItem("course",JSON.stringify(courses[eventKey]))
-    localStorage.setItem("courseId",JSON.stringify(courses[eventKey].courseId))
+    localStorage.setItem("course",JSON.stringify(courses[eventKey]));
+    localStorage.setItem("courseId",JSON.stringify(courses[eventKey].courseId));
     setCourse(courses[eventKey]);
     setCourseID(courses[eventKey].courseId);
   };
@@ -73,7 +73,7 @@ const ProfCoursePage = () => {
 
   const handleSave = () => {
     const appTemplate =
-      templates?.filter((item) => item.name === template)[0]._id || "Default";
+      templates?.filter((item) => item.name === template)[0]?._id || "Default";
     dispatch(
       updateCourseAction(course._id, appTemplate, isHiring, description)
     );

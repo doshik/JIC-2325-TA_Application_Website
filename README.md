@@ -23,14 +23,14 @@ Our MERN app has the following dependencies that must be installed manually:
 To download this project, please follow these steps:
 1. Click on the "Code" button and select "Download ZIP".
 2. Extract the downloaded ZIP file to your desired directory.
-3. Navigate to the `/frontend` directory and run the following commands to get the static files to serve. Note that you will have to set the required environment variables as documented in the next section prior to building the app.
+3. Create a `.env` file in the `frontend` directory and add the following environment variables:
+   `REACT_APP_API_URL=http://127.0.0.1:PORT`
+   Specify the `PORT` where the backend will run, which corresponds to what you will set in the `backend` `.env`.
+4. Navigate to the `/frontend` directory and run the following commands to get the static files to serve.
 ```
 npm install
 npm run build
 ```
-4. Create a `.env` file in the `frontend` directory and add the following environment variables:
-   `REACT_APP_API_URL=http://127.0.0.1:PORT`
-   Specify the `PORT` where the backend will run, which corresponds to what you will set in the `backend` `.env`.
 5. Navigate to the `/backend` directory and run the following commands to install the dependencies needed for the backend. 
 ```
 export NODE_ENV=production
@@ -76,8 +76,8 @@ If you encounter any issues during installation or running the software, try the
 * Make sure the server is running! You should see `Server is running on port: PORT` with the port you set in the terminal where you ran `npm start`. Also, make sure your ports match in both your frontend and backend `.env` files.
 * Make sure that your MongoDB server is configured correctly and you are entering the `mongoURI` correctly. 
 * If all your courses and applications seem to have disappeared, even though they are in the database, your JWT token may have expired. Just log back in, and this should be resolved.
-* If you cannot access [apply2ta.cc.gatech.edu](apply2ta.cc.gatech.edu), make sure you are either on a campus network or the campus VPN. If you are connected to eduroam, you may still need to use the campus VPN. You can read more about the campus VPN [here](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026837).
-* Similarly, you may need the VPN client in order to access the site's Plesk Control Panel. If you see `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` when trying to open the control panel, this is your issue. Log in to [vpn.gatech.edu](https://vpn.gatech.edu/) and download the VPN client for your OS. For a step-by-step guide, you can follow these articles for [Windows](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026742), [macOS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026743), [Ubuntu](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0028027), and [Chrome OS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026749). 
+* If you cannot access [apply2ta.cc.gatech.edu](apply2ta.cc.gatech.edu), make sure you are either on a campus network or the campus VPN. If you are connected to eduroam and are having issues, you may still need to use the campus VPN. You can read more about the campus VPN [here](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026837).
+* Similarly, you may need the VPN client in order to access the site's Plesk Control Panel. If you see `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` when trying to open the control panel, this is your problem. Log in to [vpn.gatech.edu](https://vpn.gatech.edu/) and download the VPN client for your OS. For a step-by-step guide, you can follow these articles for [Windows](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026742), [macOS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026743), [Ubuntu](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0028027), and [Chrome OS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026749). 
 * Check the console output for any error messages.
 
 

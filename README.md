@@ -28,48 +28,91 @@ To download this project, please follow these steps:
 npm install
 npm run build
 ```
-4. Navigate to the `/backend` directory and run the following commands to start the app in production mode. 
+4. Create a `.env` file in the `frontend` directory and add the following environment variables:
+   `REACT_APP_API_URL=http://127.0.0.1:PORT`
+   Specify the `PORT` where the backend will run, which corresponds to what you will set in the `backend` `.env`.
+5. Navigate to the `/backend` directory and run the following commands to install the dependencies needed for the backend. 
 ```
 export NODE_ENV=production
 npm install --production
-node app.js
 ```
+6. Create a `.env` file in the `backend` directory and specify the following environment variables:
+```
+mongoURI=MONGO_URI
+PORT=PORT
+CLIENT_URL=localhost:PORT
+ACCESS_TOKEN_SECRET=SECRET
+MAIL_USERNAME=email@email.com
+MAIL_PASSWORD=EMAIL_PASSWORD
+MAIL_PORT=587
+MAIL_HOST=SMTP_HOST
+```
+Set the `mongoURI` to point to your `MongoDB` instance. 
+Set the `MAIL_USERNAME` and `MAIL_PASSWORD` to the email and corresponding password to use to send status emails, 
+and set the `MAIL_HOST` to the email service you are using, for example, `smtp.office365.com` or `smtp.gmail.com`.
+We recommend using [ethereal.email](https://ethereal.email/) for testing the email feature, so no emails are actually sent.
+Finally, `587` is the port now used by most SMTP services with TSL encryption, so you most likely won't need to change this setting.
 
-### Run Instructions:
-1. Navigate to the project's root directory.
-2. Navigate to the `/frontend` directory and run the following command to install the client-side dependencies:
-```npm install```
-3. Create a `.env` file in the `frontend` directory and add the following environment variables:
-`REACT_APP_API_URL=http://localhost:PORT`
-Specify the PORT where the backend will run, which corresponds to what you will set in the `backend` `.env`. 
-4. Navigate to the `\backend` directory and run the following command to install the server-side dependencies:
-```npm install```
-5. Create a `.env` file in the `backend` directory and specify the following environment variables: 
-```
-mongoURI = "MONGO_URI"
-PORT="PORT"
-CLIENT_URL="localhost:PORT"
-ACCESS_TOKEN_SECRET="SECRET"
-```
-Set the `MONGO_URI` to point to your `MongoDB` instance. 
-6. Start the `frontend` and  `backend` by running `npm start` in the respective directories. 
+
+### Running Locally:
+1. Make sure you have followed all the steps in the Build Instructions.
+2. Navigate to the `/frontend` directory and run `npm run build` to get the latest build of the app.
+3. Navigate to the `/backend` directory and run `npm start` to start the `backend`.
+4. The app should now be running!
 
 #### View instructions:
 1. Open your preferred web browser.
-2. Navigate to `http://localhost:3000`.
-3. The app should now be running.
+2. Navigate to `http://127.0.0.1`.
+
+### Running on Plesk:
 
 ### Troubleshooting:
 If you encounter any issues during installation or running the software, try the following steps:
 
 * Make sure that your system meets the pre-requisites listed above.
+* Make sure you have followed all of the instructions for building and running above.
 * Check that all the dependencies have been installed correctly by running `npm install` in the `frontend` directory and `backend` directory.
+* Make sure you have the latest build by running `npm run build` in the `/frontend/` directory.
+* Make sure the server is running! You should see `Server is running on port: PORT` with the port you set in the terminal where you ran `npm start`. Also, make sure your ports match in both your frontend and backend `.env` files.
 * Make sure that your MongoDB server is configured correctly and you are entering the `mongoURI` correctly. 
+* If all your courses and applications seem to have disappeared, even though they are in the database, your JWT token may have expired. Just log back in, and this should be resolved.
+* If you cannot access [apply2ta.cc.gatech.edu](apply2ta.cc.gatech.edu), make sure you are either on a campus network or the campus VPN. If you are connected to eduroam, you may still need to use the campus VPN. You can read more about the campus VPN [here](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026837).
+* Similarly, you may need the VPN client in order to access the site's Plesk Control Panel. If you see `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` when trying to open the control panel, this is your issue. Log in to [vpn.gatech.edu](https://vpn.gatech.edu/) and download the VPN client for your OS. For a step-by-step guide, you can follow these articles for [Windows](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026742), [macOS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026743), [Ubuntu](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0028027), and [Chrome OS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026749). 
 * Check the console output for any error messages.
 
 
 
 ## Release Notes
+
+## Version 1.0.0:
+
+### New Features:
+- Added new question types (File Attachment, Multiselect, Select) to application templates.
+- Allow professors to sort and filter applications by Year, GPA, Courses Taking, Courses Taken, and Major.
+- Allow professors to write and save notes on each application.
+- Added paging to professor's application table.
+- Professor dashboard now displays semesters which can be then selected to display courses.
+- Added single login functionality.
+- Added profile pictures for students.
+- Added automatic email updates to students after a status change has been made on their application.
+
+### Bug Fixes:
+- Completed applications no longer use the current application template set for the course, but the application template that it was submitted with.
+
+### Known Issues:
+- PHP Symfony Migration may still be necessary at some point.
+- There is no way to create a new account in the website.
+- Semesters and courses are being added manually to the database and there is no way for courses to be added in the website.
+- There is no way for students to unsubscribe from emails.
+- More confirmation dialogs are needed for important actions, such as deleting an application template, changing the status of an application, or submitting an application.
+- May need to give a warning or log out the user when their JWT token has expired.
+- One student can apply many times for one course. This is useful for testing, but may need to be changed in the future.
+
+### Future Work:
+- Various third-party integrations depending on Georgia Tech approval: GT SSO, GT Canvas, MS Bookings, and MS Teams.
+- Account pages for professors or students to change any settings as needed.
+- Add functionality for professors while viewing a student's application, such as changing status or viewing and editing notes.
+- Add a point ranking to applications for professors or an applicant ranking page.
 
 ## Version 0.5.0:
 

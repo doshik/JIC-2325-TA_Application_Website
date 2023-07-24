@@ -9,6 +9,7 @@ Before beginning the installation process, please ensure that your system meets 
 * Operating System: Windows, macOS, or Linux
 * Node.js v14 or later
 * MongoDB v4.2 or later
+* Docker
 
 ### Dependent libraries:
 Our MERN app has the following dependencies that must be installed manually:
@@ -46,12 +47,30 @@ MAIL_USERNAME=email@email.com
 MAIL_PASSWORD=EMAIL_PASSWORD
 MAIL_PORT=587
 MAIL_HOST=SMTP_HOST
+S3_ENDPOINT=S3_ENDPOINT
+S3_ACCESS_KEY=AWS_ACCESS_KEY
+S3_SECRET_KEY=AWS_SECRET_KEY
 ```
-Set the `mongoURI` to point to your `MongoDB` instance. 
+Set the `mongoURI` to point to your `MongoDB` instance. \
 Set the `MAIL_USERNAME` and `MAIL_PASSWORD` to the email and corresponding password to use to send status emails, 
 and set the `MAIL_HOST` to the email service you are using, for example, `smtp.office365.com` or `smtp.gmail.com`.
 We recommend using [ethereal.email](https://ethereal.email/) for testing the email feature, so no emails are actually sent.
-Finally, `587` is the port now used by most SMTP services with TSL encryption, so you most likely won't need to change this setting.
+Finally, `587` is the port now used by most SMTP services with TSL encryption, so you most likely won't need to change this setting. \
+We use an S3 bucket to store file attachments and profile pictures. You will then need to set your `S3_ENDPOINT` and your `access_key` and `secret_key` 
+from your AWS account. More information about doing this locally can be seen below in setting up Docker.
+
+### Docker:
+1. You can use [MinIO](https://hub.docker.com/r/minio/minio) to simulate an S3 bucket. The default environmental variables if you do this can then be set as:
+```
+S3_ENDPOINT=https://localhost:9000
+S3_ACCESS_KEY=minio
+S3_SECRET_KEY=minio123
+```
+2. In the root directory of this app, run the following commands.
+```
+docker-compose build
+docker-compose up
+```
 
 
 ### Running Locally:
@@ -64,18 +83,17 @@ Finally, `587` is the port now used by most SMTP services with TSL encryption, s
 1. Open your preferred web browser.
 2. Navigate to `http://127.0.0.1`.
 
-### Running on Plesk:
-
 ### Troubleshooting:
 If you encounter any issues during installation or running the software, try the following steps:
 
-* Make sure that your system meets the pre-requisites listed above.
+* Make sure that your system meets the pre-requisites listed above and you have the relevant software installed.
 * Make sure you have followed all of the instructions for building and running above.
 * Check that all the dependencies have been installed correctly by running `npm install` in the `frontend` directory and `backend` directory.
 * Make sure you have the latest build by running `npm run build` in the `/frontend/` directory.
 * Make sure the server is running! You should see `Server is running on port: PORT` with the port you set in the terminal where you ran `npm start`. Also, make sure your ports match in both your frontend and backend `.env` files.
 * Make sure that your MongoDB server is configured correctly and you are entering the `mongoURI` correctly. 
 * If all your courses and applications seem to have disappeared, even though they are in the database, your JWT token may have expired. Just log back in, and this should be resolved.
+* If file attachments aren't being saved or you cannot see profile pictures, you may need to configure your S3 bucket settings. Make sure the associated environment variables are set correctly, or follow the Docker instructions for local S3 simulation.
 * If you cannot access [apply2ta.cc.gatech.edu](apply2ta.cc.gatech.edu), make sure you are either on a campus network or the campus VPN. If you are connected to eduroam and are having issues, you may still need to use the campus VPN. You can read more about the campus VPN [here](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026837).
 * Similarly, you may need the VPN client in order to access the site's Plesk Control Panel. If you see `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` when trying to open the control panel, this is your problem. Log in to [vpn.gatech.edu](https://vpn.gatech.edu/) and download the VPN client for your OS. For a step-by-step guide, you can follow these articles for [Windows](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026742), [macOS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026743), [Ubuntu](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0028027), and [Chrome OS](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026749). 
 * Check the console output for any error messages.

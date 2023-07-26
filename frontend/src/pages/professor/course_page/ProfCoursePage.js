@@ -38,6 +38,7 @@ const ProfCoursePage = () => {
     dispatch(getApplicationTemplatesAction());
   }, [dispatch]);
 
+  const [formChanged, setFormChanged] = React.useState(false);
   const [course, setCourse] = React.useState( () => {
     const item = localStorage.getItem("course");
     const parsedItem = JSON.parse(item);
@@ -61,16 +62,24 @@ const ProfCoursePage = () => {
     localStorage.setItem("courseId",JSON.stringify(courses[eventKey].courseId));
     setCourse(courses[eventKey]);
     setCourseID(courses[eventKey].courseId);
+    setFormChanged(true);
   };
 
   const handleTemplateChange = (eventKey) => {
     setTemplate(eventKey);
+    setFormChanged(true);
   };
 
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
+    setFormChanged(true);
   }
 
+  const handleHiringToggleChange = () => {
+    setIsHiring(!isHiring);
+    setFormChanged(true);
+  };
+  
   const handleSave = () => {
     const appTemplate =
       templates?.filter((item) => item.name === template)[0]?._id || "Default";
@@ -78,6 +87,7 @@ const ProfCoursePage = () => {
       updateCourseAction(course._id, appTemplate, isHiring, description)
     );
     navigate("/dashboard");
+    setFormChanged(false);
   };
 
   if (!courseId) {
@@ -113,7 +123,8 @@ const ProfCoursePage = () => {
         <Card.Body>
           <Form id="course-form">
             <Row>
-              <Col md={6}>
+              <Col md={4}>
+                <Form.Label>Select the template for TA applicants to this course:</Form.Label> 
                 <Form.Group controlId="formTemplate">
                   <DropdownButton
                     variant="info"
@@ -131,19 +142,24 @@ const ProfCoursePage = () => {
                     ))}
                   </DropdownButton>
                 </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Label>Set the hiring status for this course:</Form.Label> 
                 <Form.Group controlId="formHiring">
                   <ToggleButtonGroup type="checkbox" className="mb-2">
                     <ToggleButton
                       id="hiring-toggle"
                       variant={isHiring ? "success" : "danger"}
-                      onChange={() => setIsHiring(!isHiring)}
+                      onChange={() => handleHiringToggleChange()}
                     >
                       {isHiring ? "Hiring" : "Not Hiring"}
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Form.Group>
               </Col>
-              <Col md={6}>
+            </Row>
+            <Row>
+              <Col md={8}>
                 <Form.Group controlId="formCourseDescription">
                   <Form.Label>Course Description:</Form.Label>
                   <Form.Control
@@ -158,14 +174,14 @@ const ProfCoursePage = () => {
                 </Form.Group>
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <Button variant="primary" onClick={handleSave} className="w-25" disabled={!formChanged}>
+                  Save Changes
+                </Button>
+              </Col>
+            </Row>
           </Form>
-          <Row>
-            <Col className="d-flex justify-content-center">
-              <Button variant="primary" onClick={handleSave} className="w-25">
-                Save
-              </Button>
-            </Col>
-          </Row>
         </Card.Body>
       </Card>
       {course.active ? (

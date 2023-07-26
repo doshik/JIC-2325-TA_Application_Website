@@ -124,15 +124,15 @@ const ApplicationTable = ({ course }) => {
   return (
       <>
         <Form inline>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Form.Group controlId="sort_by">
+        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Form.Group controlId="sort_by" style={{ marginRight: '50px' }}>
               <Form.Label>Sort by: &nbsp;</Form.Label>
               <DropdownButton id="gpa" title={sortBy || "Set sort criteria"}>
                 <Dropdown.Item onClick={() => setSortBy("GPA")}>GPA</Dropdown.Item>
                 <Dropdown.Item onClick={() => setSortBy("Year")}>Year</Dropdown.Item>
               </DropdownButton>
             </Form.Group>
-            <Form.Group controlId="multiSelect1">
+            <Form.Group controlId="multiSelect1" style={{ marginRight: '50px' }}>
               <Form.Label>Courses Taking: &nbsp;</Form.Label>
               <Select
                   id="multiSelect1"
@@ -147,7 +147,7 @@ const ApplicationTable = ({ course }) => {
                   styles={{ menu: (provided) => ({ ...provided, zIndex: 999 }) }}
               />
             </Form.Group>
-            <Form.Group controlId="multiSelect2">
+            <Form.Group controlId="multiSelect2" style={{ marginRight: '50px' }}>
               <Form.Label>Courses Taken: &nbsp;</Form.Label>
               <Select
                   id="multiSelect2"
@@ -174,7 +174,6 @@ const ApplicationTable = ({ course }) => {
             </Form.Group>
           </div>
         </Form>
-
         <Table  data={data} pagination={pagination}>{
           (list) => (
               <>

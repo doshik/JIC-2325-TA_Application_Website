@@ -170,7 +170,10 @@ const ApplicationTable = ({ course }) => {
                   options={['CS', 'EE'].map((option) => ({
                     value: option,
                     label: option,
-                  }))} isMulti/>
+                  }))} 
+                  isMulti
+                  styles={{ menu: (provided) => ({ ...provided, zIndex: 999 }) }}
+                  />
             </Form.Group>
           </div>
         </Form>

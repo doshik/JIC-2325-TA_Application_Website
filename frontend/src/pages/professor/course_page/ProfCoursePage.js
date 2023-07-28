@@ -18,7 +18,7 @@ import { getApplicationTemplatesAction } from "../../../redux/actions/applicatio
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {getProfCoursesAction, updateCourseAction} from "../../../redux/actions/courseActions";
+import { getProfCoursesAction, updateCourseAction } from "../../../redux/actions/courseActions";
 
 const ProfCoursePage = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,8 @@ const ProfCoursePage = () => {
   ) || [];
 
   const location = useLocation();
-  const { semester } = location.state || {};
+  const [semester, setSemester] = React.useState(location.state?.semester || {});
+  //const { semester } = location.state || {};
 
   const courses = useSelector((state) => state.course.courses)?.filter(course => course.semester === semester) || [];
   useEffect(() => {
@@ -40,7 +41,7 @@ const ProfCoursePage = () => {
   }, [dispatch]);
 
   const [formChanged, setFormChanged] = React.useState(false);
-  const [course, setCourse] = React.useState( () => {
+  const [course, setCourse] = React.useState(() => {
     const item = localStorage.getItem("course");
     const parsedItem = JSON.parse(item);
     if (parsedItem?.semester === semester) {
@@ -64,10 +65,14 @@ const ProfCoursePage = () => {
   const handleCloseModal = () => setShowModal(false);
 
   const handleCourseChange = (eventKey) => {
-    localStorage.setItem("course",JSON.stringify(courses[eventKey]));
-    localStorage.setItem("courseId",JSON.stringify(courses[eventKey].courseId));
+    localStorage.setItem("course", JSON.stringify(courses[eventKey]));
+    localStorage.setItem("courseId", JSON.stringify(courses[eventKey].courseId));
     setCourse(courses[eventKey]);
     setCourseID(courses[eventKey].courseId);
+    setIsHiring(courses[eventKey]?.active);  // add this line
+    setMsBookingsLink(courses[eventKey]?.msBookingsLink || "");  // add this line
+    setDescription(courses[eventKey]?.description || "");  // add this line
+    setTemplate(courses[eventKey]?.applicationTemplate?.name || "");  // add this line
     setFormChanged(true);
   };
 
@@ -95,12 +100,16 @@ const ProfCoursePage = () => {
     handleOpenModal();
   };
 
-  const handleContinue = () => {
-    const appTemplate =
-      templates?.filter((item) => item.name === template)[0]?._id || "Default";
-    dispatch(
+  const handleContinue = async () => {
+    const appTemplate = templates?.filter((item) => item.name === template)[0]?._id || "Default";
+    await dispatch(
       updateCourseAction(course._id, appTemplate, isHiring, description, msBookingsLink)
     );
+    
+    // Update local storage here
+    const updatedCourse = {...course, applicationTemplate: {name: template, _id: appTemplate}, active: isHiring, description, msBookingsLink};
+    localStorage.setItem("course", JSON.stringify(updatedCourse));
+    
     navigate("/dashboard");
     setFormChanged(false);
     handleCloseModal();
@@ -130,7 +139,8 @@ const ProfCoursePage = () => {
               default="CS 1331"
             >
               {courses.map((course, idx) => {
-                return <Dropdown.Item eventKey={idx}>{course.courseId}</Dropdown.Item>})}
+                return <Dropdown.Item eventKey={idx}>{course.courseId}</Dropdown.Item>
+              })}
             </DropdownButton>
           </Form.Group>
         </Col>
@@ -140,7 +150,7 @@ const ProfCoursePage = () => {
           <Form id="course-form">
             <Row>
               <Col md={4}>
-                <Form.Label>Select the template for TA applicants to this course:</Form.Label> 
+                <Form.Label>Select the template for TA applicants to this course:</Form.Label>
                 <Form.Group controlId="formTemplate">
                   <DropdownButton
                     variant="info"
@@ -160,7 +170,7 @@ const ProfCoursePage = () => {
                 </Form.Group>
               </Col>
               <Col md={4}>
-                <Form.Label>Set the hiring status for this course:</Form.Label> 
+                <Form.Label>Set the hiring status for this course:</Form.Label>
                 <Form.Group controlId="formHiring">
                   <ToggleButtonGroup type="checkbox" className="mb-2">
                     <ToggleButton
@@ -176,7 +186,6 @@ const ProfCoursePage = () => {
             </Row>
             <Row>
               <Col md={8}>
-                {/* ... existing JSX ... */}
                 <Form.Group controlId="formMsBookingsLink">
                   <Form.Label>MS Bookings Link:</Form.Label>
                   <Form.Control

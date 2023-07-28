@@ -4,19 +4,12 @@ import { getProfInterviewRequests, deleteInterviewRequest } from "../../../api/i
 import moment from "moment";
 
 const ProfInterviewView = () => {
-  const [acceptedRequests, setAcceptedRequests] = useState([]);
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [completedRequests, setCompletedRequests] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [tempRefresh, setTempRefresh] = React.useState(1);
 
   useEffect(() => {
     getProfInterviewRequests().then((requests) => {
-      const accepted = requests.interviewRequests.filter(request => request.acceptedTime !== "" && moment(request.acceptedTime).isAfter(moment()));
-      const pending = requests.interviewRequests.filter(request => request.acceptedTime === "");
-      const completed = requests.interviewRequests.filter(request => request.acceptedTime !== "" && moment(request.acceptedTime).isBefore(moment()));
-      setAcceptedRequests(accepted);
-      setPendingRequests(pending);
-      setCompletedRequests(completed);
+      setRequests(requests.interviewRequests);
     });
   }, [tempRefresh]);
 
@@ -28,156 +21,67 @@ const ProfInterviewView = () => {
       return false;
     }
   }
-  
+
+  function getStatus(request) {
+    if (request.acceptedTime === "") {
+      return "Pending";
+    } else if (moment(request.acceptedTime).isAfter(moment())) {
+      return "Scheduled";
+    } else {
+      return "Completed";
+    }
+  }
+
   return (
     <div>
-      {(pendingRequests?.length > 0 || acceptedRequests?.length > 0 || completedRequests?.length > 0) ? (
-        <>
-          <h5>Pending Interviews</h5>
-          <Card className="mb-3">
-            <Card.Body>
-              <div className="text-center">
-                <Table hover size="sm">
-                  <thead>
-                    <tr>
-                      <th scope="col">Student Name</th>
-                      <th scope="col">Course Name</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pendingRequests?.map((request) => {
-                      return (
-                        <tr>
-                          <td>{request.student.name}</td>
-                          <td>{request.course.courseId}</td>
-                          <td>
-                            <Button 
-                              variant="danger" 
-                              className="btn-sm w-auto" 
-                              onClick={() =>
-                                deleteInterviewRequest(request._id).then(() => {
-                                  setTempRefresh(tempRefresh + 1);
-                                })
-                              }>
-                              Cancel
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-
-          <h5>Scheduled Interviews</h5>
-          <Card className="mb-3">
-            <Card.Body>
-              <div className="text-center">
-                <Table hover size="sm">
-                  <thead>
-                    <tr>
+      {requests?.length > 0 ? (
+        <Card className="mb-3">
+          <Card.Body>
+            <div className="text-center">
+              <Table hover size="sm">
+                <thead>
+                  <tr>
                     <th scope="col">Student Name</th>
-                      <th scope="col">Course Name</th>
-                      <th scope="col">Interview Time</th>
-                      <th scope="col">Meeting Link</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {acceptedRequests?.map((request) => {
-                      return (
-                        <tr>
-                          <td>{request.student.name}</td>
-                          <td>{request.course.courseId}</td>
-                          <td>
-                            {moment(request.acceptedTime).format(
-                              "MMMM Do YYYY, h:mm a"
-                            )}
-                          </td>
-                          <td>
-                            {request.meetingLink && isUrl(request.meetingLink) ? (
-                              <a href={request.meetingLink}>{request.meetingLink}</a>
-                            ) : (
-                              request.meetingLink
-                            )}
-                          </td>
-                          <td>
-                            <Button 
-                              variant="danger" 
-                              className="btn-sm w-auto" 
-                              onClick={() =>
-                                deleteInterviewRequest(request._id).then(() => {
-                                  setTempRefresh(tempRefresh + 1);
-                                })
-                              }>
-                              Cancel
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-
-          <h5>Completed Interviews</h5>
-          <Card className="mb-3">
-            <Card.Body>
-              <div className="text-center">
-                <Table hover size="sm">
-                  <thead>
-                    <tr>
-                    <th scope="col">Student Name</th>
-                      <th scope="col">Course Name</th>
-                      <th scope="col">Interview Time</th>
-                      <th scope="col">Meeting Link</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {completedRequests?.map((request) => {
-                      return (
-                        <tr>
-                          <td>{request.student.name}</td>
-                          <td>{request.course.courseId}</td>
-                          <td>
-                            {moment(request.acceptedTime).format(
-                              "MMMM Do YYYY, h:mm a"
-                            )}
-                          </td>
-                          <td>
-                            {request.meetingLink && isUrl(request.meetingLink) ? (
-                              <a href={request.meetingLink}>{request.meetingLink}</a>
-                            ) : (
-                              request.meetingLink
-                            )}
-                          </td>
-                          <td>
-                            <Button 
-                              variant="danger" 
-                              className="btn-sm w-auto" 
-                              onClick={() =>
-                                deleteInterviewRequest(request._id).then(() => {
-                                  setTempRefresh(tempRefresh + 1);
-                                })
-                              }>
-                              Cancel
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </div>
-            </Card.Body>
-          </Card>
-        </>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">MS Bookings Link</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {requests?.map((request) => {
+                    return (
+                      <tr>
+                        <td>{request.student.name}</td>
+                        <td>{request.course.courseId}</td>
+                        <td>
+                          {request.course.msBookingsLink && isUrl(request.course.msBookingsLink) ? (
+                              <a href={request.course.msBookingsLink}>{request.course.msBookingsLink}</a>
+                          ) : (
+                              request.course.msBookingsLink || "The link has not been set yet."
+                          )}
+                        </td>
+                        <td>{getStatus(request)}</td>
+                        <td>
+                          <Button 
+                            variant="danger" 
+                            className="btn-sm w-auto" 
+                            onClick={() =>
+                              deleteInterviewRequest(request._id).then(() => {
+                                setTempRefresh(tempRefresh + 1);
+                              })
+                            }>
+                            Cancel
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </div>
+          </Card.Body>
+        </Card>
       ) : (
         <Card>
             <Card.Body className="text-center">
@@ -190,4 +94,3 @@ const ProfInterviewView = () => {
 };
 
 export default ProfInterviewView;
-

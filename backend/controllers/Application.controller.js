@@ -364,6 +364,7 @@ applicationRoutes
         }).populate(["student", "professor", "course", "applicationTemplate"]);
         res.status(200).send({ submissions: submissions });
       } catch (err) {
+        console.log(err)
         res.status(400).send("updating application status failed");
       }
     });

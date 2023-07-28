@@ -28,6 +28,10 @@ const courseSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  msBookingsLink: {
+    type: String,
+  },
+  
 });
 
 const Course = mongoose.model("Course", courseSchema);

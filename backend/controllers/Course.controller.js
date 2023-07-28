@@ -100,7 +100,8 @@ courseRoutes.route("/update").post(userAuth, async function (req, res) {
         $set: {
           active: req.body.active,
           applicationTemplate: req.body.applicationTemplate ?? null,
-          description: req.body.description
+          description: req.body.description,
+          msBookingsLink: req.body.msBookingsLink,
         },
       },
       { new: true }

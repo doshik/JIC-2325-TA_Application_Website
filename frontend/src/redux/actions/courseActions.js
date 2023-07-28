@@ -51,9 +51,9 @@ export const getCourseAction = (courseId) => async (dispatch) => {
 
 // update a course
 export const updateCourseAction =
-  (id, applicationTemplate, active, description) => async (dispatch) => {
+  (id, applicationTemplate, active, description, msBookingsLink) => async (dispatch) => {
     try {
-      const response = await updateCourse(id, applicationTemplate, active, description);
+      const response = await updateCourse(id, applicationTemplate, active, description, msBookingsLink);
       dispatch({
         type: GET_COURSES,
         payload: response.courses,

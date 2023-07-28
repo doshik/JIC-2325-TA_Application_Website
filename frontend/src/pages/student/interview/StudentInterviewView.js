@@ -46,7 +46,7 @@ const StudentInterviewView = () => {
                     <tr>
                       <th scope="col">Course Name</th>
                       <th scope="col">Professor Name</th>
-                      <th scope="col">Select Interview Time</th>
+                      <th scope="col">MS Bookings Link</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -56,10 +56,9 @@ const StudentInterviewView = () => {
                           <td>{request.course.courseId}</td>
                           <td>{request.professor.name}</td>
                           <td>
-                            <StudentSchedulerWrapper
-                              request={request}
-                              trigger={() => setTempRefresh(tempRefresh + 1)}
-                            />
+                            {
+                              request.course.msBookingsLink ? request.course.msBookingsLink : "The link has not been set yet." 
+                            }
                           </td>
                         </tr>
                       );

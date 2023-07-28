@@ -11,10 +11,16 @@ import "./LeftNavBar.css";
 function LeftNavBar() {
   const location = useLocation();
   const role = useSelector((state) => state.auth.user ? state.auth.user.accountType : "");
-  const initialProfilePicture = useSelector((state) => `/application/file/download/${state.auth.user.profile_picture_key}`);
+  const profilePictureKey = useSelector((state) => state.auth.user ? state.auth.user.profile_picture_key : "");
+  const initialProfilePicture = `/application/file/download/${profilePictureKey}`;
   const [profilePicture, setProfilePicture] = React.useState(initialProfilePicture);
   const imageInputRef = React.useRef();
   const token = useSelector((state) => state.auth.token);
+
+  // Use useEffect to listen for changes in profilePictureKey and update profilePicture
+  React.useEffect(() => {
+    setProfilePicture(`/application/file/download/${profilePictureKey}`);
+  }, [profilePictureKey]);
 
   const handleImageClick = () => {
     imageInputRef.current.click();

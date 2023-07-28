@@ -341,7 +341,7 @@ applicationRoutes
                       from: process.env.MAIL_USERNAME,
                       to: req.body.email,
                       subject: 'TA Application Update for ' + req.body.course,
-                      html: 'You have been selected for an interview! Please <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">log in</a> as soon as possible to schedule your interview.'
+                      html: 'You have been selected for an interview! Please <a target="_blank" rel="noopener noreferrer" href="https://apply2ta.cc.gatech.edu/dashboard">log in</a> as soon as possible to schedule your interview.'
                   }, (err) => {
                       res.status(400).send('Mail error: ' + err.message)
                       return;
@@ -352,7 +352,7 @@ applicationRoutes
                       from: process.env.MAIL_USERNAME,
                       to: req.body.email,
                       subject: 'TA Application Update for ' + req.body.course,
-                      html: 'There has been an update for your application, <a target="_blank" rel="noopener noreferrer" href="http://localhost:3000/dashboard">click here</a> to learn more.'
+                      html: 'There has been an update for your application, <a target="_blank" rel="noopener noreferrer" href="https://apply2ta.cc.gatech.edu/dashboard">click here</a> to learn more.'
                   }, (err) => {
                       res.status(400).send('Mail error: ' + err.message)
                       return;

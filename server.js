@@ -19,6 +19,7 @@ var allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3006",
+  "https://apply2ta.cc.gatech.edu"
 ];
 
 if (process.env.CLIENT_URL) {

@@ -44,7 +44,7 @@ const ApplicationTable = ({ course }) => {
     console.log("chat icon clicked: ", applicationId)
 
     try {
-        const response = await axios.get(`http://127.0.0.1/note/getByApplication/${applicationId}`);
+        const response = await axios.get(`http://localhost/note/getByApplication/${applicationId}`);
         const fetchedMessages = response.data.notes; // Adjust according to your specific JSON structure
         console.log('fetched: ', fetchedMessages);
         console.log('fetched: ', fetchedMessages[0])
@@ -70,7 +70,7 @@ const ApplicationTable = ({ course }) => {
       applicationId: currentApplicationId, 
     };
     try {
-      const response = await axios.post('http://127.0.0.1/note/add', newMessageObject);
+      const response = await axios.post('http://localhost/note/add', newMessageObject);
       console.log(response.data);  // Response from the server
 
       setChatMessages([...chatMessages, newMessageObject]);

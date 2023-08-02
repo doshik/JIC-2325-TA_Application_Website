@@ -87,7 +87,7 @@ function LeftNavBar() {
           }
         </div>
       )}
-      {role !== "student" && role !== "professor" && (
+      {(role !== "student" && role !== "professor" && role !== "TA") && (
         <div>
           {renderNavItem("/login", "Welcome")}
           {renderNavItem("/FAQs", "FAQs")}
@@ -102,7 +102,7 @@ function LeftNavBar() {
           {renderNavItem("/FAQs", "FAQs")}
         </div>
       )}
-      {role === "professor" && (
+      {(role === "professor" || role === "TA") && (
         <div>
           {renderNavItem("/home", "Home")}
           {renderNavItem("/dashboard", "Dashboard")}

@@ -34,9 +34,12 @@ courseRoutes.route("/create").post(async function (req, res) {
 // @access Public
 courseRoutes.route("/prof/get").get(userAuth, async function (req, res) {
   try {
-    const courses = await Course.find({ professor: req.user.id }).populate(
-      "applicationTemplate"
-    );
+    const courses = await Course.find({
+      $or: [
+        { professor: req.user.id },
+        { TAList: req.user.id }
+      ]
+    }).populate("applicationTemplate");
 
     if (courses) {
       res.status(200).json({ courses: courses });

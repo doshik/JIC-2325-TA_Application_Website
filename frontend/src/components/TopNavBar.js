@@ -81,7 +81,7 @@ function TopNavBar() {
           </Nav.Item>
         </>
       )}
-      {role === "professor" && (
+      {(role === "professor" || role === "TA") && (
         <>
           <Nav.Item>
             <Nav.Link

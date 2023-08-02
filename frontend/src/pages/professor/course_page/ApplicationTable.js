@@ -24,6 +24,7 @@ import { faComments } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from "axios";
+
 const ApplicationTable = ({ course }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const ApplicationTable = ({ course }) => {
     console.log("chat icon clicked: ", applicationId)
 
     try {
-        const response = await axios.get(`http://localhost/note/getByApplication/${applicationId}`);
+        const response = await axios.get(`/note/getByApplication/${applicationId}`);
         const fetchedMessages = response.data.notes; // Adjust according to your specific JSON structure
         console.log('fetched: ', fetchedMessages);
         console.log('fetched: ', fetchedMessages[0])
@@ -65,12 +66,12 @@ const ApplicationTable = ({ course }) => {
 
     const newMessageObject = {
       message: newMessage,
-      username: "currentUser", 
+      username: "you",
       timestamp: new Date().toISOString(),
       applicationId: currentApplicationId, 
     };
     try {
-      const response = await axios.post('http://localhost/note/add', newMessageObject);
+      const response = await axios.post('/note/add', newMessageObject);
       console.log(response.data);  // Response from the server
 
       setChatMessages([...chatMessages, newMessageObject]);

@@ -43,7 +43,7 @@ const Router = createBrowserRouter(
         <Route exact path="/faqs" element={<FAQs />} />
 
         {/* student professor routes go in here */}
-        <Route element={<ProtectedRoute roles={["student", "professor"]} />}>
+        <Route element={<ProtectedRoute roles={["student", "professor", "TA"]} />}>
           <Route exact path="/dashboard" element={<DashboardView />} />
           <Route exact path="/home" element={<HomePage />} />
         </Route>
@@ -74,7 +74,7 @@ const Router = createBrowserRouter(
         </Route>
 
         {/* professor routes */}
-        <Route element={<ProtectedRoute roles={["professor"]} />}>
+        <Route element={<ProtectedRoute roles={["professor", "TA"]} />}>
           <Route
             exact
             path="/applications/:courseId"

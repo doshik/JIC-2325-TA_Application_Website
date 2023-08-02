@@ -25,7 +25,7 @@ const Private = ({ Component, roles }) => {
 
     if (user.accountType === "student") {
       navigate("/user/studentdashboard");
-    } else if (user.accountType === "professor") {
+    } else if ((user.accountType === "professor" || user.accountType === "TA")) {
       navigate("/user/professordashboard");
     } else {
       navigate("/login");

@@ -18,7 +18,10 @@ exports.userAuth = (req, res, next) => {
 
 exports.generateToken = (user) => {
   const accessToken = jwt.sign(
-    { id: user._id },
+    { 
+      id: user._id,
+      username: user.username,
+    },
     process.env.ACCESS_TOKEN_SECRET,
     {
       expiresIn: "1h",

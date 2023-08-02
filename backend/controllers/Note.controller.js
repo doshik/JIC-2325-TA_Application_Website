@@ -13,9 +13,10 @@ noteRoutes
     .post(userAuth, async function (req, res) {
         console.log("HIT");
     try {
+        console.log(req.user)
         const newNote = new Note({
             message: req.body.message,
-            username: req.body.username,
+            username: req.user.username,
             application: req.body.applicationId, 
         });
 

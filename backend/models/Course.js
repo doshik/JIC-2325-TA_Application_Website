@@ -13,6 +13,10 @@ const courseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  TAList: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
   applicationTemplate: {
     type: Schema.Types.ObjectId,
     ref: "ApplicationTemplate",

@@ -9,7 +9,7 @@ const DashboardView = () => {
   return (
     <>
       {auth.user.accountType === "student" && <StudentDashboardView />}
-      {auth.user.accountType === "professor" && <ProfessorDashboardView />}
+      {(auth.user.accountType === "professor" || auth.user.accountType === "TA") && <ProfessorDashboardView />}
     </>
   );
 };

@@ -210,7 +210,6 @@ applicationRoutes
     const userIds = users.map(user => user._id);
 
     let appQuery = {
-      professor: req.user.id,
       course: req.query.course,
       submitted: true,
       student: { $in: userIds },
